@@ -2,18 +2,17 @@
 
 int main(void)
 {
-    int i,m=0,n=0,q=0,sum=0;
+    int i,sum=0;
     for(i=1;i<=1000;i++)
     {if(0==i%5)
-         {m++;
+         {sum++;
          if(0==i%25)
-             {n++;
+             {sum++;
              if(0==i%125)
-             q++;
+             sum++;
              }
          }
      }
-    sum=m+n+q;
     printf("0 is %d\n",sum);
     return 0;
 }
