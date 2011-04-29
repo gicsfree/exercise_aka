@@ -13,7 +13,7 @@ int main(int argc, const char *argv[])
 int sushu(int n)
 {
     int i,j,flag;
-    for(i=1;i<=n;i++)
+    for(i=2;i<=n;i++)
     {flag=1;
     for(j=2;j<i;j++)
         if(0==i%j)
