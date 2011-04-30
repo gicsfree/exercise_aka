@@ -28,15 +28,10 @@ int main(int argc, const char *argv[])
 		flag = 1;
 	else if (n % 4 == 0 && n % 100 != 0)
 		flag = 1;
-	if (1 == flag) {
-		for (i = 0; i < y; i++)
-			sum += a[i];
-		sum += r;
-	} else {
-		for (i = 0; i < y; i++)
-			sum += b[i];
-		sum += r;
-	}
+	if (1 == flag)
+		sum = a[y - 1] + r;
+	else
+		sum = b[y - 1] + r;
 	printf("date is\n%d\n", sum);
 	return 0;
 }
