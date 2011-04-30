@@ -32,13 +32,13 @@ void yuesefu(int m, int n)
 					j = 0;
 					a[i] = 0;
 					k++;
-					if (q < 5) {
+					if (q < 4) {
 						q++;
-						printf("%3d %3d out", k,
+						printf("%3d: %3d out.", k,
 						       i);
 					} else {
 						q = 0;
-						printf("%3d %3d out\n", k,
+						printf("%3d: %3d out.\n", k,
 						       i);
 					}
 				}
