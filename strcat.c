@@ -10,11 +10,11 @@ int main(int argc, const char *argv[])
 }
 
 char *strcat(char *s1, const char *s2)
-{
-	while (*s1++);
-	s1--;
+{   char *p=s1;
+	while (*p++);
+	p--;
 	while (*s2)
-		*s1++ = *s2++;
-	*s1 = '\0';
+		*p++ = *s2++;
+	*p = '\0';
 	return s1;
 }

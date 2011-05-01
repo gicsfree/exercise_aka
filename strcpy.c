@@ -10,10 +10,10 @@ int main(int argc, const char *argv[])
 }
 
 char *strcpy(char *dest, const char *src)
-{
+{   char *p=dest;
 	while (*src) {
-		*dest++ = *src++;
+		*p++ = *src++;
 	}
-	*dest = '\0';
+	*p = '\0';
 	return dest;
 }
