@@ -4,13 +4,11 @@ int main(int argc, const char *argv[])
 {
 	int i, j = 0;
 	for (i = 1; i <= 200; i++)
-		if (i % 3 != 0)
-			if (j != 7) {
-				printf("%6d", i);
-				j++;
-			} else {
-				printf("%6d\n", i);
-				j = 0;
-			}
+		if (i % 3 != 0) {
+			j++;
+			printf("%6d", i);
+			if (j % 8 == 0)
+				printf("\n");
+		}
 	return 0;
 }

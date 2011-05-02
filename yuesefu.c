@@ -1,20 +1,25 @@
 #include <stdio.h>
 #include<stdlib.h>
 void yuesefu(int m, int n);
+
 int main(int argc, const char *argv[])
 {
 	int i, m, n;
 	if (3 != argc) {
-		printf("input: ./file m(1-100) n(1-100)\n");
+		printf("input(m<n): ./file m(1-100) n(1-100)\n");
 		return 0;
 	}
 	for (i = 1; i <= 2; i++)
 		if (atoi(argv[i]) < 1 || atoi(argv[i]) > 100) {
-			printf("input: ./file m(1-100) n(1-100)\n");
+			printf("input(m<n): ./file m(1-100) n(1-100)\n");
 			return 0;
 		}
 	m = atoi(argv[1]);
 	n = atoi(argv[2]);
+	if (m > n) {
+		printf("input(m<n): ./file m(1-100) n(1-100)\n");
+		return 0;
+	}
 	yuesefu(m, n);
 	return 0;
 }
@@ -32,14 +37,12 @@ void yuesefu(int m, int n)
 					j = 0;
 					a[i] = 0;
 					k++;
-					if (q < 4) {
+					{
 						q++;
-						printf("%3d: %3d out.", k,
+						printf("%3d:%3d out.",k,
 						       i);
-					} else {
-						q = 0;
-						printf("%3d: %3d out.\n", k,
-						       i);
+						if (q % 5 == 0)
+							printf("\n");
 					}
 				}
 			}
