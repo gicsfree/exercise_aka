@@ -5,7 +5,7 @@ void get_email(char *str);
 int name(char s1);
 int domain(char s2);
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {   FILE *fp;
     char string[1024];
     if(2!=argc)
