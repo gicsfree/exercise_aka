@@ -1,6 +1,6 @@
 #include <stdio.h>
 char *strcpy(char *dest, const char *src);
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	char a[7], b[6] = "hello";
 	strcpy(a, b);

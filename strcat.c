@@ -1,6 +1,6 @@
 #include <stdio.h>
 char *strcat(char *s1, const char *s2);
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	char a[6] = "hello", b[6] = "hello";
 	strcat(a, b);

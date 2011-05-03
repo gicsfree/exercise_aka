@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
 	int i, j, k = 0, n, b[5];
 	printf("input int n:\n");

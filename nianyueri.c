@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	int i, n, y, r, sum = 0, flag = 0, a[12] =
 	    { 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335 },

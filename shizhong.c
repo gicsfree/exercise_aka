@@ -7,7 +7,7 @@ struct Clock {
 	int sec;
 } clock;
 
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	clock.hour = 0;
 	clock.min = 0;

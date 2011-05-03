@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(int argc, const char *argv[])
+int main(int argc, char *argv[])
 {
 	int temp, i, j, a[10] = { 5, 6, 32, 1, 87, 23, 234, 3, 7, 123 };
 	printf("pai xu qian:\n");

@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	int i, j = 0, k = 19, m, n, temp, b[20], a[20] =
 	    { 12, 1, 48, 67, 78, 15, 58, 36, 24, 15, 38, 64, 59, 67, 65,

@@ -2,7 +2,7 @@
 #include<stdlib.h>
 void yuesefu(int m, int n);
 
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	int i, m, n;
 	if (3 != argc) {

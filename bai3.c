@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	int i, j, k, bai3, a[4] = { 1, 2, 3, 4 };
 	for (i = 0; i <= 3; i++)

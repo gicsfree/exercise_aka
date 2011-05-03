@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include<stdlib.h>
-int main(int argc, const char *argv[])
+int main(int argc,char *argv[])
 {
 	int i, a[10] = { 0 };
 	for (i = 0; i < 1000; i++)
