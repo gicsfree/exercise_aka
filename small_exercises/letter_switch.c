@@ -1,16 +1,16 @@
 #include <stdio.h>
-char *zmzh(char *string);
+char *letter_switch(char *string);
 
 int main(int argc, char *argv[])
 {
 	char a[128];
 	printf("input :string\n");
 	scanf("%s", a);
-	printf("%s\n", zmzh(a));
+	printf("%s\n", letter_switch(a));
 	return 0;
 }
 
-char *zmzh(char *string)
+char *letter_switch(char *string)
 {
 	char *p = string;
 	while (*p)

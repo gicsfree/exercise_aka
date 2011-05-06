@@ -1,16 +1,16 @@
 #include <stdio.h>
-int ywcf(int m, int n);
+int bit_mul(int m, int n);
 
 int main(int argc, char *argv[])
 {
 	int m, n;
 	printf("input :m n\n");
 	scanf("%d %d", &m, &n);
-	printf("%d\n", ywcf(m, n));
+	printf("%d\n", bit_mul(m, n));
 	return 0;
 }
 
-int ywcf(int m, int n)
+int bit_mul(int m, int n)
 {
 	int i, p, q, result = 0, flag = 0;
 	if ((m >> 31) & 1)
