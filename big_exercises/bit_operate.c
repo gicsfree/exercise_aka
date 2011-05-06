@@ -1,8 +1,9 @@
 #include <stdio.h>
-int dcb(int n);
-int ywcf(int m, int n);
-char *zmzh(char *string);
-char *jm(char *string);
+
+int decimal_to_binary(int n);
+int bit_mul(int m, int n);
+char *letter_switch(char *string);
+char *decrypt(char *s);
 
 int main(int argc, char *argv[])
 {
@@ -24,24 +25,24 @@ int main(int argc, char *argv[])
 
 			printf("input a number :");
 			scanf("%d", &n);
-			dcb(n);
+			decimal_to_binary(n);
 			break;
 		case 2:
 
 			printf("intput x y :");
 			scanf("%d %d", &x, &y);
-			ywcf(x, y);
+			bit_mul(x, y);
 			break;
 		case 3:
 			printf("input a string :");
 			scanf("%s", string);
-			zmzh(string);
+			letter_switch(string);
 			break;
 		case 4:
 
 			printf("input a string :");
 			scanf("%s", s);
-			jm(s);
+			decrypt(s);
 			break;
 		case 5:
 			return 0;
@@ -50,26 +51,25 @@ int main(int argc, char *argv[])
 	return 0;
 }
 
-int dcb(int n)
+int decimal_to_binary(int n)
 {
-	int i, j, p;
+	int i, j, binary;
 	if ((n >> 31) & 1) {
-		p = ~(n - 1);
+		binary = ~(n - 1);
 		printf("-");
 	} else
-		p = n;
+		binary = n;
 	for (i = 30; i >= 0; i--)
-		if ((p >> i) & 1)
+		if ((binary >> i) & 1)
 			break;
-	printf("decimal %d change to binary is ", n);
 	for (j = i; j >= 0; j--)
-		printf("%d", ((p >> j) & 1));
+		printf("%d", ((binary >> j) & 1));
 	printf("\n");
+
 	return 0;
 }
 
-
-int ywcf(int m, int n)
+int bit_mul(int m, int n)
 {
 	int i, p, q, result = 0, flag = 0;
 	if ((m >> 31) & 1)
@@ -87,11 +87,11 @@ int ywcf(int m, int n)
 			result += q << i;
 	if (1 == flag)
 		result = ~result + 1;
-	printf("x * y =%d\n", result);
+
 	return result;
 }
 
-char *zmzh(char *string)
+char *letter_switch(char *string)
 {
 	char *p = string;
 	while (*p)
@@ -100,24 +100,23 @@ char *zmzh(char *string)
 			p++;
 		} else
 			p++;
-	printf("%s\n", string);
 	return string;
 }
 
-char *jm(char *string)
+char *encrypt(char *s)
 {
-	char *p = string, *q = string;
-	printf("jiamiqian :%s\n", p);
+	char *p = s, *q = s;
+	printf("encrypt_before is :%s\n", s);
 	while (*p) {
 		*p = *p ^ 'x';
 		p++;
 	}
-	printf("jiamihou :%s\n", string);
+	printf("encrypted is      :%s\n", s);
 	while (*q) {
 		*q = *q ^ 'x';
 		q++;
 	}
-	printf("jiemihou :%s\n", string);
+	printf("decrypted is      :%s\n", s);
 
-	return string;
+	return s;
 }
