@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
 char *my_shell(char *s)
 {
 	char *p = s, *q = s, *r, *str = s;
-	int flag = 0, flag1 = 0;
+	int flag = 0, flag1 = 0,flag2=0,flag3=0;
 	while (*q) {
 		if (*q == '<' || *q == '>') {
 			flag = 1;
@@ -38,7 +38,7 @@ char *my_shell(char *s)
 	}
 
 	while (*s) {
-		if ((*s >= 'a' && *s <= 'z' || *s >= 'A' && *s <= 'Z')
+		if ((*s!=' ')
 		    && (*(s + 1) == ' ' || *(s + 1) == '<'
 			|| *(s + 1) == '>' || *(s + 1) == '\0')) {
 			r = s;
@@ -53,12 +53,8 @@ char *my_shell(char *s)
 				printf("command:");
 				for (i = 0; i < m + 1; i++)
 					printf("%c", *(r + i));
-			} else if ((*r == ' ') && (*(r + 1) == '-' ||
-						   (*(r + 1) >= 'a'
-						    && *(r + 1) <= 'z')
-						   || (*(r + 1) >= 'A'
-						       && *(r + 1) <=
-						       'Z'))) {
+			} else if ((*r == ' ') && (*(r + 1) !='<') &&
+						  ( *(r + 1) != '>')){
 				printf(",argument:");
 				for (i = 0; i < m; i++)
 					printf("%c", *(r + 1 + i));
@@ -66,16 +62,23 @@ char *my_shell(char *s)
 				printf("\n,in-file:");
 				for (i = 0; i < m; i++)
 					printf("%c", *(r + 1 + i));
-				printf(", out-file:NULL");
+                    flag2=1;
+		
 			} else if (*r == '>') {
-				printf("\n,in-file:NULL, out-file:");
+				printf("\n, out-file:");
 				for (i = 0; i < m; i++)
 					printf("%c", *(r + 1 + i));
+                    flag3=1;
 			}
+
 
 		}
 		s++;
 	}
+    if(flag2==0)
+    		printf(",in-file:NULL");
+            if(flag3==0)
+printf(",out-file:NULL\n");
 	printf("\n");
 	return str;
 }
