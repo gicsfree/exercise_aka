@@ -5,7 +5,7 @@
 int main(int argc,char *argv[])
 {
     int choice;
-    int ret;
+
     if (3!=argc){
         printf("input: ./file src dest\n");
         return 0;
@@ -17,7 +17,7 @@ int main(int argc,char *argv[])
         printf("3.cp by row\n");
         printf("Your choice:");
         if(scanf("%d",&choice)==0){
-            int ch;
+            char ch;
             while( (ch = getchar()) != '\n' );
         }
         if (choice>=1 && choice<=3)
