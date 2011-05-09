@@ -6,7 +6,7 @@ int main(int argc,char *argv[])
 	    { 12, 1, 48, 67, 78, 15, 58, 36, 24, 15, 38, 64, 59, 67, 65,
 		58, 69, 34, 27, 61
 	};
-	printf("pai xu qian:\n");
+	printf("before sort:\n");
 	for (i = 0; i < 20; i++) {
 		printf("%3d", a[i]);
 		if (a[i] % 2 == 1)
@@ -29,7 +29,7 @@ int main(int argc,char *argv[])
 				b[n] = temp;
 			}
 
-	printf("\npai xu hou:\n");
+	printf("\nafter sort:\n");
 	for (i = 0; i < 20; i++)
 		printf("%3d", b[i]);
 	return 0;
