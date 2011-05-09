@@ -14,7 +14,7 @@ include $(sources:.c=.d)
 
 clean:
 	@echo "cleanning project"
-	-rm *.o *.d
+	-rm main *.o *.d
 	@echo "clean completed"
 
 .PHONY: clean
