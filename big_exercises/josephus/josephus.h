@@ -1,6 +1,6 @@
-#ifndef _JOSEPH_H__
-#define _JOSEPH_H__
+#ifndef _JOSEPHUS_H__
+#define _JOSEPHUS_H__
 
-void joseph(int m,int n);
+void josephus(int m,int n);
 
 #endif

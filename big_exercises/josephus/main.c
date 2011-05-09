@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "joseph.h"
+#include "josephus.h"
 
 int main(int argc,char *argv[])
 {
@@ -19,6 +19,6 @@ int main(int argc,char *argv[])
 		printf("input(m<n): ./file m(1-100) n(1-100)\n");
 		return 0;
 	}
-	joseph(m, n);
+	josephus(m, n);
 	return 0;
 }

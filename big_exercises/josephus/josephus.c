@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include<stdlib.h>
 
-void joseph(int m, int n)
+void josephus(int m, int n)
 {
 	int i, j = 0, k = 0, q = 0, a[101];
 	for (i = 0; i < 101; i++)
