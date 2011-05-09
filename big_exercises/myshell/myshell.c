@@ -1,26 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-char *my_shell(char *s);
-
-int main(int argc, char *argv[])
-{
-	char str[128];
-	printf("mysh%% ");
-	while (strlen(gets(str)) > 0) {
-		printf("show the command:\n");
-		my_shell(str);
-		printf("mysh%% ");
-	}
-
-	return 0;
-}
-
-char *my_shell(char *s)
+char *myshell(char *s)
 {
 	char *p = s, *q = s, *r, *str = s;
 	int flag = 0, flag1 = 0, flag2 = 0, flag3 = 0;
-    /*清除'<' '>'之后的空格*/
+	/*清除'<' '>'之后的空格 */
 	while (*q) {
 		if (*q == '<' || *q == '>') {
 			flag = 1;
@@ -37,7 +22,7 @@ char *my_shell(char *s)
 		}
 		*p = '\0';
 	}
-    /*像单词一样的拆分字符串*/
+	/*像单词一样的拆分字符串 */
 	while (*s) {
 		if ((*s != ' ')
 		    && (*(s + 1) == ' ' || *(s + 1) == '<'
@@ -49,7 +34,7 @@ char *my_shell(char *s)
 					break;
 				m++;
 			}
-            /*对单词的类型进行判断*/
+			/*对单词的类型进行判断 */
 			if (r == str || flag1 == 0) {
 				flag1 = 1;
 				printf("command:");
@@ -72,8 +57,6 @@ char *my_shell(char *s)
 					printf("%c", *(r + 1 + i));
 				flag3 = 1;
 			}
-
-
 		}
 		s++;
 	}
