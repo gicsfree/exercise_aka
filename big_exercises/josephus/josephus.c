@@ -16,7 +16,7 @@ void josephus(int m, int n)
 					k++;
 					{
 						q++;
-						printf("%3d:%3d out.",k,
+						printf("%3d:%3d out.", k,
 						       i);
 						if (q % 5 == 0)
 							printf("\n");

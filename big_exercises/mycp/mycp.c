@@ -29,7 +29,7 @@ int mycp(const char *src, const char *dest)
 		if (scanf("%d", &choice) == 0) {
 			char ch;
 			while ((ch = getchar()) != '\n');
-            continue;
+			continue;
 		}
 		if (choice >= 1 && choice <= 4)
 			break;
