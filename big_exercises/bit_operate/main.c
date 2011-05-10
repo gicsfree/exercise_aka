@@ -17,8 +17,9 @@ int main(int argc, char *argv[])
 		printf("5.exit\n");
 		printf("please choice [1-5]:");
 		if (scanf("%d", &choice) == 0) {
-			char ch;
-			while ((ch = getchar()) != '\n');
+			empty_cache();
+			system("clear");
+			continue;
 		}
 		system("clear");
 		if (choice >= 1 && choice <= 5) {

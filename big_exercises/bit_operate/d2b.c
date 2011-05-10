@@ -16,7 +16,7 @@ void d2b()
 		printf("%d", decimal);
 	else {
 		if ((decimal >> 31) & 1) {
-			binary = ~(decimal - 1);
+			binary = ~(decimal - 1);	/* 取负数原码对应的正值 */
 			printf("-");
 		} else
 			binary = decimal;
