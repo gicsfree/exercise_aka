@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <string.h>
+#include <stdlib.h>
 
 char *myshell(char *s)
 {
@@ -41,23 +41,22 @@ char *myshell(char *s)
 				m++;
 			}
 			/* 对单词的类型进行判断 */
-			if (r == str) {
+			if (r == str) {	/* 指令前没空格 */
 				flag1 = 1;
 				printf("command:");
 				for (i = 0; i < m + 1; i++)
 					printf("%c", *(r + i));
-			} else if (flag1 == 0) {
+			} else if (flag1 == 0) {	/* 指令前有空格 */
 				flag1 = 1;
 				printf("command:");
 				for (i = 0; i < m; i++)
 					printf("%c", *(r + 1 + i));
 
-			} else if ((*r == ' ') && (*(r + 1) != '<') &&
-				   (*(r + 1) != '>')) {
+			} else if (*r == ' ') {	/* 以空格开始的单词 */
 				printf(",argument:");
 				for (i = 0; i < m; i++)
 					printf("%c", *(r + 1 + i));
-			} else if (*r == '<') {
+			} else if (*r == '<') {	/* 以非空格开始的单词 */
 				printf("\nin-file:");
 				for (i = 0; i < m; i++)
 					printf("%c", *(r + 1 + i));
