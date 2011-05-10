@@ -1,10 +1,14 @@
 #include <stdio.h>
+#include <string.h>
+#include "common.h"
 
 void exchange()
 {
-    char string[128];
-    printf("inout a string:");
-    scanf("%s",string);
+	char string[128];
+	printf("input a string:");
+	empty_cache();
+	while (0 == strlen(gets(string)))
+		printf("input a string:");
 	char *p = string;
 	while (*p)
 		if ((*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z')) {
@@ -12,6 +16,6 @@ void exchange()
 			p++;
 		} else
 			p++;
-    printf("%s\n",string);            
- 
+	printf("exchanged is:%s\n", string);
+
 }

@@ -1,8 +1,8 @@
-objs = main.o d2b.o multi.o encryption.o exchange.o 
+objs = main.o d2b.o multi.o encryption.o exchange.o common.o
 main: $(objs)
 	$(CC) $^ -o $@
 
-sources = main.c d2b.c multi.c encryption.c exchange.c
+sources = main.c d2b.c multi.c encryption.c exchange.c common.c
 
 include $(sources:.c=.d)
 
