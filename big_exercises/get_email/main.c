@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include "get_email.h"
 
-#define MAX 1024 
+#define MAX 1024
 
 int main(int argc, char *argv[])
 {
