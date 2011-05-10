@@ -5,6 +5,12 @@ char *myshell(char *s)
 {
 	char *p = s, *q = s, *r, *str = s;
 	int flag = 0, flag1 = 0, flag2 = 0, flag3 = 0;
+
+	system("clear");
+	printf("$:");
+	puts(s);
+	printf("show the command:\n");
+
 	/* 清除'<' '>'之后的空格 */
 	while (*q) {
 		if (*q == '<' || *q == '>') {
