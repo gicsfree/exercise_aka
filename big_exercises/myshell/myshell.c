@@ -5,7 +5,7 @@ char *myshell(char *s)
 {
 	char *p = s, *q = s, *r, *str = s;
 	int flag = 0, flag1 = 0, flag2 = 0, flag3 = 0;
-	/*清除'<' '>'之后的空格 */
+	/* 清除'<' '>'之后的空格 */
 	while (*q) {
 		if (*q == '<' || *q == '>') {
 			flag = 1;
@@ -22,7 +22,7 @@ char *myshell(char *s)
 		}
 		*p = '\0';
 	}
-	/*像单词一样的拆分字符串 */
+	/* 像单词一样的拆分字符串 */
 	while (*s) {
 		if ((*s != ' ')
 		    && (*(s + 1) == ' ' || *(s + 1) == '<'
@@ -34,12 +34,18 @@ char *myshell(char *s)
 					break;
 				m++;
 			}
-			/*对单词的类型进行判断 */
-			if (r == str || flag1 == 0) {
+			/* 对单词的类型进行判断 */
+			if (r == str) {
 				flag1 = 1;
 				printf("command:");
 				for (i = 0; i < m + 1; i++)
 					printf("%c", *(r + i));
+			} else if (flag1 == 0) {
+				flag1 = 1;
+				printf("command:");
+				for (i = 0; i < m; i++)
+					printf("%c", *(r + 1 + i));
+
 			} else if ((*r == ' ') && (*(r + 1) != '<') &&
 				   (*(r + 1) != '>')) {
 				printf(",argument:");

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "d2b.h"
 #include "exchange.h"
 #include "encryption.h"
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
             char ch;
             while( (ch = getchar()) !='\n');
             }
+        system("clear");
 		if(choice>=1 && choice<=5){
             switch (choice) {
             case 1:

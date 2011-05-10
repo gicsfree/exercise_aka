@@ -25,7 +25,7 @@ int mycp(const char *src, const char *dest)
 		printf("2.cp by record\n");
 		printf("3.cp by row\n");
         printf("4.exit\n");
-		printf("Your choice:");
+		printf("Your choice [1-4]:");
 		if (scanf("%d", &choice) == 0) {
 			char ch;
 			while ((ch = getchar()) != '\n');
