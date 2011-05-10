@@ -46,7 +46,7 @@ char *myshell(char *s)
 				printf("command:");
 				for (i = 0; i < m + 1; i++)
 					printf("%c", *(r + i));
-			} else if (flag1 == 0) {	/* 指令前有空格 */
+			} else if (flag1 == 0) { /* 指令前有空格 */
 				flag1 = 1;
 				printf("command:");
 				for (i = 0; i < m; i++)
