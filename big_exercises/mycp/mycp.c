@@ -19,12 +19,12 @@ int mycp(const char *src, const char *dest)
 	}
 
 	while (1) {
-        system("clear");
+		system("clear");
 		printf("Please select:\n");
 		printf("1.cp by char\n");
 		printf("2.cp by record\n");
 		printf("3.cp by row\n");
-        printf("4.exit\n");
+		printf("4.exit\n");
 		printf("Your choice [1-4]:");
 		if (scanf("%d", &choice) == 0) {
 			char ch;
@@ -43,9 +43,9 @@ int mycp(const char *src, const char *dest)
 	case 3:
 		cp_by_row(fp1, fp2);
 		break;
-    case 4:
-        return 0;
-        break;
+	case 4:
+		return 0;
+		break;
 	}
 	fclose(fp1);
 	fclose(fp2);
