@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 static int cp_by_char(FILE * src, FILE * dest);
 static int cp_by_record(FILE * src, FILE * dest);
@@ -11,11 +10,11 @@ int mycp(const char *src, const char *dest)
 	int choice;
 	if ((fp1 = fopen(src, "r")) == NULL) {
 		printf("can't open:%s\n", src);
-		exit(1);
+		return 1;
 	}
 	if ((fp2 = fopen(dest, "w")) == NULL) {
 		printf("can't open:%s\n", dest);
-		exit(1);
+		return 1;
 	}
 
 	while (1) {
@@ -36,17 +35,18 @@ int mycp(const char *src, const char *dest)
 	}
 	switch (choice) {
 	case 1:
-		cp_by_char(fp1, fp2);
+		if (1 == cp_by_char(fp1, fp2))
+			return 1;
 		break;
 	case 2:
 		cp_by_record(fp1, fp2);
 		break;
 	case 3:
-		cp_by_row(fp1, fp2);
+		if (1 == cp_by_row(fp1, fp2))
+			return 1;
 		break;
 	case 4:
-		return 0;
-		break;
+		return 1;
 	}
 	fclose(fp1);
 	fclose(fp2);
@@ -57,7 +57,8 @@ static int cp_by_char(FILE * src, FILE * dest)
 {
 	char ch;
 	while ((ch = fgetc(src)) != EOF)
-		fputc(ch, dest);
+		if (EOF == fputc(ch, dest))
+			return 1;
 
 	return 0;
 }
@@ -75,7 +76,8 @@ static int cp_by_row(FILE * src, FILE * dest)
 {
 	char string[81];
 	while (fgets(string, 81, src) != NULL)
-		fputs(string, dest);
+		if (EOF == fputs(string, dest))
+			return 1;
 
 	return 0;
 }

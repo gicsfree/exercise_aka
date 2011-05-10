@@ -10,7 +10,9 @@ int main(int argc, char *argv[])
 		printf("input: ./file src dest\n");
 		return 0;
 	}
-	mycp(argv[1], argv[2]);
-
+	if (1 == mycp(argv[1], argv[2]))
+		printf("copy failed\n");
+	else
+		printf("copy successfully\n");
 	return 0;
 }
