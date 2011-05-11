@@ -1,10 +1,11 @@
 #include <stdio.h>
-#include<stdlib.h>
 
+/* n为玩游戏的人数，m为报的数 */
 void josephus(int m, int n)
 {
-	int i, cnt = 0, out = 0, q = 0, a[101];
-	for (i = 0; i < 101; i++)
+	int i, cnt = 0, out = 0, a[n + 1];
+
+	for (i = 0; i < n + 1; i++)
 		a[i] = 1;
 	while (out < n) {
 		for (i = 1; i <= n; i++)
@@ -14,14 +15,11 @@ void josephus(int m, int n)
 					cnt = 0;
 					a[i] = 0;
 					out++;
-					{
-						q++;
-						printf("%3d:%3d out.", out,
-						       i);
-						if (q % 5 == 0)
-							printf("\n");
-					}
+					printf("%3d:%3d out.", out, i);
+					if (out % 5 == 0)
+						printf("\n");
 				}
 			}
 	}
+	printf("\n");
 }

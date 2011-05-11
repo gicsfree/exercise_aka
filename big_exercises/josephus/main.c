@@ -1,24 +1,21 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "josephus.h"
 
 int main(int argc, char *argv[])
 {
-	int i, m, n;
+	int m, n;		/* n是玩游戏的人数,m是报的数 */
 	if (3 != argc) {
-		printf("input(m<n): ./file m(1-100) n(1-100)\n");
+		printf("input(m<n): ./file m n\n");
 		return 0;
 	}
-	for (i = 1; i <= 2; i++)
-		if (atoi(argv[i]) < 1 || atoi(argv[i]) > 100) {
-			printf("input(m<n): ./file m(1-100) n(1-100)\n");
-			return 0;
-		}
 	m = atoi(argv[1]);
 	n = atoi(argv[2]);
-	if (m > n) {
-		printf("input(m<n): ./file m(1-100) n(1-100)\n");
+	if (m > n || m < 1 || n < 1) {
+		printf("input(m<n): ./file m n\n");
 		return 0;
 	}
 	josephus(m, n);
+
 	return 0;
 }

@@ -10,9 +10,10 @@ struct node {
 	struct node *next;
 };
 
+/* n是玩游戏的人数,m是报的数 */
 void joseph(int m, int n)
 {
-	int cnt = 0, out = 0, j;
+	int cnt = 0, out = 0;
 	struct node *head, *this;
 
 	head = init(n);
@@ -35,7 +36,6 @@ void joseph(int m, int n)
 		}
 	}
 	printf("\n");
-
 }
 
 /* 链表初始化 */
