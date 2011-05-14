@@ -7,7 +7,7 @@ struct Clock {
 	int sec;
 } clock;
 
-int main(int argc,char *argv[])
+int main(int argc, char *argv[])
 {
 	clock.hour = 0;
 	clock.min = 0;
@@ -37,6 +37,6 @@ int update_clock()
 	}
 	if (clock.hour == 24)
 		clock.hour = 0;
-    return 0;
+	return 0;
 
 }
