@@ -123,20 +123,28 @@ static int insert(sqlite3 * db)
 		printf("\ninput id:");
 	}
 	printf("input name:");
-	scanf("%s", name);
+//      scanf("%s", name);
+	getchar();
+	gets(name);
 	while (1 == is_name(name)) {
 		system("clear");
-		empty_cache();
+//              empty_cache();
 		printf("input name:");
-		scanf("%s", name);
+//              scanf("%s", name);
+//      getchar();
+		gets(name);
 	}
 	printf("input gender:");
-	scanf("%s", gender);
+//      scanf("%s", gender);
+	getchar();
+	gets(gender);
 	while (1 == is_gender(gender)) {
 		system("clear");
-		empty_cache();
+//              empty_cache();
 		printf("input gender:");
-		scanf("%s", gender);
+//              scanf("%s", gender);
+//      getchar();
+		gets(gender);
 	}
 	printf("input age:");
 	while (0 == scanf("%d", &age) || 1 == is_age(age)) {
@@ -171,12 +179,16 @@ static int delete(sqlite3 * db)
 		break;
 	case 2:
 		printf("Please input the name:");
-		scanf("%s", name);
+//              scanf("%s", name);
+		getchar();
+		gets(name);
 		while (1 == is_name(name)) {
 			system("clear");
-			empty_cache();
+//                      empty_cache();
 			printf("Please input the name:");
-			scanf("%s", name);
+//                      scanf("%s", name);
+//          getchar();
+			gets(name);
 		}
 		sql =
 		    sqlite3_mprintf("delete from employee where name=%Q;",
@@ -248,7 +260,7 @@ static int is_name(char *str)
 		return 1;
 	while (*str) {
 		if ((*str >= 'a' && *str <= 'z')
-		    || (*str >= 'A' && *str <= 'Z'))
+		    || (*str >= 'A' && *str <= 'Z') || *str == ' ')
 			str++;
 		else
 			return 1;
