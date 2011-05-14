@@ -44,10 +44,10 @@ int _sqlite3(char *str)
 		}
 		ret = sqlite3_exec(db, sql, rscallback, &empty, &err);
 		if (ret != SQLITE_OK) {
-			fputs(err, stderr);
-			fputs("\n", stderr);
-			sqlite3_close(db);
-			exit(1);
+			sqlite3_exec(db,
+				     "create table employee(id integer primary key,name text,gender text,age integer);",
+				     rscallback, NULL, NULL);
+			system("clear");
 		}
 		if (empty && 1 == flag)
 			fputs("table employee is empty\n", stderr);
