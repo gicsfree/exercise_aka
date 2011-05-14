@@ -30,10 +30,18 @@ int _sqlite3(char *str)
 			display(db);
 			break;
 		case 2:
-			insert(db);
+			if (0 != insert(db)) {
+				printf("An error occurred!\n");
+				sqlite3_close(db);
+				exit(1);
+			}
 			break;
 		case 3:
-			delete(db);
+			if (0 != delete(db)) {
+				printf("An error occurred!\n");
+				sqlite3_close(db);
+				exit(1);
+			}
 			break;
 		case 4:
 			sqlite3_close(db);
