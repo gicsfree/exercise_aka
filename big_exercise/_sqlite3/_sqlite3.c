@@ -16,7 +16,7 @@ int _sqlite3(char *str)
 {
 	sqlite3 *db = NULL;
 	char *err = NULL, *sql = NULL;
-	int ret = 0, empty = 1;
+	int ret = 0;
 
 	system("clear");
 	ret = sqlite3_open(str, &db);
@@ -26,7 +26,7 @@ int _sqlite3(char *str)
 		exit(1);
 	}
 	while (1) {
-		int flag = 0;
+		int flag = 0, empty = 1;
 
 		switch (select_nr()) {
 		case 1:
@@ -49,10 +49,8 @@ int _sqlite3(char *str)
 			sqlite3_close(db);
 			exit(1);
 		}
-		if (empty && 1 == flag) {
+		if (empty && 1 == flag)
 			fputs("table employee is empty\n", stderr);
-			exit(1);
-		}
 	}
 	sqlite3_close(db);
 
