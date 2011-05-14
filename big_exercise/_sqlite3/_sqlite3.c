@@ -3,6 +3,7 @@
 #include <sqlite3.h>
 
 static int rscallback(void *p, int argc, char **argv, char **argvv);
+static void create(sqlite3 * db);
 static int display(sqlite3 * db);
 static int insert(sqlite3 * db);
 static int delete(sqlite3 * db);
@@ -24,10 +25,15 @@ int _sqlite3(char *str)
 		fputs("\n", stderr);
 		exit(1);
 	}
+	create(db);
 	while (1) {
 		switch (select_nr()) {
 		case 1:
-			display(db);
+			if (0 != display(db)) {
+				printf("An error occurred!\n");
+				sqlite3_close(db);
+				exit(1);
+			}
 			break;
 		case 2:
 			if (0 != insert(db)) {
@@ -63,6 +69,23 @@ static int rscallback(void *p, int argc, char **argv, char **argvv)
 	return 0;
 }
 
+static void create(sqlite3 * db)
+{
+	char *sql = NULL;
+	int ret;
+
+	sql = sqlite3_mprintf("select * from employee;");
+	ret = sqlite3_exec(db, sql, NULL, NULL, NULL);
+	if (ret != SQLITE_OK) {
+		sqlite3_exec(db,
+			     "create table employee(id integer primary key,name text,gender text,age integer);",
+			     NULL, NULL, NULL);
+		system("clear");
+	}
+	sqlite3_free(sql);
+
+}
+
 static int display(sqlite3 * db)
 {
 	char *sql = NULL;
@@ -70,17 +93,11 @@ static int display(sqlite3 * db)
 
 	sql = sqlite3_mprintf("select * from employee;");
 	ret = sqlite3_exec(db, sql, rscallback, &empty, NULL);
-	if (ret != SQLITE_OK) {
-		sqlite3_exec(db,
-			     "create table employee(id integer primary key,name text,gender text,age integer);",
-			     NULL, NULL, NULL);
-		system("clear");
-	}
 	if (empty)
 		fputs("table employee is empty!\n", stderr);
 	sqlite3_free(sql);
 
-	return 0;
+	return ret;
 }
 
 static int insert(sqlite3 * db)
