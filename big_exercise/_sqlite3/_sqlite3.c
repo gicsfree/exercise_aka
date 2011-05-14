@@ -3,9 +3,9 @@
 #include <sqlite3.h>
 
 static int rscallback(void *p, int argc, char **argv, char **argvv);
-static char *display(void);
-static char *insert(void);
-static char *delete(void);
+static int display(sqlite3 * db);
+static int insert(sqlite3 * db);
+static int delete(sqlite3 * db);
 static void interface(void);
 static void interface1(void);
 static int select_nr(void);
@@ -15,8 +15,7 @@ static void empty_cache(void);
 int _sqlite3(char *str)
 {
 	sqlite3 *db = NULL;
-	char *err = NULL, *sql = NULL;
-	int ret = 0;
+	int ret;
 
 	system("clear");
 	ret = sqlite3_open(str, &db);
@@ -26,35 +25,22 @@ int _sqlite3(char *str)
 		exit(1);
 	}
 	while (1) {
-		int flag = 0, empty = 1;
-
 		switch (select_nr()) {
 		case 1:
-			sql = display();
-			flag = 1;
+			display(db);
 			break;
 		case 2:
-			sql = insert();
+			insert(db);
 			break;
 		case 3:
-			sql = delete();
+			delete(db);
 			break;
 		case 4:
-			return 0;
+			sqlite3_close(db);
+			exit(0);
 		}
-		ret = sqlite3_exec(db, sql, rscallback, &empty, &err);
-		if (ret != SQLITE_OK) {
-			sqlite3_exec(db,
-				     "create table employee(id integer primary key,name text,gender text,age integer);",
-				     rscallback, NULL, NULL);
-			system("clear");
-		}
-		if (empty && 1 == flag)
-			fputs("table employee is empty\n", stderr);
 	}
 	sqlite3_close(db);
-
-	return 0;
 }
 
 static int rscallback(void *p, int argc, char **argv, char **argvv)
@@ -69,19 +55,30 @@ static int rscallback(void *p, int argc, char **argv, char **argvv)
 	return 0;
 }
 
-static char *display(void)
+static int display(sqlite3 * db)
 {
 	char *sql = NULL;
+	int empty = 1, ret;
 
 	sql = sqlite3_mprintf("select * from employee;");
+	ret = sqlite3_exec(db, sql, rscallback, &empty, NULL);
+	if (ret != SQLITE_OK) {
+		sqlite3_exec(db,
+			     "create table employee(id integer primary key,name text,gender text,age integer);",
+			     NULL, NULL, NULL);
+		system("clear");
+	}
+	if (empty)
+		fputs("table employee is empty!\n", stderr);
+	sqlite3_free(sql);
 
-	return sql;
+	return 0;
 }
 
-static char *insert(void)
+static int insert(sqlite3 * db)
 {
 	char *sql = NULL, name[15], gender[10];
-	int id, age;
+	int id, age, ret;
 
 	printf("input id:");
 	while (0 == scanf("%d", &id)) {
@@ -100,14 +97,16 @@ static char *insert(void)
 	sql =
 	    sqlite3_mprintf("insert into employee values(%d,%Q,%Q,%d);",
 			    id, name, gender, age);
+	ret = sqlite3_exec(db, sql, NULL, NULL, NULL);
+	sqlite3_free(sql);
 
-	return sql;
+	return ret;
 }
 
-static char *delete(void)
+static int delete(sqlite3 * db)
 {
 	char *sql = NULL, name[15];
-	int id;
+	int id, ret;
 
 	switch (select_nr1()) {
 	case 1:
@@ -128,8 +127,10 @@ static char *delete(void)
 				    name);
 		break;
 	}
+	ret = sqlite3_exec(db, sql, NULL, NULL, NULL);
+	sqlite3_free(sql);
 
-	return sql;
+	return ret;
 }
 
 static void interface(void)
