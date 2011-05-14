@@ -246,6 +246,13 @@ static int is_name(char *str)
 {
 	if (strlen(str) > NAME_LEN - 1)
 		return 1;
+	while (*str) {
+		if ((*str >= 'a' && *str <= 'z')
+		    || (*str >= 'A' && *str <= 'Z'))
+			str++;
+		else
+			return 1;
+	}
 
 	return 0;
 }
