@@ -4,13 +4,12 @@
 
 int josephus(int m, int n)
 {
-
 	int i, cnt = 1, out = 0;
 	typedef struct node {
 		int nr;
 		struct node *next;
 	} Node, *PNode;
-	PNode this = NULL, parent = NULL, head = NULL;
+	PNode thisN = NULL, parent = NULL, head = NULL;
 
 	if (m > n || m < 1 || n < 1)
 		return WRONG_IN;
@@ -29,20 +28,20 @@ int josephus(int m, int n)
 			parent->next = head;
 	}
 
-	this = head;
+	thisN = head;
 	while (out < n) {
 		while (cnt < m) {
 			cnt++;
-			parent = this;
-			this = this->next;
+			parent = thisN;
+			thisN = thisN->next;
 		}
 		cnt = 1;
 		out++;
-		printf("%3d:%3d out.", out, this->nr);
+		printf("%3d:%3d out.", out, thisN->nr);
 		if (0 == out % 5)
 			printf("\n");
-		parent->next = this->next;
-		this = parent->next;
+		parent->next = thisN->next;
+		thisN = parent->next;
 	}
 	putchar('\n');
 	free(head);
