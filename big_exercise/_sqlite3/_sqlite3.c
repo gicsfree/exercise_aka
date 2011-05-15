@@ -123,27 +123,18 @@ static int insert(sqlite3 * db)
 		printf("\ninput id:");
 	}
 	printf("input name:");
-//      scanf("%s", name);
-	getchar();
+	empty_cache();
 	gets(name);
 	while (1 == is_name(name)) {
 		system("clear");
-//              empty_cache();
 		printf("input name:");
-//              scanf("%s", name);
-//      getchar();
 		gets(name);
 	}
 	printf("input gender:");
-//      scanf("%s", gender);
-	getchar();
 	gets(gender);
 	while (1 == is_gender(gender)) {
 		system("clear");
-//              empty_cache();
 		printf("input gender:");
-//              scanf("%s", gender);
-//      getchar();
 		gets(gender);
 	}
 	printf("input age:");
@@ -179,15 +170,11 @@ static int delete(sqlite3 * db)
 		break;
 	case 2:
 		printf("Please input the name:");
-//              scanf("%s", name);
-		getchar();
+		empty_cache();
 		gets(name);
 		while (1 == is_name(name)) {
 			system("clear");
-//                      empty_cache();
 			printf("Please input the name:");
-//                      scanf("%s", name);
-//          getchar();
 			gets(name);
 		}
 		sql =
