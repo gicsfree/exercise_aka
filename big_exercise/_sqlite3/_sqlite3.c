@@ -11,9 +11,9 @@
 
 static int rscallback(void *p, int argc, char **argv, char **argvv);
 static void create(sqlite3 * db);
-static int display(sqlite3 * db);
-static int insert(sqlite3 * db);
-static int delete(sqlite3 * db);
+static void display(sqlite3 * db);
+static void insert(sqlite3 * db);
+static void delete(sqlite3 * db);
 static void interface(void);
 static void interface1(void);
 static int select_nr(void);
@@ -40,25 +40,13 @@ int _sqlite3(char *str)
 	while (1) {
 		switch (select_nr()) {
 		case 1:
-			if (0 != display(db)) {
-				printf("An error occurred!\n");
-				sqlite3_close(db);
-				exit(1);
-			}
+			display(db);
 			break;
 		case 2:
-			if (0 != insert(db)) {
-				printf("An error occurred!\n");
-				sqlite3_close(db);
-				exit(1);
-			}
+			insert(db);
 			break;
 		case 3:
-			if (0 != delete(db)) {
-				printf("An error occurred!\n");
-				sqlite3_close(db);
-				exit(1);
-			}
+			delete(db);
 			break;
 		case 4:
 			sqlite3_close(db);
@@ -97,27 +85,29 @@ static void create(sqlite3 * db)
 
 }
 
-static int display(sqlite3 * db)
+static void display(sqlite3 * db)
 {
-	char *sql = NULL;
+	char *sql = NULL, *err = NULL;
 	int empty = 1, ret;
 
 	sql = sqlite3_mprintf("select * from employee;");
-	ret = sqlite3_exec(db, sql, rscallback, &empty, NULL);
+	ret = sqlite3_exec(db, sql, rscallback, &empty, &err);
+	if (ret != SQLITE_OK) {
+		fputs(err, stderr);
+		fputs("\n", stderr);
+	}
 	if (empty)
 		fputs("table employee is empty!\n", stderr);
 	sqlite3_free(sql);
-
-	return ret;
 }
 
-static int insert(sqlite3 * db)
+static void insert(sqlite3 * db)
 {
-	char *sql = NULL, name[NAME_LEN], gender[GENDER_LEN];
+	char *sql = NULL, *err = NULL, name[NAME_LEN], gender[GENDER_LEN];
 	int id, age, ret;
 
 	printf("input id:");
-	while (0 == scanf("%d", &id) || 1 == is_id(id)) {
+	while (0 == scanf("%d", &id) || 0 == is_id(id)) {
 		empty_cache();
 		system("clear");
 		printf("\ninput id:");
@@ -125,20 +115,20 @@ static int insert(sqlite3 * db)
 	printf("input name:");
 	empty_cache();
 	gets(name);
-	while (1 == is_name(name)) {
+	while (0 == is_name(name)) {
 		system("clear");
 		printf("input name:");
 		gets(name);
 	}
 	printf("input gender:");
 	gets(gender);
-	while (1 == is_gender(gender)) {
+	while (0 == is_gender(gender)) {
 		system("clear");
 		printf("input gender:");
 		gets(gender);
 	}
 	printf("input age:");
-	while (0 == scanf("%d", &age) || 1 == is_age(age)) {
+	while (0 == scanf("%d", &age) || 0 == is_age(age)) {
 		empty_cache();
 		system("clear");
 		printf("\ninput age:");
@@ -146,21 +136,24 @@ static int insert(sqlite3 * db)
 	sql =
 	    sqlite3_mprintf("insert into employee values(%d,%Q,%Q,%d);",
 			    id, name, gender, age);
-	ret = sqlite3_exec(db, sql, NULL, NULL, NULL);
+	ret = sqlite3_exec(db, sql, NULL, NULL, &err);
+	if (ret != SQLITE_OK) {
+		fputs(err, stderr);
+		fputs("\n", stderr);
+	}
 	sqlite3_free(sql);
 
-	return ret;
 }
 
-static int delete(sqlite3 * db)
+static void delete(sqlite3 * db)
 {
-	char *sql = NULL, name[NAME_LEN];
+	char *sql = NULL, *err, name[NAME_LEN];
 	int id, ret;
 
 	switch (select_nr1()) {
 	case 1:
 		printf("Please input the id:");
-		while (0 == scanf("%d", &id) || 1 == is_id(id)) {
+		while (0 == scanf("%d", &id) || 0 == is_id(id)) {
 			empty_cache();
 			printf("\nPleade input the id:");
 		}
@@ -172,7 +165,7 @@ static int delete(sqlite3 * db)
 		printf("Please input the name:");
 		empty_cache();
 		gets(name);
-		while (1 == is_name(name)) {
+		while (0 == is_name(name)) {
 			system("clear");
 			printf("Please input the name:");
 			gets(name);
@@ -182,10 +175,13 @@ static int delete(sqlite3 * db)
 				    name);
 		break;
 	}
-	ret = sqlite3_exec(db, sql, NULL, NULL, NULL);
+	ret = sqlite3_exec(db, sql, NULL, NULL, &err);
+	if (ret != SQLITE_OK) {
+		fputs(err, stderr);
+		fputs("\n", stderr);
+	}
 	sqlite3_free(sql);
 
-	return ret;
 }
 
 static void interface(void)
@@ -244,39 +240,39 @@ static void empty_cache(void)
 static int is_name(char *str)
 {
 	if (strlen(str) > NAME_LEN - 1)
-		return 1;
+		return 0;
 	while (*str) {
 		if ((*str >= 'a' && *str <= 'z')
 		    || (*str >= 'A' && *str <= 'Z') || *str == ' ')
 			str++;
 		else
-			return 1;
+			return 0;
 	}
 
-	return 0;
+	return 1;
 }
 
 static int is_gender(char *str)
 {
 	if (strlen(str) > GENDER_LEN - 1
 	    || (strcmp(str, MALE) != 0 && strcmp(str, FEMALE) != 0))
-		return 1;
+		return 0;
 
-	return 0;
+	return 1;
 }
 
 static int is_id(int id)
 {
 	if (id < 1 || id > ID)
-		return 1;
+		return 0;
 
-	return 0;
+	return 1;
 }
 
 static int is_age(int age)
 {
 	if (age < 1 || age > AGE)
-		return 1;
+		return 0;
 
-	return 0;
+	return 1;
 }
