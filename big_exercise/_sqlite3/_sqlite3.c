@@ -24,7 +24,7 @@ static int is_gender(char *str);
 static int is_id(int id);
 static int is_age(int age);
 
-int _sqlite3(char *str)
+void _sqlite3(char *str)
 {
 	sqlite3 *db = NULL;
 	int ret;
@@ -54,6 +54,7 @@ int _sqlite3(char *str)
 		}
 	}
 	sqlite3_close(db);
+
 }
 
 static int rscallback(void *p, int argc, char **argv, char **argvv)
