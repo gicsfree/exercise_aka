@@ -240,7 +240,7 @@ static void empty_cache(void)
 
 static int is_name(char *str)
 {
-	if (strlen(str) > NAME_LEN - 1)
+	if (strlen(str) > NAME_LEN - 1 || strlen(str) == 0)
 		return 0;
 	while (*str) {
 		if ((*str >= 'a' && *str <= 'z')
