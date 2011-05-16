@@ -15,7 +15,8 @@ int main(int argc, char *argv[])
 		printf("input(m<n): ./file m n\n");
 		return 0;
 	}
-	josephus(m, n);
+	if (josephus(m, n) == WRONG_IN)
+		printf("wrong input!\n");
 
 	return 0;
 }

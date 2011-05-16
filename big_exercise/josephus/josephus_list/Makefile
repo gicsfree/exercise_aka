@@ -1,8 +1,8 @@
-objs = main.o josephus.o 
+objs = main.o joseph.o 
 main: $(objs)
 	$(CC) $^ -o $@
 
-sources = main.c josephus.c
+sources = main.c joseph.c
 
 include $(sources:.c=.d)
 

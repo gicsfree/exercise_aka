@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include "main.h"
-#include "josephus.h"
+#include <stdlib.h>
+#include "joseph.h"
 
 int main(int argc, char *argv[])
 {
-	int m, n, ret;
+	int m, n, ret;		/* n是玩游戏的人数，m是报的数 */
 
 	if (3 != argc) {
 		printf("input(m<n):./file m n\n");
@@ -16,7 +16,8 @@ int main(int argc, char *argv[])
 		printf("input(m<n):./file m n\n");
 		return 0;
 	}
-	ret = josephus(m, n);
+
+	ret = joseph(m, n);
 	switch (ret) {
 	case WRONG_IN:
 		printf("wrong input!\n");
