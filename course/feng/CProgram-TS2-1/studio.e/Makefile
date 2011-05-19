@@ -8,7 +8,7 @@ STRIP   = $(CROSS)strip
 CFLAGS  = -Wall -Wshadow -Wno-trigraphs -pipe
 LDFLAGS = -lm 
 
-BIN		  = studio_f
+BIN		  = studio_e
 SRCS		= $(BIN).c
 OBJS		= $(SRCS:.c=.o)
 
@@ -18,8 +18,8 @@ $(OBJS): %.o: %.c
 	$(CC) -c -g $(CFLAGS) $< -o $@
 
 $(BIN): $(OBJS)
-	$(CC) -lm $(OBJS) $(LDLIBS) -o studio_f
-#	$(STRIP) studio_f
+	$(CC) -lm $(OBJS) $(LDLIBS) -o studio_e
+#	$(STRIP) studio_e
 	
 clean:
 	rm -rf *.o
