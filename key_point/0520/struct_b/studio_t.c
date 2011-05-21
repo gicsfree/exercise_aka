@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "struct_t.h"
-#define DEBUG_
+#define DEBUG
 
 int main( int argc, char ** argv)
 {
