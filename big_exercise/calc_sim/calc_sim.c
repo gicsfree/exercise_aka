@@ -43,7 +43,10 @@ double calc_div(double d1, double d2)
 {
     double result = 0.0;
     
-    assert(0.0 != d2);
+    if (0.0 == d2){
+        printf("the divisor cannot be 0.0 !\n");
+        exit(1);
+    }
     result = d1 / d2;
 
     return (result);
@@ -140,7 +143,25 @@ long calc_rand(void)
     return (result);
 }
 
-
+/* print_func */
+void print_func(void)
+{
+    printf("Please input commonds as follows:\n");
+    printf("./calc_sim 1 xxx xxx   : add\n");
+    printf("./calc_sim 2 xxx xxx   : sub\n");
+    printf("./calc_sim 3 xxx xxx   : mul\n");
+    printf("./calc_sim 4 xxx xxx   : div\n");
+    printf("./calc_sim 5           : PI\n");
+    printf("./calc_sim 6 xxx       : sin\n");
+    printf("./calc_sim 7 xxx       : cos\n");
+    printf("./calc_sim 8 xxx       : tan\n");
+    printf("./calc_sim 9 xxx       : fabs\n");
+    printf("./calc_sim 10 xxx      : exp\n");
+    printf("./calc_sim 11 xxx      : ln\n");
+    printf("./calc_sim 12 xxx      : lg\n");
+    printf("./calc_sim 13 xxx xxx  : pow\n");
+    printf("./calc_sim 14          : rand\n");
+}
 
 /* main */
 int main (int argc, char** argv)    
@@ -155,7 +176,7 @@ int main (int argc, char** argv)
         argv++;
         calc_mod = atoi(*argv);
         if ((calc_mod != 5) && (calc_mod != 14)){ 
-            printf("when the cmd numbers is 2, the second cmd must be 5 or 14 !!!\n");
+            print_func();
             return -1;
         }
         break;
@@ -164,7 +185,7 @@ int main (int argc, char** argv)
         argv ++;
         calc_mod = atoi(*argv);
         if ((calc_mod < 6) || (calc_mod > 12)){ 
-            printf("when the cmd numbers is 3, the second cmd must in 6 to 12 !!!\n");
+            print_func();
             return -1;
         }
         argv ++;    
@@ -176,7 +197,7 @@ int main (int argc, char** argv)
         argv ++;
         calc_mod = atoi(*argv);
         if ((calc_mod < 1) || (calc_mod > 4 && calc_mod != 13)){ 
-            printf("when the cmd numbers is 4, the second cmd must in 1 to 4 or 13 !!!\n");
+            print_func();
             return -1;
         }
         argv ++;    
@@ -187,7 +208,7 @@ int main (int argc, char** argv)
         break;
 
     default :
-        printf("enter cmd numbers must in 2 to 4 !!!\n");
+        print_func();
         return -1;
     }
 
