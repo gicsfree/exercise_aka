@@ -113,7 +113,10 @@ double calc_log(double k)
 {
     double result = 0.0;
 
-    assert(k > 0.0);
+    if (k <= 0.0){
+        printf("the value must > 0.0 !\n");
+        exit(1);
+    }
     result = log(k);
 
     return (result);
@@ -122,7 +125,10 @@ double calc_log(double k)
 /* log10 */
 double calc_log10(double l)
 {
-    assert(l > 0.0);
+    if (l <= 0.0){
+        printf("the value must > 0.0 !\n");
+        exit(1);
+    }
 
     return (log10(l));
 }
@@ -157,8 +163,8 @@ void print_func(void)
     printf("./calc_sim 8 xxx       : tan\n");
     printf("./calc_sim 9 xxx       : fabs\n");
     printf("./calc_sim 10 xxx      : exp\n");
-    printf("./calc_sim 11 xxx      : ln\n");
-    printf("./calc_sim 12 xxx      : lg\n");
+    printf("./calc_sim 11 xxx      : log\n");
+    printf("./calc_sim 12 xxx      : log10\n");
     printf("./calc_sim 13 xxx xxx  : pow\n");
     printf("./calc_sim 14          : rand\n");
 }
