@@ -10,7 +10,7 @@
 SqQueue common, vip;
 
 #define BSYS_MAX_USER_NUM     1000
-
+//#define Line_Mode
 
 static void printf_func(void)
 {
@@ -71,6 +71,31 @@ int Bank_Sys_Get_Id(int flag)
 {
 	static int vip_id = 0;
 	static int common_id =0;
+
+#ifdef Line_Mode 
+
+	if (flag == 0 )
+	{
+		if (0 == QueueEnterC(&vip, vip_id))
+		{
+			vip_id++; 
+			return vip_id;
+		}
+		else
+			return -1;
+	}
+	else
+	{
+		if (0 == QueueEnterC(&common, common_id))
+		{
+			common_id++; 
+			return common_id;
+		}
+		else
+			return -1;
+	}
+
+#else
 	
 	if (flag == 0 )
 	{
@@ -91,7 +116,9 @@ int Bank_Sys_Get_Id(int flag)
 		}
 		else
 			return -1;
-	}	
+	}
+
+#endif	
 
 }
 
@@ -101,6 +128,18 @@ int Bank_Sys_Get_Id(int flag)
 int Bank_Sys_Call_Id(int *Vip)
 {
 	int id;
+
+#ifdef Line_Mode
+
+	if (-1 != QueueDeleteC(&vip, &id))
+		*Vip = 1;
+	else
+		if (-1 != QueueDeleteC(&common, &id))
+			*Vip = 0;
+    	else
+			return -1;
+
+#else
 	
 	if (-1 != QueueDeleteC(&vip, &id))
 		*Vip = 1;
@@ -109,6 +148,8 @@ int Bank_Sys_Call_Id(int *Vip)
 			*Vip = 0;
     	else
 			return -1;
+
+#endif
 	
 	return id;
 }
