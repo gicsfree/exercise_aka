@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <math.h>
 #include <time.h>
+
 #define PI 3.1415926
 
 /* add */
@@ -134,7 +135,7 @@ double calc_log10(double l)
 }
 
 /* pow */
-double calc_pow(double m1,double m2)
+double calc_pow(double m1, double m2)
 {
     return (pow(m1, m2));
 }
@@ -144,7 +145,7 @@ long calc_rand(void)
 {
     long result = 0;
 
-    srand(time(0));
+    srand((int)time(0));
     result = rand();
     return (result);
 }
@@ -216,6 +217,7 @@ int main (int argc, char** argv)
     default :
         print_func();
         return -1;
+
     }
 
     switch(calc_mod){
