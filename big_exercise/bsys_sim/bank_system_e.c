@@ -6,12 +6,14 @@
 
 #include "queue_queue.c"
 
-/////////////////////////////////////////////////////////////////
-SqQueue common, vip;
-
-#define BSYS_MAX_USER_NUM     1000
 //#define Line_Mode
 
+////////////////////////////////////////////////////////////////
+SqQueue common, vip;
+
+/**************************************************************
+* printf_func
+***************************************************************/
 static void printf_func(void)
 {
 	printf("1.vip user get number\n");
@@ -21,6 +23,9 @@ static void printf_func(void)
 	printf("Please Select[1-4]:");
 }
 
+/**************************************************************
+* empty_cache
+**************************************************************/
 static void empty_cache(void)
 {
 	char ch;
@@ -28,6 +33,9 @@ static void empty_cache(void)
 	while ((ch = getchar()) != '\n');
 }
 
+/**************************************************************
+* select_num
+**************************************************************/
 static int select_num(void)
 {
 	int num = 0;
@@ -72,6 +80,7 @@ int Bank_Sys_Get_Id(int flag)
 	static int vip_id = 0;
 	static int common_id =0;
 
+//Line Mode
 #ifdef Line_Mode 
 
 	if (flag == 0 )
@@ -94,7 +103,7 @@ int Bank_Sys_Get_Id(int flag)
 		else
 			return -1;
 	}
-
+//Circle Mode
 #else
 	
 	if (flag == 0 )
@@ -129,6 +138,7 @@ int Bank_Sys_Call_Id(int *Vip)
 {
 	int id;
 
+//Line Mode
 #ifdef Line_Mode
 
 	if (-1 != QueueDeleteC(&vip, &id))
@@ -139,6 +149,7 @@ int Bank_Sys_Call_Id(int *Vip)
     	else
 			return -1;
 
+//Circle Mode
 #else
 	
 	if (-1 != QueueDeleteC(&vip, &id))
@@ -209,14 +220,14 @@ int main(int argc, char**argv)
 
 				break;
 			case 3:
-				id = Bank_Sys_Call_Id(&Vip);
 				num = Bank_Get_User_Num(1);
+				id = Bank_Sys_Call_Id(&Vip);				
 				if (id == -1)
 					printf("there are no people in wait\n");
 				else
 				{
 					printf("you should call %s %d\n", (Vip ? "vip": "common"), id+1);
-					printf("there are %d people are in wait\n", num + 1);
+					printf("there are %d people are in wait\n", num);
 				}
 
 				break;
@@ -232,60 +243,3 @@ int main(int argc, char**argv)
 }
 
 
-
-
-
-
-
-
-
-#if 0
-
-/***************************************************************
-* main
-****************************************************************/
-int main(int argc, char**argv)
-{
-    char virtkey = 0;
-    
-	Bank_Sys_Init();
-
-
-	      	
-	  for(;;)
-	  {
-        scanf("%c", &virtkey); 
-        
-        switch(virtkey)
-        {
-        	   case 'g':
-        	     break;
-        	     
-        	   case 'c':
-        	     break;
-        	     
-        	   case 'u':
-        	     break;
-        	     
-        	   case 'e':
-	                goto BSYSEXIT;
-        	     break;        	     
-        	   
-        	   default:     	   	   
-        	   	   if(virtkey != 10) // "ENTER" Key Code (10)
-        	   	   {
-        	           printf("Error Enter Key!! \n");
-        	       }
-        	     break;
-        }
-	  }
-	  
-BSYSEXIT:
-	  Bank_Sys_Term();
-
-
-	  
-    return 0;
-}
-
-#endif

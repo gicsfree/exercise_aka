@@ -23,8 +23,8 @@ int QueueCreate(SqQueue *sq)
     sq->queue = (int*)malloc(QUEUE_SIZE*sizeof(int));
     if(!sq->queue)
     {
-    	  printf("QueueCreate()->malloc() failure! \n");
-        exit(0);
+		printf("QueueCreate()->malloc() failure! \n");
+		exit(0);
     }
 
     sq->front = sq->rear = 0;
@@ -38,20 +38,20 @@ int QueueCreate(SqQueue *sq)
 **********************************************************************/
 int QueueEmpty(SqQueue *sq, int mode)
 {
-	  if(mode == 0)         // Line Mode
-	  {
-	      if(sq->qcount < 1)
-	      {
-	          return 1;
-	      }
-	  }
-	  else                  // Circle Mode
-	  {
-	      if((sq->front == sq->rear)&&(sq->qcount < 1))
-	      {
-	          return 1;
-	      }	  	
-	  }
+	if(mode == 0)         // Line Mode
+	{
+		if(sq->qcount < 1)
+		{
+			return 1;
+		}
+	}
+	else                  // Circle Mode
+	{
+		if((sq->front == sq->rear)&&(sq->qcount < 1))
+		{
+			return 1;
+		}	  	
+	}
 	  
     return 0;
 }
@@ -61,46 +61,46 @@ int QueueEmpty(SqQueue *sq, int mode)
 **********************************************************************/
 int QueueFull(SqQueue *sq, int mode)
 {
-	  if(mode == 0)         // Line Mode
-	  {
-	      if(sq->qcount == QUEUE_SIZE)
-	      {
-	          return 1;
-	      }
-	  }
-	  else                  // Circle Mode
-	  {
-	      if((sq->front == sq->rear)&&(sq->qcount == QUEUE_SIZE))
-	      {
-	          return 1;
-	      }	  	
-	  }
+	if(mode == 0)         // Line Mode
+	{
+		if(sq->qcount == QUEUE_SIZE)
+		{
+			return 1;
+		}
+	}
+	else                  // Circle Mode
+	{
+		if((sq->front == sq->rear)&&(sq->qcount == QUEUE_SIZE))
+		{
+			return 1;
+		}	  	
+	}
     
-    return 0;
+	return 0;
 }
 
 /*********************************************************************
-* Delete Queue (Line Mode)
+* Enter Queue (Line Mode)
 **********************************************************************/
 int QueueEnterL(SqQueue *sq, int qdata)
 {
-	   if(QueueFull(sq, 0))
-	   {
-         printf("The queue is full!\n");
-         return -1;
-	   }
+	if(QueueFull(sq, 0))
+	{
+		printf("The queue is full!\n");
+		return -1;
+	}
 	   
-	   if(sq->qcount > 1)
-	   {
-         memmove((sq->queue + 1), sq->queue, sq->qcount*sizeof(int));
-     }
-     sq->queue[sq->rear] = qdata;
-     if( sq->qcount < QUEUE_SIZE)         // overflow limit
-     {
-         sq->qcount++;     	
-     }
+	if(sq->qcount > 1)
+	{
+		memmove((sq->queue + 1), sq->queue, sq->qcount*sizeof(int));
+	}
+	sq->queue[sq->rear] = qdata;
+	if( sq->qcount < QUEUE_SIZE)         // overflow limit
+	{
+	sq->qcount++;     	
+	}
      
-     return 0;
+	return 0;
 }
 
 /*********************************************************************
@@ -108,17 +108,17 @@ int QueueEnterL(SqQueue *sq, int qdata)
 **********************************************************************/
 int QueueEnterC(SqQueue *sq, int qdata)
 {
-	   if(QueueFull(sq, 1))
-	   {
-         printf("The queue is full!\n");
-         return -1;
-	   }
+	if(QueueFull(sq, 1))
+	{
+		printf("The queue is full!\n");
+		return -1;
+	}
 	   
-	   sq->rear = (sq->rear + 1) % QUEUE_SIZE;
-     sq->queue[sq->rear] = qdata;
-     sq->qcount ++;    
+	sq->rear = (sq->rear + 1) % QUEUE_SIZE;
+	sq->queue[sq->rear] = qdata;
+	sq->qcount ++;    
      
-     return 0;
+	return 0;
 }
 
 /*********************************************************************
@@ -126,16 +126,16 @@ int QueueEnterC(SqQueue *sq, int qdata)
 **********************************************************************/
 int QueueDeleteL(SqQueue *sq, int *qdata)
 {
-	   if(QueueEmpty(sq, 0))
-	   {
-//         printf("The queue is empty!\n");
-         return -1;
-	   }
+	if(QueueEmpty(sq, 0))
+	{
+//		printf("The queue is empty!\n");
+		return -1;
+	}
 	   
-     sq->qcount --;
-     *qdata = sq->queue[sq->qcount];
+	sq->qcount --;
+	*qdata = sq->queue[sq->qcount];
      
-     return 0;
+	return 0;
 }
 
 /*********************************************************************
@@ -143,17 +143,17 @@ int QueueDeleteL(SqQueue *sq, int *qdata)
 **********************************************************************/
 int QueueDeleteC(SqQueue *sq, int *qdata)
 {
-	   if(QueueEmpty(sq, 1))
-	   {
-//         printf("The queue is empty!\n");
-         return -1;
-	   }
+	if(QueueEmpty(sq, 1))
+	{
+//		printf("The queue is empty!\n");
+		return -1;
+	}
 	   
-	   sq->front = (sq->front + 1) % QUEUE_SIZE;
-     *qdata = sq->queue[sq->front];
-     sq->qcount --;
+	sq->front = (sq->front + 1) % QUEUE_SIZE;
+	*qdata = sq->queue[sq->front];
+	sq->qcount --;
      
-     return 0;
+	return 0;
 }
 
 /*********************************************************************
