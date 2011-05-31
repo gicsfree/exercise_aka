@@ -21,12 +21,22 @@
 int tcp_download_list(char cli_addr[]);
 int udp_get_vetsion(char cli_addr[]);
 int get_version(char version[]);
-static int select_nr(void);
-static void pfunc(void);
-static void empty_cache(void);
+int select_num(void);
+void printf_func(void);
+void empty_cache(void);
 
+///////////////////////////////////////////////////////////////////
+/*****************************************************************
+* global variable: flag
+* -1 : the movielist.txt is not exist !
+*  0 : the vesion is the newest !
+*  1 : the version is not the newest !
+******************************************************************/
 int flag = 0;
 
+/*****************************************************************
+* main
+******************************************************************/
 int main(int argc, char** argv)
 {
     if (argc != 2)
@@ -36,44 +46,46 @@ int main(int argc, char** argv)
     }
     while (1)
     {
-        switch (select_nr())
+        switch (select_num())
         {
             case 1:
                 udp_get_version(argv[1]);
-                if (flag > 0)
-                    printf("the version is not newest, you need download the newer !\n");
-                else
-                    if (0 == flag)
+                if (1 == flag)
+                    printf("the version is not the newest, you need download the newer !\n");
+                else if (0 == flag)
                     printf("the version is the newest !\n");
                 else
                     printf("the %s is not exist, you should download !\n", MOVIELIST);
                 break;
-        case 2:
-            if (0 == tcp_download_list(argv[1]))
-            {
-                printf("download %s successfully !\n", MOVIELIST);
-                flag = 0;
-            }
-            break;
-        case 3:
-            udp_get_version(argv[1]);
-            if (-1 == flag)
-                printf("the %s is not exist, you should download !\n", MOVIELIST);
-            else
-                if (0 == flag)
-                    printf("the version is the newest,you needn't update !\n");
-            else
-                if (0 == tcp_download_list(argv[1]))
-                {
-                    printf("update %s successfully !\n", MOVIELIST);
-                    flag = 0;
-                }
-                break;
-        case 4:
-            analysis(MOVIELIST);
-            break;
-        case 5:
-            return 0;
+
+        	case 2:
+            	if (0 == tcp_download_list(argv[1]))
+            	{
+                	printf("download %s successfully !\n", MOVIELIST);
+                	flag = 0;
+            	}
+            	break;
+
+        	case 3:
+            	udp_get_version(argv[1]);
+            	if (-1 == flag)
+                	printf("the %s is not exist, you should download !\n", MOVIELIST);
+            	else if (0 == flag)
+					printf("the version is the newest,you needn't update !\n");
+            	else if (0 == tcp_download_list(argv[1]))
+				{
+					printf("update %s successfully !\n", MOVIELIST);
+					flag = 0;
+				}
+				break;
+
+        	case 4:
+            	if (-1 == analysis())
+					printf("the %s is not exist, you should download !\n", MOVIELIST);
+            	break;
+
+        	case 5:
+            	return 0;
 
         }
     }
@@ -82,8 +94,12 @@ int main(int argc, char** argv)
 
 }
 
-
-
+/***************************************************************
+* get version from server ...
+* return  -1 : the movielist.txt is not exist !
+*          0 : the vesion is the newest !
+*          1 : the version is not the newest !
+****************************************************************/
 int udp_get_version(char cli_addr[])
 {
     int cPort = DEFAULT_PORT_UDP;
@@ -122,10 +138,6 @@ int udp_get_version(char cli_addr[])
         printf("recvfrom() failure!\n");
         return -1;
     }
-    else
-    {
-        printf("recvfrom() succeeded.\n");
-    }
 	
     if (get_version(version) != 0)
     {
@@ -134,13 +146,16 @@ int udp_get_version(char cli_addr[])
     }
 
     if (strncmp(version, recv_buf, sizeof(version)) != 0)
-        flag++;
+        flag = 1;
+
     close(cClient);
 
     return 0;
 }
 
-
+/*************************************************************
+* download the movielist.txt from server
+**************************************************************/
 int tcp_download_list(char cli_addr[])
 {
     
@@ -149,7 +164,6 @@ int tcp_download_list(char cli_addr[])
     int cRecv = 0;
     struct sockaddr_in cli;
     char recv_buf[RECV_BUF_LEN];
-    char finish[] = "finish";
    
     memset(recv_buf, 0, sizeof(recv_buf));
    
@@ -168,11 +182,11 @@ int tcp_download_list(char cli_addr[])
 
     FILE *fp = fopen(MOVIELIST, "w+");
     if (fp == NULL)
-
     {
         printf("cannot open %s\n", MOVIELIST);
         return -1;
     }
+
     while (1)
     {   
         cRecv = Recv(cClient, recv_buf, sizeof(recv_buf), 0);   
@@ -181,14 +195,13 @@ int tcp_download_list(char cli_addr[])
             printf("recv() failure!\n");
             return -1;
         } 
-
-        if (0 != strncmp(recv_buf ,finish ,strlen(finish)))
-            fputs(recv_buf,fp);
-        else
-        {
-            fclose(fp);
-            break;
-        }
+		else if (cRecv == 0)
+		{
+			fclose(fp);
+			break;		
+		}
+		else
+			fputs(recv_buf, fp);
     }
     
     Close(cClient);   
@@ -196,6 +209,10 @@ int tcp_download_list(char cli_addr[])
     return 0;
 }
 
+/**********************************************************
+* get version from the client
+* return -1 : the movielist.txt is not exist !
+***********************************************************/
 int get_version(char version[])
 {
     FILE *fp;
@@ -220,20 +237,26 @@ int get_version(char version[])
     return 0;
 }
 
-static int select_nr(void)
+/**********************************************************
+* select_num
+***********************************************************/
+int select_num(void)
 {
-    int nr = 0;
+    int num = 0;
 
-    while (nr < 1 || nr > 5) {
-        pfunc();
-        if (0 == scanf("%d", &nr)) 
+    while (num < 1 || num > 5) {
+        printf_func();
+        if (0 == scanf("%d", &num)) 
             empty_cache();
     }
 
-    return nr;
+    return num;
 }
 
-static void pfunc(void)
+/**********************************************************
+* printf_func
+***********************************************************/
+void printf_func(void)
 {
     printf("1.version test\n");
     printf("2.download list\n");
@@ -243,7 +266,10 @@ static void pfunc(void)
     printf("Please Select[1-5]:");
 }
 
-static void empty_cache(void)
+/**********************************************************
+* empty_cache
+***********************************************************/
+void empty_cache(void)
 {
     char ch;
 

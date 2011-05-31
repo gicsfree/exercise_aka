@@ -21,12 +21,14 @@
 
 void get_version(char version[]);
 
-
+/********************************************************************
+* send  the movielist version to client
+*********************************************************************/
 void * udp_send_version(void *sPara)
 {
     int sPort = DEFAULT_PORT_UDP;
     int sSocket = 0;
-    int sLen = 0;
+    unsigned int sLen = 0;
     int sSend = 0;
     int sRecv = 0;
     char send_buf[SEND_BUF_LEN];
@@ -55,7 +57,7 @@ void * udp_send_version(void *sPara)
         if(sRecv < 0)
         {
             printf("recvfrom() failure!\n");
-            break;
+			exit(1);
         }
         else
         {
@@ -69,16 +71,20 @@ void * udp_send_version(void *sPara)
         if (sSend < 0)
         {
             printf("sendto() failure!\n");
-            return NULL;
+            exit(1);
         }
-        printf("sendto() succeeded.\n");
+
         printf("Server waiting...\n");
         sleep(3);
     }
+
     Close(sSocket);
    
 }
 
+/***************************************************************
+* download the movielist.txt
+****************************************************************/
 int main(int argc, char** argv)
 {
     int sPort = DEFAULT_PORT_TCP;
@@ -87,13 +93,9 @@ int main(int argc, char** argv)
     unsigned int sLen = 0;
     struct sockaddr_in ser;
     struct sockaddr_in cli;
-    int sSend = 0,sRecv = 0;
+    int sSend = 0;
+	int sRecv = 0;
     char send_buf[SEND_BUF_LEN];
-    char is_exist[] = "is_exist";
-    char no_exist[] = "no_exist";
-    char update[10] = "update";
-    char finish[] = "finish";
-    char is_update[10];
 
     pthread_t thread;
     pthread_create(&thread, NULL, udp_send_version, NULL);
@@ -112,8 +114,7 @@ int main(int argc, char** argv)
     ser.sin_addr.s_addr = htonl(INADDR_ANY);
    
     Bind(sListen, (struct sockaddr*)&ser, sizeof(ser));
-   
-    Listen(sListen, 5); 
+	Listen(sListen, 5); 
 
     while(1)
     {
@@ -140,30 +141,27 @@ int main(int argc, char** argv)
             sSend = Send(sAccept, send_buf, sizeof(send_buf), 0);
             if(sSend < 0)
             {
-                printf("send(txt) failure!\n");
+                printf("send() failure!\n");
                 return -1;
             } 
         }
         fclose(fp);
 
-        sSend = Send(sAccept, finish, sizeof(finish), 0);
-        if(sSend < 0)
-        {
-            printf("send(finish) failure!\n");
-            return -1;
-        } 
-
         printf("download %s successfully !\n", MOVIELIST);
-
         printf("Server waiting...\n");
+
         Close(sAccept);
         sleep(2);
     }
+
     Close(sListen);
    
     return 0;
 }
 
+/***************************************************************
+* get movielist version from server
+****************************************************************/
 void get_version(char version[])
 {
     FILE *fp;

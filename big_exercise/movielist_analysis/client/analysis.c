@@ -2,18 +2,23 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MOVIELIST "movielist.txt"
 #define LINE_LEN 1024
 
-static void analysis_by_Name(char list_name[], char Name[]);
-static void analysis_by_Director(char list_name[], char Director[]);
-static void analysis_by_Year(char list_name[], char Year[]);
+static int analysis_by_Name(char Name[]);
+static int analysis_by_Director(char Director[]);
+static int analysis_by_Year(char Year[]);
 static void Puts(char *str);
 static int select_nr(void);
 static void pfunc(void);
 static void empty_cache(void);
 void Gets(char str[], int n);
 
-int analysis(char list_name[])
+/************************************************************
+* analysis the movielist.txt
+* return -1 : the movielist is not exist ! 
+*************************************************************/
+int analysis(void)
 {
     char Name[LINE_LEN];
     char Director[LINE_LEN];
@@ -27,20 +32,26 @@ int analysis(char list_name[])
                 printf("input the movie'name:");
                 empty_cache();
                 Gets(Name, LINE_LEN);
-                analysis_by_Name(list_name, Name);
+                if (-1 == analysis_by_Name(Name))
+					return -1;
                 break;
+
             case 2:
                 printf("input the movie'Director:");
                 empty_cache();
                 Gets(Director, LINE_LEN);
-                analysis_by_Director(list_name, Director);
+                if (-1 == analysis_by_Director(Director))
+					return -1;
                 break;
+
             case 3:
                 printf("input the movie'Year:");
                 empty_cache();
                 Gets(Year, LINE_LEN);
-                analysis_by_Year(list_name, Year);
+                if (-1 == analysis_by_Year(Year))
+					return -1;
                 break;
+
             case 4:
                 return 0;
         }
@@ -48,16 +59,20 @@ int analysis(char list_name[])
 
 }
 
-static void analysis_by_Name(char list_name[], char Name[])
+/************************************************************
+* analysis the movielist.txt by Name
+* return -1 : the movielist is not exist ! 
+*************************************************************/
+static int analysis_by_Name(char Name[])
 {
     char aLine[LINE_LEN];
     int flag = 0;
 
-    FILE *fp = fopen(list_name, "r");
+    FILE *fp = fopen(MOVIELIST, "r");
     if (fp == NULL)
     {
-        printf("cannot open %s\n", list_name);
-        exit(1);
+        printf("cannot open %s\n", MOVIELIST);
+        return -1;
     }
 
     while (fgets(aLine, LINE_LEN, fp) != NULL)
@@ -72,21 +87,28 @@ static void analysis_by_Name(char list_name[], char Name[])
         }
     }
 
+	fclose(fp);
     if (0 == flag)
         printf("no such Name !\n");
+	
+	return 0;
 }
 
-static void analysis_by_Director(char list_name[], char Director[])
+/************************************************************
+* analysis the movielist.txt by Director
+* return -1 : the movielist is not exist ! 
+*************************************************************/
+static int analysis_by_Director(char Director[])
 {
     char Name[LINE_LEN];
     char aLine[LINE_LEN];
     int flag = 0;
 
-    FILE *fp = fopen(list_name, "r");
+    FILE *fp = fopen(MOVIELIST, "r");
     if (fp == NULL)
     {
-        printf("cannot open %s\n", list_name);
-        exit(1);
+        printf("cannot open %s\n", MOVIELIST);
+        return -1;
     }
 
     while (fgets(aLine, LINE_LEN, fp) != NULL)
@@ -103,22 +125,29 @@ static void analysis_by_Director(char list_name[], char Director[])
         }
     }
 
+	fclose(fp);
     if (0 == flag)
         printf("no such Director !\n");
+
+	return 0;
 }
 
-static void analysis_by_Year(char list_name[], char Year[])
+/************************************************************
+* analysis the movielist.txt by Year
+* return -1 : the movielist is not exist ! 
+*************************************************************/
+static int analysis_by_Year(char Year[])
 {
     char Name[LINE_LEN];
     char Director[LINE_LEN];
     char aLine[LINE_LEN];
     int flag = 0;
 
-    FILE *fp = fopen(list_name, "r");
+    FILE *fp = fopen(MOVIELIST, "r");
     if (fp == NULL)
     {
-        printf("cannot open %s\n", list_name);
-        exit(1);
+        printf("cannot open %s\n", MOVIELIST);
+        return -1;
     }
 
     while (fgets(aLine, LINE_LEN, fp) != NULL)
@@ -141,15 +170,20 @@ static void analysis_by_Year(char list_name[], char Year[])
         }
     }
 
+	fclose(fp);
     if (0 == flag)
         printf("no such Year !\n");
+
+	return 0;
 }
 
+/* Puts */
 static void Puts(char *str)
 {
     printf("%s",str);
 }
 
+/* select_nr */
 static int select_nr(void)
 {
     int nr = 0;
@@ -163,15 +197,17 @@ static int select_nr(void)
     return nr;
 }
 
+/* fpunc */
 static void pfunc(void)
 {
     printf("1.analysis by Name\n");
     printf("2.analysis by Director\n");
     printf("3.analysis by Year\n");
-    printf("4.Exit\n");
+    printf("4.exit analysis\n");
     printf("Please Select[1-4]:");
 }
 
+/* empty_cache */
 static void empty_cache(void)
 {
     char ch;
@@ -179,6 +215,7 @@ static void empty_cache(void)
     while ((ch = getchar()) != '\n');
 }
 
+/* Gets */
 void Gets(char str[], int n)
 {
     char s[n];
@@ -193,5 +230,4 @@ void Gets(char str[], int n)
     }
 
     *str = '\0';
-
 }
