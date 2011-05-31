@@ -2,6 +2,7 @@
 #include <sqlite3.h>
 #include "_sqlite3.h"
 
+/* main */
 int main(int argc, char *argv[])
 {
 	if (2 != argc) {

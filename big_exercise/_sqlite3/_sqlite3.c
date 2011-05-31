@@ -14,16 +14,18 @@ static void create(sqlite3 * db);
 static void display(sqlite3 * db);
 static void insert(sqlite3 * db);
 static void delete(sqlite3 * db);
-static void interface(void);
-static void interface1(void);
-static int select_nr(void);
-static int select_nr1(void);
+static void printf_func(void);
+static void printf_delete(void);
+static int select_func_num(void);
+static int select_delete_num(void);
 static void empty_cache(void);
 static int is_name(char *str);
 static int is_gender(char *str);
 static int is_id(int id);
 static int is_age(int age);
+static void Gets(char str[], int n);
 
+/* _sqlite3 */
 void _sqlite3(char *str)
 {
 	sqlite3 *db = NULL;
@@ -38,7 +40,7 @@ void _sqlite3(char *str)
 	}
 	create(db);
 	while (1) {
-		switch (select_nr()) {
+		switch (select_func_num()) {
 		case 1:
 			display(db);
 			break;
@@ -57,6 +59,7 @@ void _sqlite3(char *str)
 
 }
 
+/* rscallback */
 static int rscallback(void *p, int argc, char **argv, char **argvv)
 {
 	int i;
@@ -69,6 +72,7 @@ static int rscallback(void *p, int argc, char **argv, char **argvv)
 	return 0;
 }
 
+/* create */
 static void create(sqlite3 * db)
 {
 	char *sql = NULL;
@@ -86,6 +90,7 @@ static void create(sqlite3 * db)
 
 }
 
+/* display */
 static void display(sqlite3 * db)
 {
 	char *sql = NULL, *err = NULL;
@@ -102,6 +107,7 @@ static void display(sqlite3 * db)
 	sqlite3_free(sql);
 }
 
+/* insert */
 static void insert(sqlite3 * db)
 {
 	char *sql = NULL, *err = NULL, name[NAME_LEN], gender[GENDER_LEN];
@@ -115,18 +121,18 @@ static void insert(sqlite3 * db)
 	}
 	printf("input name:");
 	empty_cache();
-	gets(name);
+	Gets(name, sizeof(name));
 	while (0 == is_name(name)) {
 		system("clear");
 		printf("input name:");
-		gets(name);
+		Gets(name, sizeof(name));
 	}
 	printf("input gender:");
-	gets(gender);
+	Gets(gender, sizeof(gender));
 	while (0 == is_gender(gender)) {
 		system("clear");
 		printf("input gender:");
-		gets(gender);
+		Gets(gender, sizeof(gender));
 	}
 	printf("input age:");
 	while (0 == scanf("%d", &age) || 0 == is_age(age)) {
@@ -146,12 +152,13 @@ static void insert(sqlite3 * db)
 
 }
 
+/* delete */
 static void delete(sqlite3 * db)
 {
 	char *sql = NULL, *err, name[NAME_LEN];
 	int id, ret;
 
-	switch (select_nr1()) {
+	switch (select_delete_num()) {
 	case 1:
 		printf("Please input the id:");
 		while (0 == scanf("%d", &id) || 0 == is_id(id)) {
@@ -165,11 +172,11 @@ static void delete(sqlite3 * db)
 	case 2:
 		printf("Please input the name:");
 		empty_cache();
-		gets(name);
+		Gets(name, sizeof(name));
 		while (0 == is_name(name)) {
 			system("clear");
 			printf("Please input the name:");
-			gets(name);
+			Gets(name, sizeof(name));
 		}
 		sql =
 		    sqlite3_mprintf("delete from employee where name=%Q;",
@@ -185,7 +192,8 @@ static void delete(sqlite3 * db)
 
 }
 
-static void interface(void)
+/* printf_func */
+static void printf_func(void)
 {
 	printf("1.Display all records\n");
 	printf("2.Insert Record\n");
@@ -194,12 +202,13 @@ static void interface(void)
 	printf("Please Select[1-4]:");
 }
 
-static int select_nr(void)
+/* select_func_num */
+static int select_func_num(void)
 {
 	int nr = 0;
 
 	while (nr < 1 || nr > 4) {
-		interface();
+		printf_func();
 		if (0 == scanf("%d", &nr)) {
 			system("clear");
 			empty_cache();
@@ -210,7 +219,8 @@ static int select_nr(void)
 	return nr;
 }
 
-static void interface1(void)
+/* printf_delete */
+static void printf_delete(void)
 {
 	system("clear");
 	printf("1.Delete by id\n");
@@ -218,12 +228,13 @@ static void interface1(void)
 	printf("Your choice[1-2]:");
 }
 
-static int select_nr1(void)
+/* select_delete_num */
+static int select_delete_num(void)
 {
 	int nr = 0;
 
 	while (nr < 1 || nr > 2) {
-		interface1();
+		printf_delete();
 		if (0 == scanf("%d", &nr))
 			empty_cache();
 	}
@@ -231,6 +242,7 @@ static int select_nr1(void)
 	return nr;
 }
 
+/* empty_cache */
 static void empty_cache(void)
 {
 	char ch;
@@ -238,6 +250,7 @@ static void empty_cache(void)
 	while ((ch = getchar()) != '\n');
 }
 
+/* is_name */
 static int is_name(char *str)
 {
 	if (strlen(str) > NAME_LEN - 1 || strlen(str) == 0)
@@ -253,6 +266,7 @@ static int is_name(char *str)
 	return 1;
 }
 
+/* is_gender */
 static int is_gender(char *str)
 {
 	if (strlen(str) > GENDER_LEN - 1
@@ -262,6 +276,7 @@ static int is_gender(char *str)
 	return 1;
 }
 
+/* is_id */
 static int is_id(int id)
 {
 	if (id < 1 || id > ID)
@@ -270,10 +285,26 @@ static int is_id(int id)
 	return 1;
 }
 
+/* is_age */
 static int is_age(int age)
 {
 	if (age < 1 || age > AGE)
 		return 0;
 
 	return 1;
+}
+
+/* Gets */
+static void Gets(char str[], int n)
+{
+	char s[n];
+	int i = 0;
+
+	fgets(s, n, stdin);
+
+	while ((s[i] != '\n') && (s[i] != '\0')) {
+		*str++ = s[i];
+		i++;
+	}
+	*str = '\0';
 }
