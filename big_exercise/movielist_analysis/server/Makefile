@@ -1,10 +1,27 @@
-objs = movielist_server.o wrap.o -lpthread
-movielist_server: $(objs)
-	$(CC) $^ -o $@
+CROSS =
+CC = $(CROSS)gcc
+LD = $(CROSS)ld
+AR = $(CROSS)ar
+RANLIB = $(CROSS)ranlib
+STRIP = $(CROSS)strip
 
-sources = movielist_server.c wrap.c
+CFLAGS = -Wall -Wshadow -Wno-trigraphs -pipe
+LDFLAGS = -lm
 
-include $(sources:.c=.d)
+SOURCES = movielist_server.c wrap.c 
+BIN = main
+OBJS = $(SOURCES:.c=.o)
+
+all: $(BIN)
+
+$(OBJS): %.o: %.c
+	$(CC) -c -g $(CFLAGS) $< -o $@
+
+$(BIN): $(OBJS)
+	$(CC) -lpthread $(OBJS) $(LDLIBS) -o $(BIN)
+	# $(STRIP) hic_const
+			
+include $(SOURCES:.c=.d)
 
 %.d:%.c
 	set -e;rm -f $@; \
@@ -14,7 +31,8 @@ include $(sources:.c=.d)
 
 clean:
 	@echo "cleanning project"
-	-rm  movielist_server *.o *.d
+	rm -rf $(BIN)
+	rm -rf *.o *.d *.bak *.c.bak
 	@echo "clean completed"
-
+		
 .PHONY: clean

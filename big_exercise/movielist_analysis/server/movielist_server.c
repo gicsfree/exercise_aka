@@ -31,7 +31,6 @@ void * udp_send_version(void *sPara)
     unsigned int sLen = 0;
     int sSend = 0;
     int sRecv = 0;
-    char send_buf[SEND_BUF_LEN];
     char recv_buf[RECV_BUF_LEN];
     char version[VERSION_LEN];
     struct sockaddr_in ser;
@@ -94,7 +93,6 @@ int main(int argc, char** argv)
     struct sockaddr_in ser;
     struct sockaddr_in cli;
     int sSend = 0;
-	int sRecv = 0;
     char send_buf[SEND_BUF_LEN];
 
     pthread_t thread;

@@ -1,10 +1,27 @@
-objs = movielist_client.o wrap.o analysis.o
-movielist_client: $(objs)
-	$(CC) $^ -o $@
+CROSS =
+CC = $(CROSS)gcc
+LD = $(CROSS)ld
+AR = $(CROSS)ar
+RANLIB = $(CROSS)ranlib
+STRIP = $(CROSS)strip
 
-sources = movielist_client.c wrap.c analysis.c
+CFLAGS = -Wall -Wshadow -Wno-trigraphs -pipe
+LDFLAGS = -lm
 
-include $(sources:.c=.d)
+SOURCES = movielist_client.c wrap.c analysis.c 
+BIN = main
+OBJS = $(SOURCES:.c=.o)
+
+all: $(BIN)
+
+$(OBJS): %.o: %.c
+	$(CC) -c -g $(CFLAGS) $< -o $@
+
+$(BIN): $(OBJS)
+	$(CC) -lpthread $(OBJS) $(LDLIBS) -o $(BIN)
+	# $(STRIP) hic_const
+			
+include $(SOURCES:.c=.d)
 
 %.d:%.c
 	set -e;rm -f $@; \
@@ -14,7 +31,8 @@ include $(sources:.c=.d)
 
 clean:
 	@echo "cleanning project"
-	-rm  movielist_client *.o *.d
+	rm -rf $(BIN)
+	rm -rf *.o *.d *.bak *.c.bak
 	@echo "clean completed"
-
+		
 .PHONY: clean

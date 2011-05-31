@@ -19,7 +19,7 @@
 #define MOVIELIST "movielist.txt"
 
 int tcp_download_list(char cli_addr[]);
-int udp_get_vetsion(char cli_addr[]);
+int udp_get_version(char cli_addr[]);
 int get_version(char version[]);
 int select_num(void);
 void printf_func(void);

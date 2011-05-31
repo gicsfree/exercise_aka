@@ -1,5 +1,7 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <unistd.h>
 #include <sys/socket.h>
 
 void perr_exit(const char *s)
