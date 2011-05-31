@@ -1,16 +1,18 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
 #include "common.h"
+
+#define LEN 128
 
 void encryption()
 {
-	char s[128];
+	char s[LEN];
 	printf("input a string:");
 	empty_cache();
-	while (0 == strlen(gets(s))) {
-		system("clear");
-		printf("input a string:");
-	}
+	Gets(s, sizeof(s));
+
 	char *p = s, *q = s;
 
 	while (*p) {

@@ -1,10 +1,27 @@
-objs = main.o d2b.o multi.o encryption.o exchange.o common.o
-main: $(objs)
-	$(CC) $^ -o $@
+CROSS =
+CC = $(CROSS)gcc
+LD = $(CROSS)ld
+AR = $(CROSS)ar
+RANLIB = $(CROSS)ranlib
+STRIP = $(CROSS)strip
 
-sources = main.c d2b.c multi.c encryption.c exchange.c common.c
+CFLAGS = -Wall -Wshadow -Wno-trigraphs -pipe
+LDFLAGS = -lm
 
-include $(sources:.c=.d)
+SOURCES = main.c common.c d2b.c encryption.c exchange.c multi.c
+BIN = main
+OBJS = $(SOURCES:.c=.o)
+
+all: $(BIN)
+
+$(OBJS): %.o: %.c
+	$(CC) -c -g $(CFLAGS) $< -o $@
+
+$(BIN): $(OBJS)
+	$(CC) -lm $(OBJS) $(LDLIBS) -o $(BIN)
+#	$(STRIP) hic_const
+			
+include $(SOURCES:.c=.d)
 
 %.d:%.c
 	set -e;rm -f $@; \
@@ -14,7 +31,8 @@ include $(sources:.c=.d)
 
 clean:
 	@echo "cleanning project"
-	-rm main *.o *.d
+	rm -rf $(BIN)
+	rm -rf *.o *.d *.bak *.c.bak
 	@echo "clean completed"
-
+		
 .PHONY: clean

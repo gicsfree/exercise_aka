@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+
 #include "common.h"
+
+#define LEN 128
 
 void exchange()
 {
-	char string[128];
+	char string[LEN];
 	printf("input a string:");
 	empty_cache();
-	while (0 == strlen(gets(string))) {
-		system("clear");
-		printf("input a string:");
-	}
+	Gets(string, sizeof(string));
+
 	char *p = string;
 	while (*p)
 		if ((*p >= 'a' && *p <= 'z') || (*p >= 'A' && *p <= 'Z')) {

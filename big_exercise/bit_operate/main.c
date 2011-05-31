@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 			system("clear");
 			continue;
 		}
-		system("clear");
 		if (choice >= 1 && choice <= 5) {
 			switch (choice) {
 			case 1:
