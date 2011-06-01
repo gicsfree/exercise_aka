@@ -1,24 +1,27 @@
-main: main.o d2b.o multi.o encryption.o exchange.o 
-	gcc main.o d2b.o multi.o encryption.o exchange.o -o main 
+CROSS	= 
+CC	= $(CROSS)gcc
+LD	= $(CROSS)ld
+AR	= $(CROSS)ar
+RANLIB  = $(CROSS)ranlib
+STRIP   = $(CROSS)strip
 
-main.o: main.c d2b.h multi.h encryption.h exchange.h
-	gcc -c main.c
+CFLAGS  = -Wall -Wshadow -Wno-trigraphs -pipe
+LDFLAGS = -lm 
 
-d2b.o: d2b.c d2b.h
-	gcc -c d2b.c
+BIN		  = for
+SRCS		= $(BIN).c
+OBJS		= $(SRCS:.c=.o)
 
-multi.o: multi.c multi.h
-	gcc -c multi.c
+all: $(BIN)
 
-encryption.o: encryption.c encryption.h
-	gcc -c encryption.c
+$(OBJS): %.o: %.c
+	$(CC) -c -g $(CFLAGS) $< -o $@
 
-exchange.o: exchange.c exchange.h
-	gcc -c exchange.c
-
+$(BIN): $(OBJS)
+	$(CC) -lm $(OBJS) $(LDLIBS) -o $(BIN)
+#	$(STRIP) hic_const
+	
 clean:
-	@echo "cleanning project"
-	-rm main *.o
-	@echo "clean completed"
-
-.PHONY: clean
+	rm -rf *.o
+	rm -rf $(BIN)
+	rm -rf *.o *.bak *.c.bak

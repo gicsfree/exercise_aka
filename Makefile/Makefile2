@@ -1,17 +1,20 @@
-main: main.o d2b.o multi.o encryption.o exchange.o 
-	gcc main.o d2b.o multi.o encryption.o exchange.o -o main 
+objs = main.o d2b.o multi.o encryption.o exchange.o 
+main: $(objs)
+	$(CC) $^ -o $@
 
-d2b.o: d2b.h
+sources = main.c d2b.c multi.c encryption.c exchange.c
 
-multi.o: multi.h
+include $(sources:.c=.d)
 
-encryption.o: encryption.h
-
-exchange.o: exchange.h
+%.d:%.c
+	set -e;rm -f $@; \
+	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
+	sed 's,\($*\)\o[ :]*,\1.o $@ :,g' < $@.$$$$ >$@; \
+	rm -f $@.$$$$
 
 clean:
 	@echo "cleanning project"
-	-rm main *.o
+	-rm *.o *.d
 	@echo "clean completed"
 
 .PHONY: clean
