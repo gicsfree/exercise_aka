@@ -18,7 +18,7 @@ $(OBJS): %.o: %.c
 	$(CC) -c -g $(CFLAGS) $< -o $@
 
 $(BIN): $(OBJS)
-	$(CC) -lm $(OBJS) $(LDLIBS) -o $(BIN)
+	$(CC) $(OBJS) $(LDLIBS) -o $(BIN)
 #	$(STRIP) hic_const
 			
 include $(SOURCES:.c=.d)
