@@ -40,6 +40,7 @@ int main(int argc, const char *argv[])
 		return -1;
 	}
 
+//    int ret = atoi(NULL);
 	int ret = atoi(argv[1]);
 	printf("string %s converts to integer is: %d\n", argv[1],
 	       (ret != -1) ? ret : 0);
