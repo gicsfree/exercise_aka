@@ -5,6 +5,7 @@
 char *strncpy(char *dest, const char *src, int n)
 {
 	assert((dest != NULL) && (src != NULL));
+    assert(n >= 0);
 
 	int i;
 

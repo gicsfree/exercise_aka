@@ -11,6 +11,7 @@
 void loopmove(char *str, int steps)
 {
 	assert(str != NULL);
+    assert(steps >= 0);
 
 	int n;
 	int len = strlen(str);
@@ -29,6 +30,7 @@ void loopmove(char *str, int steps)
 void loopmove(char *str, int steps)
 {
 	assert(str != NULL);
+    assert(steps >= 0);
 
 	int i;
 	int j;
