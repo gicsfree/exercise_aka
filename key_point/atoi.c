@@ -1,3 +1,5 @@
+/* atoi.c */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -39,7 +41,6 @@ int main(int argc, const char *argv[])
 		printf("Usage: ./main string\n");
 		return -1;
 	}
-
 //    int ret = atoi(NULL);
 	int ret = atoi(argv[1]);
 	printf("string %s converts to integer is: %d\n", argv[1],

@@ -1,3 +1,5 @@
+/* strcpy.c */
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -5,6 +7,9 @@
 char *strcpy(char *strdest, const char *strsrc)
 {
 	assert((strdest != NULL) && (strsrc != NULL));
+
+	if ((unsigned int) strdest == (unsigned int) strsrc)
+		return strdest;
 
 	char *address = strdest;
 

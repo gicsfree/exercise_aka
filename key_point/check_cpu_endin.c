@@ -1,3 +1,5 @@
+/* check_cpu_endin.c */
+
 #include <stdio.h>
 
 #define _U

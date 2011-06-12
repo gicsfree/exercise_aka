@@ -1,3 +1,5 @@
+/* strncpy.c */
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -5,7 +7,7 @@
 char *strncpy(char *dest, const char *src, int n)
 {
 	assert((dest != NULL) && (src != NULL));
-    assert(n >= 0);
+	assert(n >= 0);
 
 	int i;
 

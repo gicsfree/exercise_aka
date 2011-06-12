@@ -1,3 +1,5 @@
+/* sum_n.c */
+
 #include <stdio.h>
 #include <assert.h>
 
@@ -6,7 +8,7 @@
 /* sum 1 to n */
 long sum_n(int n)
 {
-    assert(n > 0);
+	assert(n > 0);
 
 	return (long) (n * (n + 1) / 2);
 }
