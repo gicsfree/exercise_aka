@@ -10,7 +10,7 @@ void *memcpy(void *dest, const void *src, int n)
 	assert(src != NULL);
 	assert(n >= 0);
 
-	if ((unsigned int) dest == (unsigned int) src)
+	if (dest == src)
 		return dest;
 
 	char *d = (char *) dest;

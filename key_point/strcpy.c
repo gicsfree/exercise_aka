@@ -8,7 +8,7 @@ char *strcpy(char *strdest, const char *strsrc)
 {
 	assert((strdest != NULL) && (strsrc != NULL));
 
-	if ((unsigned int) strdest == (unsigned int) strsrc)
+	if (strdest == strsrc)
 		return strdest;
 
 	char *address = strdest;
