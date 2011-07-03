@@ -5,6 +5,7 @@ int main(int argc, const char *argv[])
     printf("type\tsizeof\n");
     printf("char\t%d\n", sizeof(char));
     printf("short\t%d\n", sizeof(short));
+    printf("float\t%d\n", sizeof(float));
     printf("int\t%d\n", sizeof(int));
     printf("long\t%d\n", sizeof(long));
     printf("double\t%d\n", sizeof(double));
