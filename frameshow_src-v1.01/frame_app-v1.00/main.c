@@ -27,7 +27,13 @@ void *pro_thread(void *fb_inf)
 int main(int argc, char *argv[]) 
 {
     pthread_t p_mon; 
-    fb_info fb_inf;   
+    fb_info fb_inf; 
+    fb_info new_inf;
+
+    new_inf.w = 512;
+    new_inf.h = 384;
+//    new_inf.bpp = 0;
+//    new_inf.fbmem = NULL;  
 
     if (init_fb(&fb_inf) < 0)
     {
@@ -35,7 +41,8 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    if (init_ft("mao.ttf", 30) < 0)
+//    if (init_ft("mao.ttf", 30) < 0)
+    if (init_ft("simkai.ttf", 30) < 0)
     {
         fprintf(stderr, "Error initial font\b")	;
     	 return -1;
@@ -44,10 +51,39 @@ int main(int argc, char *argv[])
     pthread_create(&p_mon, NULL, pro_thread, &fb_inf);
  
     #ifdef FRAME_SUPPORT_JPEG
-    display_jpeg("test0.jpg", fb_inf);
+    display_jpeg("1.jpg", fb_inf);
     sleep(1);
-    display_jpeg("test1.jpg", fb_inf);
+    display_jpeg("9.jpg", fb_inf);
     sleep(1);
+
+#if 1
+    display_jpeg_blind_y("3.jpg", fb_inf);
+    sleep(1);
+    display_jpeg_blind_x("4.jpg", fb_inf);
+    sleep(1);
+    display_jpeg_cross("5.jpg", fb_inf);
+    sleep(1);
+    display_jpeg_blind_m("6.jpg", fb_inf);
+    sleep(1);
+
+    display_jpeg_diagonal_c("7.jpg", fb_inf);
+    sleep(1);
+    display_jpeg_circle("8.jpg", fb_inf);
+    sleep(1);
+    display_jpeg_diagonal_o("9.jpg", fb_inf);
+    sleep(1);
+
+
+    display_jpeg_square("10.jpg", fb_inf);
+    sleep(1);
+
+    display_jpeg_point("1.jpg", fb_inf);
+    sleep(1);
+#endif
+
+    display_jpeg_small("7.jpg", 0, 0, new_inf, fb_inf);
+    sleep(15);
+
     #endif
      
     fb_draw_squarearea(fb_inf, 0, 0, fb_inf.w, fb_inf.h, 0xFF0000);

@@ -24,7 +24,7 @@ int test_mouse(fb_info fb_inf)
 
     fb_save_cursor(fb_inf, m_x, m_y);
     p_x = m_x;   
-    p_y = m_y;    
+    p_y = m_y;  
     fb_draw_cursor(fb_inf, m_x, m_y);
         
     for(;;)
@@ -35,17 +35,22 @@ int test_mouse(fb_info fb_inf)
 	     //printf("dx:%d\tdy:%d\n", mevent.x, mevent.y);
 	     //printf("mx:%d\tmy:%d\n", m_x, m_y);
 
-            fb_restore_cursor(fb_inf, p_x, p_y);
 	     m_x += mevent.x;
 	     m_y += mevent.y;
-              
+                           
             if((m_x >= 0) && (m_x < fb_inf.w - C_WIDTH) && (m_y >= 0) && (m_y < fb_inf.h - C_HEIGHT))
               {
+                fb_restore_cursor(fb_inf, p_x, p_y);
                 fb_save_cursor(fb_inf, m_x, m_y); 
                 p_x = m_x;   
                 p_y = m_y;
 	         fb_draw_cursor(fb_inf, m_x, m_y);
               }
+            else
+             {
+	         m_x -= mevent.x;
+	         m_y -= mevent.y;
+             }
 
 	     switch (mevent.button)
               {
@@ -65,7 +70,7 @@ int test_mouse(fb_info fb_inf)
 		      break;
 	     }
 	 }	
-        usleep(800);
+        usleep(300);
      }
      
     return 0;
