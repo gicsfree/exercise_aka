@@ -315,8 +315,6 @@ int display_jpeg_diagonal_o(const char *jpegname, fb_info fb_inf)
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
 
-    
-    
     for (xloop = fb_inf.w - 1; xloop >= 0; xloop--)
 //    for (xloop = 0; xloop < fb_inf.w; xloop++)
     {
@@ -615,6 +613,102 @@ int display_jpeg_down(const char *jpegname, fb_info fb_inf)
             }
         }
     }
+    
+    free(buf24);
+    free(scale_buf);
+    free(buf32);
+    
+    return 0;
+}
+#endif
+
+#if 1
+/* display jpeg mosaic*/
+int display_jpeg_mosaic(const const char *jpegname, fb_info fb_inf, int size)
+{
+    fb_info jpeg_inf;
+    int xres;
+    int yres;
+    
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
+    u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
+    u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
+    
+    
+    for (yres = 0; yres < fb_inf.h; yres++)
+    {
+        for (xres = 0; xres < fb_inf.w; xres++)
+        {
+            fb_pixel(fb_inf, xres, yres, buf32[(xres / size) * size + ((yres / size) * size * fb_inf.w)]);
+        }
+    }
+    
+    free(buf24);
+    free(scale_buf);
+    free(buf32);
+    
+    return 0;
+}
+#endif
+
+#if 0
+/* display jpeg mosaic*/
+int display_jpeg_mosaic(const const char *jpegname, fb_info fb_inf, int size)
+{
+    fb_info jpeg_inf;
+    int xres;
+    int yres;
+    int xloop;
+    int yloop;
+    
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
+    u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
+    u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
+
+    u32_t *buf_mosaic_r = (u32_t *)malloc((fb_inf.w / size + 1) * (fb_inf.h / size + 1) * 4);
+    u32_t *buf_mosaic_g = (u32_t *)malloc((fb_inf.w / size + 1) * (fb_inf.h / size + 1) * 4);
+    u32_t *buf_mosaic_b = (u32_t *)malloc((fb_inf.w / size + 1) * (fb_inf.h / size + 1) * 4);
+
+    for (yloop = 0; yloop < fb_inf.h; yloop++)
+    {
+        for (xloop = 0; xloop < fb_inf.w; xloop++)
+        {
+
+            buf_mosaic_r[xloop / size + (yloop / size) * (fb_inf.w / size + 1)] += (u32_t)*((u8_t *)&buf32[xloop + yloop * fb_inf.w] + 2);
+            buf_mosaic_g[xloop / size + (yloop / size) * (fb_inf.w / size + 1)] += (u32_t)*((u8_t *)&buf32[xloop + yloop * fb_inf.w] + 1);
+            buf_mosaic_b[xloop / size + (yloop / size) * (fb_inf.w / size + 1)] += (u32_t)*((u8_t *)&buf32[xloop + yloop * fb_inf.w] + 0);
+        }
+    }
+
+    for (xloop = 0; xloop < (fb_inf.h / size + 1) * (fb_inf.h / size + 1); xloop++)
+    {
+        buf_mosaic_r[xloop] /= size * size;
+        buf_mosaic_g[xloop] /= size * size;
+        buf_mosaic_b[xloop] /= size * size;
+    }
+
+    for (yloop = 0; yloop < fb_inf.h; yloop++)
+    {
+        for (xloop = 0; xloop < fb_inf.w; xloop++)
+        {
+
+            *((u8_t *)&buf32[xloop + yloop * fb_inf.w] + 2) = (u8_t)buf_mosaic_r[xloop / size + (yloop / size) * (fb_inf.w / size + 1)];
+            *((u8_t *)&buf32[xloop + yloop * fb_inf.w] + 1) = (u8_t)buf_mosaic_g[xloop / size + (yloop / size) * (fb_inf.w / size + 1)];
+            *((u8_t *)&buf32[xloop + yloop * fb_inf.w] + 0) = (u8_t)buf_mosaic_b[xloop / size + (yloop / size) * (fb_inf.w / size + 1)];
+        }
+    }
+
+    for (yres = 0; yres < fb_inf.h; yres++)
+    {
+        for (xres = 0; xres < fb_inf.w; xres++)
+        {
+            fb_pixel(fb_inf, xres, yres, buf32[xres + (yres * fb_inf.w)]);
+        }
+    }
+
+    free(buf_mosaic_r);
+    free(buf_mosaic_g);
+    free(buf_mosaic_b);
     
     free(buf24);
     free(scale_buf);

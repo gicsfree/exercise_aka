@@ -149,6 +149,12 @@ extern u8_t *decode_24bmp (const char *bmpname, fb_info *bmp_inf);
 extern int display_bmp(const char *bmpname, fb_info fb_inf);
 /* display bmp blind */
 extern int display_bmp_blind(const char *bmpname, fb_info fb_inf);
+/* display bmp circle */
+extern int display_bmp_circle(const char *bmpname, fb_info fb_inf);
+/* display bmp square */
+extern int display_bmp_square(const char *bmpname, fb_info fb_inf);
+/* display bmp diagonal open */
+extern int display_bmp_diagonal(const char *bmpname, fb_info fb_inf);
 
 #endif  /* FRAME_SUPPORT_BMP */
 

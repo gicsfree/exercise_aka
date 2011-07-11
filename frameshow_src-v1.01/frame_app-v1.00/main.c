@@ -67,15 +67,17 @@ int main(int argc, char *argv[])
     sleep(1);
     display_jpeg_circle("8.jpg", fb_inf);
     sleep(1);
-//    display_jpeg_diagonal_o("9.jpg", fb_inf);
-//    sleep(1);
     display_jpeg_square("10.jpg", fb_inf);
     sleep(1);
     display_jpeg_circle_area("11.jpg", fb_inf);
     sleep(1);
     display_jpeg_point("12.jpg", fb_inf);
     sleep(1);
+
 #endif
+
+    display_jpeg_mosaic("1.jpg", fb_inf, 20);
+    sleep(30);
 
     display_jpeg_down("13.jpg", fb_inf);
     sleep(1);
@@ -97,7 +99,11 @@ int main(int argc, char *argv[])
     #endif 
 
     #ifdef FRAME_SUPPORT_BMP
-    display_bmp("3.bmp", fb_inf);
+    display_bmp_square("3.bmp", fb_inf);
+    sleep(1);
+    display_bmp_circle("1.bmp", fb_inf);
+    sleep(1);
+    display_bmp_diagonal("4.bmp", fb_inf);
     sleep(1);
     display_bmp_blind("2.bmp", fb_inf);
     sleep(1);
