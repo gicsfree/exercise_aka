@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     #ifdef FRAME_SUPPORT_JPEG
     display_jpeg("1.jpg", fb_inf);
     sleep(1);
-    display_jpeg("9.jpg", fb_inf);
+    display_jpeg("2.jpg", fb_inf);
     sleep(1);
 
 #if 1
@@ -65,24 +65,31 @@ int main(int argc, char *argv[])
     sleep(1);
     display_jpeg_blind_m("6.jpg", fb_inf);
     sleep(1);
-
     display_jpeg_diagonal_c("7.jpg", fb_inf);
     sleep(1);
     display_jpeg_circle("8.jpg", fb_inf);
     sleep(1);
-    display_jpeg_diagonal_o("9.jpg", fb_inf);
+//    display_jpeg_diagonal_o("9.jpg", fb_inf);
+//    sleep(1);
+    display_jpeg_circle_area("10.jpg", fb_inf);
     sleep(1);
-
-
-    display_jpeg_square("10.jpg", fb_inf);
+    display_jpeg_square("11.jpg", fb_inf);
     sleep(1);
-
-    display_jpeg_point("1.jpg", fb_inf);
+    display_jpeg_point("12.jpg", fb_inf);
     sleep(1);
 #endif
 
-    display_jpeg_small("7.jpg", 0, 0, new_inf, fb_inf);
-    sleep(15);
+    display_jpeg_down("13.jpg", fb_inf);
+    sleep(1);
+
+    display_jpeg_small("14.jpg", "9.jpg", 0, 0, new_inf, fb_inf);
+    sleep(2);
+    display_jpeg_small("15.jpg", "8.jpg", 0, 0, new_inf, fb_inf);
+    sleep(2);
+    display_jpeg_small("16.jpg", "4.jpg", fb_inf.w / 2, fb_inf.h / 2, new_inf, fb_inf);
+    sleep(2);
+    display_jpeg_small("17.jpg", "3.jpg", fb_inf.w / 2, fb_inf.h / 2, new_inf, fb_inf);
+    sleep(2);
 
     #endif
      
