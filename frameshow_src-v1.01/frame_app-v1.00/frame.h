@@ -97,25 +97,58 @@ extern int test_mouse(fb_info fb_inf);
 #ifdef FRAME_SUPPORT_JPEG
 ////////////////////////////////////////////////////////////////////////////
 /* decode jpeg */
-extern unsigned char *decode_jpeg (const char *filename, fb_info *jpeg_inf);
+extern unsigned char *decode_jpeg (const char *jpegname, fb_info *jpeg_inf);
 /* rgb888 to argb8888 */
-extern u32_t * rgb24to32(u8_t *buf24, fb_info jpeg_inf);
+extern u32_t * rgb24to32(u8_t *buf24, fb_info picture_inf);
 /* scale24 */
-u8_t * scale24(u8_t *buf24, fb_info new_inf, fb_info jpeg_inf);
+u8_t * scale24(u8_t *buf24, fb_info new_inf, fb_info picture_inf);
 
 /* display jpeg */
-extern int display_jpeg(char *filename, fb_info fb_inf);
+extern int display_jpeg(const char *jpegname, fb_info fb_inf);
+/* display jpeg blind y */
+extern int display_jpeg_blind_y(const char *jpegname, fb_info fb_inf);
+/* display jpeg blind x */
+extern int display_jpeg_blind_x(const char *jpegname, fb_info fb_inf);
+/* display jpeg door */
+extern int display_jpeg_door(const char *jpegname, fb_info fb_inf);
+/* display jpeg cross */
+extern int display_jpeg_cross(const char *jpegname, fb_info fb_inf);
+/* display jpeg circle */
+extern int display_jpeg_circle(const char *jpegname, fb_info fb_inf);
+/* display jpeg diagonal close */
+extern int display_jpeg_diagonal_c(const char *jpegname, fb_info fb_inf);
+/* display jpeg diagonal open */
+extern int display_jpeg_diagonal_o(const char *jpegname, fb_info fb_inf);
+/* display jpeg circle area */
+extern int display_jpeg_circle_area(const char *jpegname, fb_info fb_inf);
+/* display jpeg point */
+extern int display_jpeg_point(const char *jpegname, fb_info fb_inf);
+/* display jpeg square */
+extern int display_jpeg_square(const char *jpegname, fb_info fb_inf);
+/* dosplay jpeg inset */
+extern int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, fb_info small_inf, fb_info fb_inf);
+/* display jpeg down */
+extern int display_jpeg_down(const char *jpegname, fb_info fb_inf);
+
+
+#if 0
 /* display jpeg */
 extern int display_jpeg_shutter(char *filename, fb_info fb_inf);
 
 extern int disp(char *filename, fb_info fb_inf);
+#endif
 
 #endif  /* FRAME_SUPPORT_JPEG */
 
 #ifdef FRAME_SUPPORT_BMP
 ////////////////////////////////////////////////////////////////////////////
+/* bmp decode */
+extern u8_t *decode_24bmp (const char *bmpname, fb_info *bmp_inf);
+
 /* display bmp */
-extern void display_bmp(const fb_info fb_inf, const char *bmpname);
+extern int display_bmp(const char *bmpname, fb_info fb_inf);
+/* display bmp blind */
+extern int display_bmp_blind(const char *bmpname, fb_info fb_inf);
 
 #endif  /* FRAME_SUPPORT_BMP */
 

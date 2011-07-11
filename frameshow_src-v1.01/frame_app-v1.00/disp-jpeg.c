@@ -14,13 +14,13 @@
 ////////////////////////////////////////////////////////////////
 #if 1
 /* display jpeg */
-int display_jpeg(char *filename, fb_info fb_inf)
+int display_jpeg(const const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -43,14 +43,14 @@ int display_jpeg(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg blind y */
-int display_jpeg_blind_y(char *filename, fb_info fb_inf)
+int display_jpeg_blind_y(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
     int yloop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -60,7 +60,7 @@ int display_jpeg_blind_y(char *filename, fb_info fb_inf)
         {
             for(xres = 0; xres < fb_inf.w; xres++)
             {
-            fb_pixel(fb_inf, xres, yres, buf32[xres + (yres * fb_inf.w)]);
+                fb_pixel(fb_inf, xres, yres, buf32[xres + (yres * fb_inf.w)]);
             }            
         }
         usleep(1);
@@ -76,14 +76,14 @@ int display_jpeg_blind_y(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg blind x */
-int display_jpeg_blind_x(char *filename, fb_info fb_inf)
+int display_jpeg_blind_x(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
     int xloop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -108,15 +108,14 @@ int display_jpeg_blind_x(char *filename, fb_info fb_inf)
 #endif
 
 #if 1
-/* display jpeg blind middle */
-int display_jpeg_blind_m(char *filename, fb_info fb_inf)
+/* display jpeg door */
+int display_jpeg_door(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
-    int xres;
     int yres;
     int xloop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -140,17 +139,16 @@ int display_jpeg_blind_m(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg cross */
-int display_jpeg_cross(char *filename, fb_info fb_inf)
+int display_jpeg_cross(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
-    int xloop;
     int xres_temp;
     int yres_temp;
     int t_sum = 0;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -187,7 +185,7 @@ int display_jpeg_cross(char *filename, fb_info fb_inf)
 
 #if 0
 /* display jpeg circle */
-int display_jpeg_circle(char *filename, fb_info fb_inf)
+int display_jpeg_circle(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
@@ -222,16 +220,14 @@ int display_jpeg_circle(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg circle */
-int display_jpeg_circle(char *filename, fb_info fb_inf)
+int display_jpeg_circle(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
-    int xres;
-    int yres;
     int r_len;
     int x_loop;
     int y_loop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -264,18 +260,18 @@ int display_jpeg_circle(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg diagonal close */
-int display_jpeg_diagonal_c(char *filename, fb_info fb_inf)
+int display_jpeg_diagonal_c(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
-    int yres;
     int xloop;
     int xres1;
     int xres2;
     int yres1;
     int yres2;
+    float h_div_w = (float)fb_inf.h / fb_inf.w;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -285,7 +281,7 @@ int display_jpeg_diagonal_c(char *filename, fb_info fb_inf)
         for (xres = 0; xres < xloop; xres++)
         {
             xres1 = xres;
-            yres1 = ((float )fb_inf.h / fb_inf.w) * (xloop - xres1);
+            yres1 = h_div_w * (xloop - xres1);
             xres2 = fb_inf.w - 1 - xres1;
             yres2 = fb_inf.h - 1 - yres1;
             fb_pixel(fb_inf, xres1, yres1, buf32[xres1 + (yres1 * fb_inf.w)]);
@@ -304,20 +300,22 @@ int display_jpeg_diagonal_c(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg diagonal open */
-int display_jpeg_diagonal_o(char *filename, fb_info fb_inf)
+int display_jpeg_diagonal_o(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
-    int yres;
     int xloop;
     int xres1;
     int xres2;
     int yres1;
     int yres2;
+    float h_div_w = (float)fb_inf.h / fb_inf.w;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
+
+    
     
     for (xloop = fb_inf.w - 1; xloop >= 0; xloop--)
 //    for (xloop = 0; xloop < fb_inf.w; xloop++)
@@ -325,7 +323,7 @@ int display_jpeg_diagonal_o(char *filename, fb_info fb_inf)
         for (xres = 0; xres < xloop; xres++)
         {
             xres1 = xres;
-            yres1 = ((float )fb_inf.h / fb_inf.w) * (xloop - xres1);
+            yres1 = h_div_w * (xloop - xres1);
             xres2 = fb_inf.w - 1 - xres1;
             yres2 = fb_inf.h - 1 - yres1;
             fb_pixel(fb_inf, xres1, yres1, buf32[xres1 + (yres1 * fb_inf.w)]);
@@ -344,16 +342,14 @@ int display_jpeg_diagonal_o(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg circle area */
-int display_jpeg_circle_area(char *filename, fb_info fb_inf)
+int display_jpeg_circle_area(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
-    int xres;
-    int yres;
     int r_len;
     int x_loop;
     int y_loop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -386,24 +382,23 @@ int display_jpeg_circle_area(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg point */
-int display_jpeg_point(char *filename, fb_info fb_inf)
+int display_jpeg_point(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
-    int t_sum;
     int iloop;
     int jloop;
     int x_flag = 4;
     int y_flag = 4;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
 
     for (iloop = 0; iloop < x_flag; iloop++)
     {
-        for (jloop = 0; jloop < y_flag; jloop++)
+        for (jloop = y_flag - 1; jloop >= 0; jloop--)
         {
             for (xres = 0; xres < fb_inf.h; ++xres)
              {
@@ -429,17 +424,15 @@ int display_jpeg_point(char *filename, fb_info fb_inf)
 
 #if 1
 /* display jpeg square */
-int display_jpeg_square(char *filename, fb_info fb_inf)
+int display_jpeg_square(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
-    int xres;
-    int yres;
     int x_len;
     int y_len;
     int x_loop;
     int y_loop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -473,7 +466,8 @@ int display_jpeg_square(char *filename, fb_info fb_inf)
 #endif
 
 #if 1
-int display_jpeg_small(char *jpeg_big, char *jpeg_small, int x, int y, fb_info small_inf, fb_info fb_inf)
+/* dosplay jpeg inset */
+int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, fb_info small_inf, fb_info fb_inf)
 {
     fb_info jpeg_inf1;
     fb_info jpeg_inf2;
@@ -525,38 +519,34 @@ int display_jpeg_small(char *jpeg_big, char *jpeg_small, int x, int y, fb_info s
 }
 #endif
 
-#if 0
+#if 1
 /* display jpeg down */
-int display_jpeg_down(char *filename, fb_info fb_inf)
+int display_jpeg_down(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
     int yloop;
-    int t_sum = 0;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
-    for (yloop = 0; yloop < fb_inf.h; yloop++)
-{
-    for (yres = 0; yres < yloop; yres++)
+    for (yloop = 0; yloop < fb_inf.h; yloop += 3)
     {
-        for (xres = 0; xres < fb_inf.w; xres++)
+        for (yres = 0; yres <= yloop; yres++)
         {
-            fb_pixel(fb_inf, xres, yres, buf32[xres + ((fb_inf.h - yloop + yres) * fb_inf.w)]);
+            for (xres = 0; xres < fb_inf.w / 2; xres += 2)
+             {
+                fb_pixel(fb_inf, xres, yres, buf32[xres + ((fb_inf.h - yloop + yres) * fb_inf.w)]);
+                fb_pixel(fb_inf, xres + 1, yres, buf32[xres + 1 + ((fb_inf.h - yloop + yres) * fb_inf.w)]);
+                fb_pixel(fb_inf, fb_inf.w - 1 - xres, yres, buf32[fb_inf.w - 1 - xres + ((fb_inf.h - yloop + yres) * fb_inf.w)]);
+                fb_pixel(fb_inf, fb_inf.w - 1 - xres - 1, yres, buf32[fb_inf.w - 1 - xres - 1 + ((fb_inf.h - yloop + yres) * fb_inf.w)]);
+             }
         }
-}
-//    t_sum++;
-//if (t_sum < fb.inf.h / 2)
-//{yloop = yloop + 1
-//    usleep(500);
-//}
-//else
-//{yloop = yloop + 30
-//    usleep(500);
-}
+//        usleep(1);
+    }
+    display_jpeg(jpegname, fb_inf);
     
     free(buf24);
     free(scale_buf);
@@ -568,14 +558,14 @@ int display_jpeg_down(char *filename, fb_info fb_inf)
 
 #if 0
 /* display jpeg down */
-int display_jpeg_down(char *filename, fb_info fb_inf)
+int display_jpeg_down(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
     int yloop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
@@ -599,16 +589,16 @@ int display_jpeg_down(char *filename, fb_info fb_inf)
 }
 #endif
 
-#if 1
+#if 0
 /* display jpeg down */
-int display_jpeg_down(char *filename, fb_info fb_inf)
+int display_jpeg_down(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;
     int yres;
     int yloop;
     
-    u8_t *buf24 = decode_jpeg(filename, &jpeg_inf);
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     

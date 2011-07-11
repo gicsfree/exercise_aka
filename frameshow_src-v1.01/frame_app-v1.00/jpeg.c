@@ -23,7 +23,7 @@ static void jpeg_error_exit(j_common_ptr cinfo)
 /*
 * jpeg decode
 */
-unsigned char *decode_jpeg (const char *filename, fb_info *jpeg_inf)
+unsigned char *decode_jpeg (const char *jpegname, fb_info *jpeg_inf)
 {
     register JSAMPARRAY lineBuf;
     struct jpeg_decompress_struct cinfo;
@@ -42,10 +42,10 @@ unsigned char *decode_jpeg (const char *filename, fb_info *jpeg_inf)
     int yres;			    
     int yloop;
     
-    inFile = fopen (filename, "rb");
+    inFile = fopen (jpegname, "rb");
     if (NULL == inFile)
     { 
-		printf ("Open file error %s\n",filename);
+        printf ("Open file error %s\n",jpegname);
         return NULL;
     }
     
@@ -117,10 +117,10 @@ unsigned char *decode_jpeg (const char *filename, fb_info *jpeg_inf)
 /*
 * rgb888 transfer to argb8888
 */
-u32_t * rgb24to32(u8_t *buf24, fb_info jpeg_inf)
+u32_t * rgb24to32(u8_t *buf24, fb_info picture_inf)
 {
-    int w = jpeg_inf.w;
-    int h = jpeg_inf.h;
+    int w = picture_inf.w;
+    int h = picture_inf.h;
     int iloop;
     
     u32_t *buf = malloc(w * h * 4);
@@ -142,7 +142,7 @@ u32_t * rgb24to32(u8_t *buf24, fb_info jpeg_inf)
 /*
 * scale24
 */
-u8_t * scale24(u8_t *buf24, fb_info new_inf, fb_info jpeg_inf)
+u8_t * scale24(u8_t *buf24, fb_info new_inf, fb_info picture_inf)
 {
     int iloop;
     int jloop;
@@ -160,12 +160,12 @@ u8_t * scale24(u8_t *buf24, fb_info new_inf, fb_info jpeg_inf)
     {
         for(iloop = 0; iloop < new_inf.w; iloop++)
         {
-            dtw = (iloop * jpeg_inf.w) / new_inf.w;
-            dth = (jloop * jpeg_inf.h) / new_inf.h;
+            dtw = (iloop * picture_inf.w) / new_inf.w;
+            dth = (jloop * picture_inf.h) / new_inf.h;
             
-            buf[(0 + (iloop * 3)) + (jloop * new_inf.w * 3)] = buf24[0 + ((dtw + (dth * jpeg_inf.w)) * 3)];
-            buf[(1 + (iloop * 3)) + (jloop * new_inf.w * 3)] = buf24[1 + ((dtw + (dth * jpeg_inf.w)) * 3)];
-            buf[(2 + (iloop * 3)) + (jloop * new_inf.w * 3)] = buf24[2 + ((dtw + (dth * jpeg_inf.w)) * 3)];
+            buf[(0 + (iloop * 3)) + (jloop * new_inf.w * 3)] = buf24[0 + ((dtw + (dth * picture_inf.w)) * 3)];
+            buf[(1 + (iloop * 3)) + (jloop * new_inf.w * 3)] = buf24[1 + ((dtw + (dth * picture_inf.w)) * 3)];
+            buf[(2 + (iloop * 3)) + (jloop * new_inf.w * 3)] = buf24[2 + ((dtw + (dth * picture_inf.w)) * 3)];
         }
     }
     

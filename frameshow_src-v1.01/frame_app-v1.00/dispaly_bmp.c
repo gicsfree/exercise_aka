@@ -1,78 +1,70 @@
-#include <unistd.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#include <errno.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
+#include <unistd.h>
 
 #include "frame.h"
 
 #ifdef FRAME_SUPPORT_BMP
-/* display bitmap */
-void display_bmp(const fb_info fb_inf, const char *bmpname)
+
+#if 1
+
+/* display bmp */
+int display_bmp(const char *bmpname, fb_info fb_inf)
 {
-    int fd;
-//    unsigned char rd_rgb[3];
-    int rgb;
-    int iloop;
-    int jloop;
-    int bmpwidth;
-    int bmpheight;
-  
-    if ((fd = open(bmpname, O_RDONLY)) < 0)
+    fb_info bmp_inf;
+    int xres;
+    int yres;
+    
+    u8_t *buf24 = decode_24bmp(bmpname, &bmp_inf);
+    u8_t *scale_buf = scale24(buf24, fb_inf, bmp_inf);
+    u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
+        
+    for (yres = 0; yres < fb_inf.h; yres++)
     {
-        fprintf(stderr, "Open %s failed:%s\n", bmpname, strerror(errno));
-        exit(1);
-    }
-
-    if (lseek(fd, 18, SEEK_SET) < 0)
-    {
-        perror("lseek 18");
-        exit(1);
-    }
-
-    if (read(fd, &bmpwidth, 4) < 0)
-    {
-        perror("read bmpwidth");
-        exit(1);
-    }
-    if (read(fd, &bmpheight, 4) < 0)
-    {
-        perror("read bmpwidth");
-        exit(1);
-    }    
-
-    if (lseek(fd, 54, SEEK_SET) < 0)
-    {
-        perror("lseek 54");
-        exit(1);
-    }
-
-    for (jloop = bmpheight - 1; jloop >= 0; jloop--)
-    {
-       for (iloop = 0; iloop < bmpwidth; iloop++)
+        for (xres = 0; xres < fb_inf.w; xres++)
         {
-           rgb = 0;
-//           if (read(fd, rd_rgb, 3) < 0)
-           if (read(fd, &rgb, 3) < 0)
-            {
-               perror("read rgb");
-               exit(1);
-            } 
-//           rgb = rgb + rd_rgb[2];
-//           rgb = (rgb << 8) + rd_rgb[1];
-//           rgb = (rgb << 8)+ rd_rgb[0];
-//            rgb = rgb << 8;
-
-           fb_pixel(fb_inf, iloop, jloop, rgb);
-        }        
+            fb_pixel(fb_inf, xres, yres, buf32[xres + (yres * fb_inf.w)]);
+        }
     }
-
-    close(fd);
+    
+    free(buf24);
+    free(scale_buf);
+    free(buf32);
+    
+    return 0;
 }
 #endif
 
+#if 1
+/* display bmp blind */
+int display_bmp_blind(const char *bmpname, fb_info fb_inf)
+{
+    fb_info bmp_inf;
+    int xres;
+    int yres;
+    int xloop;
+    
+    u8_t *buf24 = decode_24bmp(bmpname, &bmp_inf);
+    u8_t *scale_buf = scale24(buf24, fb_inf, bmp_inf);
+    u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
+    
+    for(xloop = 0; xloop < fb_inf.w / 5; xloop++)
+    {
+        for (xres = xloop; xres < fb_inf.w; xres += fb_inf.w / 5)
+        {
+            for(yres = 0; yres < fb_inf.h; yres++)
+            {
+            fb_pixel(fb_inf, xres, yres, buf32[xres + (yres * fb_inf.w)]);
+            }            
+        }
+        usleep(1);
+    }
+    
+    free(buf24);
+    free(scale_buf);
+    free(buf32);
+    
+    return 0;
+}
+#endif
+
+#endif

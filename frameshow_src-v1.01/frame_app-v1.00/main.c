@@ -28,12 +28,10 @@ int main(int argc, char *argv[])
 {
     pthread_t p_mon; 
     fb_info fb_inf; 
-    fb_info new_inf;
+    fb_info small_inf;
 
-    new_inf.w = 512;
-    new_inf.h = 384;
-//    new_inf.bpp = 0;
-//    new_inf.fbmem = NULL;  
+    small_inf.w = 512;
+    small_inf.h = 384;
 
     if (init_fb(&fb_inf) < 0)
     {
@@ -63,7 +61,7 @@ int main(int argc, char *argv[])
     sleep(1);
     display_jpeg_cross("5.jpg", fb_inf);
     sleep(1);
-    display_jpeg_blind_m("6.jpg", fb_inf);
+    display_jpeg_door("6.jpg", fb_inf);
     sleep(1);
     display_jpeg_diagonal_c("7.jpg", fb_inf);
     sleep(1);
@@ -71,9 +69,9 @@ int main(int argc, char *argv[])
     sleep(1);
 //    display_jpeg_diagonal_o("9.jpg", fb_inf);
 //    sleep(1);
-    display_jpeg_circle_area("10.jpg", fb_inf);
+    display_jpeg_square("10.jpg", fb_inf);
     sleep(1);
-    display_jpeg_square("11.jpg", fb_inf);
+    display_jpeg_circle_area("11.jpg", fb_inf);
     sleep(1);
     display_jpeg_point("12.jpg", fb_inf);
     sleep(1);
@@ -82,15 +80,8 @@ int main(int argc, char *argv[])
     display_jpeg_down("13.jpg", fb_inf);
     sleep(1);
 
-    display_jpeg_small("14.jpg", "9.jpg", 0, 0, new_inf, fb_inf);
-    sleep(2);
-    display_jpeg_small("15.jpg", "8.jpg", 0, 0, new_inf, fb_inf);
-    sleep(2);
-    display_jpeg_small("16.jpg", "4.jpg", fb_inf.w / 2, fb_inf.h / 2, new_inf, fb_inf);
-    sleep(2);
-    display_jpeg_small("17.jpg", "3.jpg", fb_inf.w / 2, fb_inf.h / 2, new_inf, fb_inf);
-    sleep(2);
-
+    display_jpeg_inset("15.jpg", "8.jpg", 0, 0, small_inf, fb_inf);
+    sleep(5);
     #endif
      
     fb_draw_squarearea(fb_inf, 0, 0, fb_inf.w, fb_inf.h, 0xFF0000);
@@ -106,7 +97,9 @@ int main(int argc, char *argv[])
     #endif 
 
     #ifdef FRAME_SUPPORT_BMP
-    display_bmp(fb_inf, "test.bmp");
+    display_bmp("3.bmp", fb_inf);
+    sleep(1);
+    display_bmp_blind("2.bmp", fb_inf);
     sleep(1);
     #endif
 

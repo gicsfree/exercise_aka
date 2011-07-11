@@ -22,6 +22,8 @@ $(BIN): $(OBJS)
 #	$(STRIP) frame_app
 	
 clean:
+	@echo "cleanning project"
 	rm -rf *.o
 	rm -rf $(BIN)
 	rm -rf *.o *.bak *.c.bak *.txt
+	@echo "clean completed"
