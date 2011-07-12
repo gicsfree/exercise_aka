@@ -1,6 +1,7 @@
 /* display_clock.c */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
@@ -9,9 +10,10 @@
 
 #include "frame.h"
 
-#define X 500
+#define COLURE 0x00FF0000
+#define X 700
 #define Y 0 
-#define BMP_WIDTH  524
+#define BMP_WIDTH  320
 #define BMP_HEIGHT 70
 
 static unsigned long save_bmp[BMP_WIDTH * BMP_HEIGHT];
@@ -61,7 +63,15 @@ void display_clock(fb_info fb_inf)
     struct tm *ltm;
 
     char time_buf[50] = {0};
-    char week_buf[10] = {0};
+//    char week_buf[10] = {0};
+
+    #ifdef FRAME_SUPPORT_FONT
+    if (init_ft("simkai.ttf", 30) < 0)
+    {
+        fprintf(stderr, "Error initial font\b");
+    	 exit(1);
+    }
+    #endif
 
     fb_save_bmp(fb_inf, X, Y);
 
@@ -70,47 +80,49 @@ void display_clock(fb_info fb_inf)
         gettimeofday(&tm_get, NULL);
         ltm = localtime(&tm_get.tv_sec);
 
+        fb_restore_bmp(fb_inf, X, Y);
+
+        sprintf(time_buf, "%d-%d-%d %d:%d:%d", ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday,
+                ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
+
+        display_string (time_buf, X + 20, Y + 30, fb_inf, COLURE);
+
+//        display_string_ch (week_buf, 720, 60, fb_inf, COLURE);
+
         switch (ltm->tm_wday)
         {
-            case 0: 
-                strcpy(week_buf, "Sunday");
+            case 0:
+//                strcpy(week_buf, "Sunday");
+                display_string_ch ("星期日", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             case 1: 
-                strcpy(week_buf, "Monday");
+                display_string_ch ("星期一", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             case 2: 
-                strcpy(week_buf, "Tuesday");
+                display_string_ch ("星期二", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             case 3: 
-                strcpy(week_buf, "Wednesday");
+                display_string_ch ("星期三", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             case 4: 
-                strcpy(week_buf, "Thursday");
+                display_string_ch ("星期四", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             case 5: 
-                strcpy(week_buf, "Wriday");
+                display_string_ch ("星期五", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             case 6: 
-                strcpy(week_buf, "Saturday");
+                display_string_ch ("星期六", X + 20, Y + 60, fb_inf, COLURE);
                 break;
 
             default: 
                 break;
         }
-
-        sprintf(time_buf, "%d-%d-%d %d:%d:%d", ltm->tm_year + 1900, ltm->tm_mon + 1, ltm->tm_mday,
-                ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
-
-        fb_restore_bmp(fb_inf, X, Y);
-        display_string (time_buf, 500, 30, fb_inf, 0x00FF0000);
-        display_string (week_buf, 500, 60, fb_inf, 0x00FF0000);
-
         sleep(1);
     }
 }

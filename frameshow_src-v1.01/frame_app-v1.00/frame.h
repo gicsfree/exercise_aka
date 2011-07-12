@@ -61,6 +61,8 @@ extern int init_ft (const char *file, int size);
 
 /* display string */
 extern int display_string (const char * buf, int x, int y, fb_info fb_inf, u32_t color);
+/* display string chinese */
+extern int display_string_ch (const char * buf, int x, int y, fb_info fb_inf, u32_t color);
 
 #endif    /* FRAME_SUPPORT_FONT */
 
@@ -127,12 +129,15 @@ extern int display_jpeg_circle_area(const char *jpegname, fb_info fb_inf);
 extern int display_jpeg_point(const char *jpegname, fb_info fb_inf);
 /* display jpeg square */
 extern int display_jpeg_square(const char *jpegname, fb_info fb_inf);
-/* dosplay jpeg inset */
-extern int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, fb_info small_inf, fb_info fb_inf);
+/* display jpeg inset */
+extern int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, float vlaue, fb_info small_inf, fb_info fb_inf);
 /* display jpeg down */
 extern int display_jpeg_down(const char *jpegname, fb_info fb_inf);
 /* display jpeg mosaic*/
 extern int display_jpeg_mosaic(const const char *jpegname, fb_info fb_inf, int size);
+
+/* display jpeg inner */
+extern int display_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf);
 
 #if 0
 /* display jpeg */
@@ -152,8 +157,8 @@ extern u8_t *decode_24bmp (const char *bmpname, fb_info *bmp_inf);
 extern int display_bmp(const char *bmpname, fb_info fb_inf);
 /* display bmp blind */
 extern int display_bmp_blind(const char *bmpname, fb_info fb_inf);
-/* display bmp circle */
-extern int display_bmp_circle(const char *bmpname, fb_info fb_inf);
+/* display bmp some circle */
+extern int display_bmp_circle_num(const char *bmpname, fb_info fb_inf, int x_num, int y_num);
 /* display bmp square */
 extern int display_bmp_square(const char *bmpname, fb_info fb_inf);
 /* display bmp diagonal open */

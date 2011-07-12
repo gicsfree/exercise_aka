@@ -203,9 +203,9 @@ int display_jpeg_circle(const char *jpegname, fb_info fb_inf)
     
     for(r_len = 0; r_len < sqrt(fb_inf.w * fb_inf.w + fb_inf.h * fb_inf.h) / 2 + 1; r_len++)
     {
-        for (x_loop = 0; x_loop < r_len; x_loop++)
+        for (x_loop = 0; x_loop <= r_len; x_loop++)
         {
-            for (y_loop = 0; y_loop < r_len; y_loop++)
+            for (y_loop = 0; y_loop <= r_len; y_loop++)
             {
                 if (((x_loop * x_loop + y_loop * y_loop) <= r_len * r_len)
                    && ((x_loop * x_loop + y_loop * y_loop) >= (r_len - 1) * (r_len - 1)))
@@ -268,18 +268,18 @@ int display_jpeg_circle_num(const char *jpegname, fb_info fb_inf, int x_num, int
     u8_t *scale_buf = scale24(buf24, fb_inf, jpeg_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
-    for(r_len = 0; r_len < sqrt((fb_inf.w / x_num) * (fb_inf.w / x_num) + (fb_inf.h / y_num) * (fb_inf.h / y_num)) / 2 + 10; r_len++)
+    for(r_len = 0; r_len <= sqrt((fb_inf.w / x_num) * (fb_inf.w / x_num) + (fb_inf.h / y_num) * (fb_inf.h / y_num)) / 2 + 10; r_len++)
     {
-        for (x_loop = 0; x_loop < r_len; x_loop++)
+        for (x_loop = 0; x_loop <= r_len; x_loop++)
         {
-            for (y_loop = 0; y_loop < r_len; y_loop++)
+            for (y_loop = 0; y_loop <= r_len; y_loop++)
             {
                 if (((x_loop * x_loop + y_loop * y_loop) <= r_len * r_len)
                    && ((x_loop * x_loop + y_loop * y_loop) >= (r_len - 1) * (r_len - 1)))
                 { 
-                    for (xres_center = fb_inf.w /(x_num * 2); xres_center < fb_inf.w; xres_center += fb_inf.w / x_num )
+                    for (xres_center = fb_inf.w / (x_num * 2); xres_center < fb_inf.w; xres_center += fb_inf.w / x_num )
                       {
-                        for (yres_center = fb_inf.h /(y_num * 2); yres_center < fb_inf.h; yres_center += fb_inf.h / y_num ) 
+                        for (yres_center = fb_inf.h / (y_num * 2); yres_center < fb_inf.h; yres_center += fb_inf.h / y_num ) 
                            {       
                             xres = xres_center + x_loop;
                             yres = yres_center + y_loop;
@@ -530,8 +530,8 @@ int display_jpeg_square(const char *jpegname, fb_info fb_inf)
 #endif
 
 #if 1
-/* dosplay jpeg inset */
-int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, fb_info small_inf, fb_info fb_inf)
+/* display jpeg inset */
+int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, float value, fb_info small_inf, fb_info fb_inf)
 {
     fb_info jpeg_inf1;
     fb_info jpeg_inf2;
@@ -553,12 +553,12 @@ int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int 
         for (xloop = 0; xloop < small_inf.w; xloop++)
         {
 
-            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2)) * 0.3 
-                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 2)) * 0.7;
-            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1)) * 0.3 
-                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 1)) * 0.7;
-            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0)) * 0.3 
-                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 0)) * 0.7;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2)) * (1 - value) 
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 2)) * value;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1)) * (1 - value)
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 1)) * value;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0)) * (1 - value) 
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 0)) * value;
 
         }
     }

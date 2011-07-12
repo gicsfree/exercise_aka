@@ -134,7 +134,26 @@ int display_string (const char * buf, int x, int y, fb_info fb_inf, u32_t color)
 		        return -1;
 		    }
 		    buf += len;
+//		    x += psize;
+		    x += psize / 2;
+	  }
+    
+	  return 0;
+}
+
+int display_string_ch (const char * buf, int x, int y, fb_info fb_inf, u32_t color)
+{
+    int len;
+
+	  while (buf[0] != '\0')
+	  {	
+		    if (display_font(buf, &len, x, y, fb_inf, color))
+		    {
+		        return -1;
+		    }
+		    buf += len;
 		    x += psize;
+//		    x += psize / 2;
 	  }
     
 	  return 0;

@@ -71,35 +71,69 @@ int display_bmp_blind(const char *bmpname, fb_info fb_inf)
 #endif
 
 #if 1
-/* display bmp circle */
-int display_bmp_circle(const char *bmpname, fb_info fb_inf)
+/* display bmp some circle */
+int display_bmp_circle_num(const char *bmpname, fb_info fb_inf, int x_num, int y_num)
 {
     fb_info bmp_inf;
-    int r_len;
+    int xres;
+    int yres;
+    int xres_center;
+    int yres_center;
     int x_loop;
     int y_loop;
+    int r_len;
     
     u8_t *buf24 = decode_24bmp(bmpname, &bmp_inf);
     u8_t *scale_buf = scale24(buf24, fb_inf, bmp_inf);
     u32_t *buf32 = rgb24to32(scale_buf, fb_inf);
     
-    for(r_len = sqrt(fb_inf.w * fb_inf.w + fb_inf.h * fb_inf.h) / 2 + 1; r_len >= 0;  r_len--)
+//    for(r_len = 0; r_len <= sqrt((fb_inf.w / x_num) * (fb_inf.w / x_num) + (fb_inf.h / y_num) * (fb_inf.h / y_num)) / 2 + 10; r_len++)
+    for(r_len = sqrt((fb_inf.w / x_num) * (fb_inf.w / x_num) + (fb_inf.h / y_num) * (fb_inf.h / y_num)) / 2 + 10; r_len >= 0; r_len--)
     {
-        for (x_loop = 0; x_loop < fb_inf.w / 2; x_loop++)
+        for (x_loop = 0; x_loop <= r_len; x_loop++)
         {
-            for (y_loop = 0; y_loop < fb_inf.h / 2; y_loop++)
+            for (y_loop = 0; y_loop <= r_len; y_loop++)
             {
                 if (((x_loop * x_loop + y_loop * y_loop) <= r_len * r_len)
                    && ((x_loop * x_loop + y_loop * y_loop) >= (r_len - 1) * (r_len - 1)))
                 { 
-                    fb_pixel(fb_inf, fb_inf.w / 2 + x_loop, fb_inf.h / 2 + y_loop, buf32[fb_inf.w / 2 + x_loop + ((fb_inf.h / 2 + y_loop) * fb_inf.w)]);
-                    fb_pixel(fb_inf, fb_inf.w / 2 + x_loop, fb_inf.h / 2 - y_loop, buf32[fb_inf.w / 2 + x_loop + ((fb_inf.h / 2 - y_loop) * fb_inf.w)]);
-                    fb_pixel(fb_inf, fb_inf.w / 2 - x_loop, fb_inf.h / 2 + y_loop, buf32[fb_inf.w / 2 - x_loop + ((fb_inf.h / 2 + y_loop) * fb_inf.w)]);
-                    fb_pixel(fb_inf, fb_inf.w / 2 - x_loop, fb_inf.h / 2 - y_loop, buf32[fb_inf.w / 2 - x_loop + ((fb_inf.h / 2 - y_loop) * fb_inf.w)]);
+                    for (xres_center = fb_inf.w / (x_num * 2); xres_center < fb_inf.w; xres_center += fb_inf.w / x_num )
+                      {
+                        for (yres_center = fb_inf.h / (y_num * 2); yres_center < fb_inf.h; yres_center += fb_inf.h / y_num ) 
+                           {       
+                            xres = xres_center + x_loop;
+                            yres = yres_center + y_loop;
+                            if ((xres >= 0) && (xres < fb_inf.w) && (yres >= 0) && (yres < fb_inf.h))
+                               {
+                                fb_pixel(fb_inf, xres, yres, buf32[xres + yres * fb_inf.w]);
+                               }
+
+                            xres = xres_center + x_loop;
+                            yres = yres_center - y_loop;
+                            if ((xres >= 0) && (xres < fb_inf.w) && (yres >= 0) && (yres < fb_inf.h))
+                               {
+                                fb_pixel(fb_inf, xres, yres, buf32[xres + yres * fb_inf.w]);
+                               }
+
+                            xres = xres_center - x_loop;
+                            yres = yres_center + y_loop;
+                            if ((xres >= 0) && (xres < fb_inf.w) && (yres >= 0) && (yres < fb_inf.h))
+                               {
+                                fb_pixel(fb_inf, xres, yres, buf32[xres + yres * fb_inf.w]);
+                               }
+
+                            xres = xres_center - x_loop;
+                            yres = yres_center - y_loop;
+                            if ((xres >= 0) && (xres < fb_inf.w) && (yres >= 0) && (yres < fb_inf.h))
+                               {
+                                fb_pixel(fb_inf, xres, yres, buf32[xres + yres * fb_inf.w]);
+                               }
+                         } 
+                    }
                 }
             }            
         }
-       usleep(1);
+       usleep(500 * x_num * y_num);
     }
     
     free(buf24);
