@@ -115,6 +115,8 @@ extern int display_jpeg_door(const char *jpegname, fb_info fb_inf);
 extern int display_jpeg_cross(const char *jpegname, fb_info fb_inf);
 /* display jpeg circle */
 extern int display_jpeg_circle(const char *jpegname, fb_info fb_inf);
+/* display jpeg some circle */
+extern int display_jpeg_circle_num(const char *jpegname, fb_info fb_inf, int x_num, int y_num);
 /* display jpeg diagonal close */
 extern int display_jpeg_diagonal_c(const char *jpegname, fb_info fb_inf);
 /* display jpeg diagonal open */
@@ -129,7 +131,8 @@ extern int display_jpeg_square(const char *jpegname, fb_info fb_inf);
 extern int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, fb_info small_inf, fb_info fb_inf);
 /* display jpeg down */
 extern int display_jpeg_down(const char *jpegname, fb_info fb_inf);
-
+/* display jpeg mosaic*/
+extern int display_jpeg_mosaic(const const char *jpegname, fb_info fb_inf, int size);
 
 #if 0
 /* display jpeg */

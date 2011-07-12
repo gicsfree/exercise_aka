@@ -49,7 +49,7 @@ unsigned char *decode_jpeg (const char *jpegname, fb_info *jpeg_inf)
         return NULL;
     }
     
-    cinfo.err = jpeg_std_error (&err_mgr);
+    cinfo.err = jpeg_std_error(&err_mgr);
     err_mgr.error_exit = jpeg_error_exit;	
     
     jpeg_create_decompress (&cinfo);

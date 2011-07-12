@@ -108,8 +108,8 @@ void display_clock(fb_info fb_inf)
                 ltm->tm_hour, ltm->tm_min, ltm->tm_sec);
 
         fb_restore_bmp(fb_inf, X, Y);
-        display_string (time_buf, 500, 30, fb_inf, 0x00FFFF00);
-        display_string (week_buf, 500, 60, fb_inf, 0x00FFFF00);
+        display_string (time_buf, 500, 30, fb_inf, 0x00FF0000);
+        display_string (week_buf, 500, 60, fb_inf, 0x00FF0000);
 
         sleep(1);
     }

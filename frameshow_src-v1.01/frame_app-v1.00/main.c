@@ -51,8 +51,6 @@ int main(int argc, char *argv[])
     #ifdef FRAME_SUPPORT_JPEG
     display_jpeg("1.jpg", fb_inf);
     sleep(1);
-    display_jpeg("2.jpg", fb_inf);
-    sleep(1);
 
 #if 1
     display_jpeg_blind_y("3.jpg", fb_inf);
@@ -73,17 +71,21 @@ int main(int argc, char *argv[])
     sleep(1);
     display_jpeg_point("12.jpg", fb_inf);
     sleep(1);
+    display_jpeg_mosaic("1.jpg", fb_inf, 10);
+    sleep(3);
 
 #endif
 
-    display_jpeg_mosaic("1.jpg", fb_inf, 20);
-    sleep(30);
+//    display_jpeg_right("14.jpg", fb_inf);
+//    sleep(1);
 
+    display_jpeg_circle_num("9.jpg", fb_inf, 15, 10);
+    sleep(1);
     display_jpeg_down("13.jpg", fb_inf);
     sleep(1);
 
-    display_jpeg_inset("15.jpg", "8.jpg", 0, 0, small_inf, fb_inf);
-    sleep(5);
+//    display_jpeg_inset("15.jpg", "8.jpg", fb_inf.w / 4, fb_inf.h / 4, small_inf, fb_inf);
+//    sleep(1);
     #endif
      
     fb_draw_squarearea(fb_inf, 0, 0, fb_inf.w, fb_inf.h, 0xFF0000);
@@ -106,6 +108,8 @@ int main(int argc, char *argv[])
     display_bmp_diagonal("4.bmp", fb_inf);
     sleep(1);
     display_bmp_blind("2.bmp", fb_inf);
+    sleep(1);
+    display_jpeg_inset("2.jpg", "8.jpg", fb_inf.w / 4, fb_inf.h / 4, small_inf, fb_inf);
     sleep(1);
     #endif
 
