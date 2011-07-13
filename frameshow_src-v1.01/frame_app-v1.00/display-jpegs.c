@@ -12,28 +12,38 @@
 
 #include "frame.h"
 
+#if 0
 #define JPEG_X_NUM 3
 #define JPEG_Y_NUM 2
 
 char jpegs[JPEG_X_NUM * JPEG_Y_NUM + 1][8] = {"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"};
+#endif
+
+#if 1
+#define JPEG_X_NUM 4
+#define JPEG_Y_NUM 3
+
+char jpegs[JPEG_X_NUM * JPEG_Y_NUM + 1][8] = {"1.jpg", "2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "9.jpg", "10.jpg", "11.jpg", "12.jpg", "13.jpg", "8.jpg"};
+#endif
+
 #if 0
-char jpegs[JPEG_X_NUM * JPEG_Y_NUM + 1][8] = {"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"
-                         ,"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"
-                         ,"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"
-                         ,"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"
-                         ,"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"
-                         ,"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg"};
+#define JPEG_X_NUM 7
+#define JPEG_Y_NUM 5
+char jpegs[JPEG_X_NUM * JPEG_Y_NUM + 1][8] = {"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg","1.jpg", "9.jpg", "10.jpg","11.jpg", "12.jpg", "13.jpg", "14.jpg"
+                                              , "15.jpg", "16.jpg", "17.jpg","18.jpg", "19.jpg", "20.jpg", "21.jpg","22.jpg", "21.jpg", "20.jpg","19.jpg"
+                                              , "18.jpg", "17.jpg",  "16.jpg","15.jpg", "14.jpg", "13.jpg","12.jpg", "11.jpg", "10.jpg", "9.jpg", "8.jpg"}; 
 #endif
 
 static int m_x;
 static int m_y;
 static int p_x;
 static int p_y;
-static int flag_p_left = -1;
-static int flag_n_left = -1;
-static int flag_is_big = 0;
-static int flag_big_times = 0;
-static int flag_is_bigger = 0;
+static int button_left_pre_flag = -1;
+static int button_left_now_flag = -1;
+static int jpeg_is_big_flag = 0;
+static int jpeg_big_button_left_times = 0;
+static int jpeg_is_bigger_flag = 0;
+static int mouse_response_time = 0;
 
 #ifdef FRAME_SUPPORT_JPEG
 ////////////////////////////////////////////////////////////////
@@ -55,8 +65,8 @@ int display_jpeg_mouse(fb_info fb_inf)
     size_inf.w = fb_inf.w / (JPEG_X_NUM + 1);
     size_inf.h = fb_inf.h / (JPEG_Y_NUM + 1);
 
-    bigger_size_inf.w = fb_inf.w / (JPEG_X_NUM );
-    bigger_size_inf.h = fb_inf.h / (JPEG_Y_NUM );
+    bigger_size_inf.w = fb_inf.w / JPEG_X_NUM;
+    bigger_size_inf.h = fb_inf.h / JPEG_Y_NUM;
 
     display_jpegs(fb_inf, size_inf);
         
@@ -97,7 +107,7 @@ int display_jpeg_mouse(fb_info fb_inf)
 	     switch (mevent.button)
               {
 	         case 1:
-                    if (flag_is_bigger = 0)
+                    if (jpeg_is_bigger_flag == 0)
                       {
                         mevent_button_left(size_inf, size_inf, fb_inf);
                       }
@@ -119,6 +129,16 @@ int display_jpeg_mouse(fb_info fb_inf)
 	     }
 	 }	
         usleep(300);
+#if 1
+        mouse_response_time++;
+        if (mouse_response_time == 300)
+        {
+            mouse_response_time = 0;
+            jpeg_big_button_left_times = 0;
+            button_left_pre_flag = -1;
+            button_left_now_flag = -1;             
+        }
+#endif
      }
 
     return 0;
@@ -126,19 +146,19 @@ int display_jpeg_mouse(fb_info fb_inf)
 #endif
 
 #if 1
+/* jpeg bigger */
 int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf)
 {
     int num;
     int iloop;
     int jloop;
     int flag_mouse_in_bigger;
-//    static int flag_is_bigger = 0;
     static int p_iloop;
     static int p_jloop;
 
-    if (flag_is_big == 0)
+    if (jpeg_is_big_flag == 0)
     {
-        if (flag_is_bigger == 0)
+        if (jpeg_is_bigger_flag == 0)
          {
             for (jloop = 1; jloop < 2 * JPEG_Y_NUM; jloop += 2)
             {
@@ -148,7 +168,7 @@ int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf)
                         && (m_y >= jloop * (fb_inf.h / (2 * JPEG_Y_NUM)) - size_inf.h / 2) && (m_y <= jloop * (fb_inf.h / (2 * JPEG_Y_NUM)) + size_inf.h / 2))
                       {
                         num = iloop / 2 + JPEG_X_NUM * (jloop / 2);
-                        display_jpeg_inner(jpegs[num], iloop * (fb_inf.w / (2 * JPEG_X_NUM)), jloop * (fb_inf.h / (2 * JPEG_Y_NUM)), bigger_size_inf, fb_inf);
+                        display_bigger_jpeg_inner(jpegs[num], iloop * (fb_inf.w / (2 * JPEG_X_NUM)), jloop * (fb_inf.h / (2 * JPEG_Y_NUM)), bigger_size_inf, fb_inf);
 
                         fb_save_cursor(fb_inf, m_x, m_y); 
                         p_x = m_x;   
@@ -157,8 +177,10 @@ int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf)
 
                         p_iloop = iloop;
                         p_jloop = jloop;
-                        flag_is_bigger = 1;
 
+                        jpeg_is_bigger_flag = 1;
+
+                        break;
                       } 
                 }
            }
@@ -181,7 +203,7 @@ int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf)
 
                 fb_save_cursor(fb_inf, m_x, m_y); 
 
-                flag_is_bigger = 0; 
+                jpeg_is_bigger_flag = 0; 
              }
         }
     }
@@ -191,6 +213,7 @@ int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf)
 #endif
 
 #if 1
+/* display jpeg in local */
 int display_jpeg_local(int p_iloop, int p_jloop, fb_info bigger_size_inf, fb_info fb_inf)
 {
     fb_info jpeg_inf;
@@ -226,26 +249,30 @@ int display_jpeg_local(int p_iloop, int p_jloop, fb_info bigger_size_inf, fb_inf
 #endif
 
 #if 1
-int mevent_button_left(fb_info size_inf, fb_info size_inf1, fb_info fb_inf)
+/* response of left button work */
+int mevent_button_left(fb_info size_inf, fb_info small_size_inf, fb_info fb_inf)
 {
 
     int iloop;
     int jloop;
 
-    if (flag_is_big == 1)
+    mouse_response_time = 0;
+
+    if (jpeg_is_big_flag == 1)
     {
-        flag_big_times++;
-        if (flag_big_times == 2)
+        jpeg_big_button_left_times++;
+        if (jpeg_big_button_left_times == 2)
          {
-            display_jpegs(fb_inf, size_inf1);
+            display_jpegs(fb_inf, small_size_inf);
+            jpeg_is_bigger_flag = 0;
  
             fb_save_cursor(fb_inf, m_x, m_y); 
             p_x = m_x;   
             p_y = m_y;
             fb_draw_cursor(fb_inf, m_x, m_y);
 
-            flag_big_times = 0;
-            flag_is_big = 0; 
+            jpeg_big_button_left_times = 0;
+            jpeg_is_big_flag = 0; 
         }  
     }
     else
@@ -257,25 +284,25 @@ int mevent_button_left(fb_info size_inf, fb_info size_inf1, fb_info fb_inf)
                 if ((m_x >= iloop * (fb_inf.w / (2 * JPEG_X_NUM)) - size_inf.w / 2) && m_x <= (iloop * (fb_inf.w / (2 * JPEG_X_NUM)) + size_inf.w / 2)
                     && (m_y >= jloop * (fb_inf.h / (2 * JPEG_Y_NUM)) - size_inf.h / 2) && (m_y <= jloop * (fb_inf.h / (2 * JPEG_Y_NUM)) + size_inf.h / 2))
                   {
-                    flag_n_left = iloop / 2 + JPEG_X_NUM * (jloop / 2);
-                    if (flag_p_left == flag_n_left)
+                    button_left_now_flag = iloop / 2 + JPEG_X_NUM * (jloop / 2);
+                    if (button_left_pre_flag == button_left_now_flag)
                       {
-                        display_jpeg(jpegs[flag_n_left], fb_inf);
+                        display_jpeg(jpegs[button_left_now_flag], fb_inf);
 
                         fb_save_cursor(fb_inf, m_x, m_y); 
                         p_x = m_x;   
                         p_y = m_y;
                         fb_draw_cursor(fb_inf, m_x, m_y);
 
-                        flag_is_big = 1;
+                        jpeg_is_big_flag = 1;
 
-                        flag_n_left = -1;
-                        flag_p_left = -1;
+                        button_left_pre_flag = -1;
+                        button_left_now_flag = -1;
                         }
                     else 
                       {
-                        flag_p_left = flag_n_left;
-                        flag_n_left = -1;
+                        button_left_pre_flag = button_left_now_flag;
+                        button_left_now_flag = -1;
                       }
                 } 
             }
@@ -286,66 +313,6 @@ int mevent_button_left(fb_info size_inf, fb_info size_inf1, fb_info fb_inf)
 }
 #endif
 
-#if 0
-int mevent_button_left(fb_info size_inf, fb_info fb_inf)
-{
-
-    int iloop;
-    int jloop;
-
-    if (flag_is_big == 1)
-    {
-        flag_big_times++;
-        if (flag_big_times == 2)
-         {
-            display_jpegs(fb_inf, size_inf);
- 
-            fb_save_cursor(fb_inf, m_x, m_y); 
-            p_x = m_x;   
-            p_y = m_y;
-            fb_draw_cursor(fb_inf, m_x, m_y);
-
-            flag_big_times = 0;
-            flag_is_big = 0; 
-        }  
-    }
-    else
-    {
-        for (jloop = 1; jloop < 2 * JPEG_Y_NUM; jloop += 2)
-        {
-            for (iloop = 1; iloop < 2 * JPEG_X_NUM; iloop += 2)
-             {
-                if ((m_x >= iloop * (fb_inf.w / (2 * JPEG_X_NUM)) - size_inf.w / 2) && m_x <= (iloop * (fb_inf.w / (2 * JPEG_X_NUM)) + size_inf.w / 2)
-                    && (m_y >= jloop * (fb_inf.h / (2 * JPEG_Y_NUM)) - size_inf.h / 2) && (m_y <= jloop * (fb_inf.h / (2 * JPEG_Y_NUM)) + size_inf.h / 2))
-                  {
-                    flag_n_left = iloop / 2 + JPEG_X_NUM * (jloop / 2);
-                    if (flag_p_left == flag_n_left)
-                      {
-                        display_jpeg(jpegs[flag_n_left], fb_inf);
-
-                        fb_save_cursor(fb_inf, m_x, m_y); 
-                        p_x = m_x;   
-                        p_y = m_y;
-                        fb_draw_cursor(fb_inf, m_x, m_y);
-
-                        flag_is_big = 1;
-
-                        flag_n_left = -1;
-                        flag_p_left = -1;
-                        }
-                    else 
-                      {
-                        flag_p_left = flag_n_left;
-                        flag_n_left = -1;
-                      }
-                } 
-            }
-        }
-    }
-
-    return 0;
-}
-#endif
 
 #if 1
 /* display jpegs */
@@ -370,7 +337,7 @@ int display_jpegs(fb_info fb_inf, fb_info size_inf)
 }
 #endif
 
-#if 1
+#if 0
 /* display jpeg inner */
 int display_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf)
 {
@@ -401,6 +368,159 @@ int display_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_
     free(buf24);
     free(scale_buf);
     free(buf32);
+    
+    return 0;
+}
+#endif
+
+#if 1
+/* display bigger jpeg inner */
+int display_bigger_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf)
+{
+    fb_info jpeg_inf;
+    int xres;
+    int yres;
+    int xloop;
+    int yloop;
+
+    u8_t *buf24 = decode_jpeg(jpegname, &jpeg_inf);
+    u8_t *scale_buf = scale24(buf24, size_inf, jpeg_inf);
+    u32_t *buf32 = rgb24to32(scale_buf, size_inf);
+    
+    for (yloop = 0; yloop < size_inf.h; yloop++)
+    {
+        for (xloop = 0; xloop < size_inf.w; xloop++)
+        {
+            xres = x - size_inf.w / 2 + xloop;
+            yres = y - size_inf.h / 2 + yloop;
+
+            if ((xres >= 0) && (xres < fb_inf.w) && (yres >= 0) && (yres < fb_inf.h))
+             {
+                fb_pixel(fb_inf, xres, yres, buf32[xloop + yloop * size_inf.w]);
+             }
+        }
+    }
+        
+    free(buf24);
+    free(scale_buf);
+    free(buf32);
+    
+    return 0;
+}
+#endif
+
+#if 1
+/* display jpeg inner */
+int display_jpeg_inner(const char *jpegname, int x_center, int y_center, fb_info size_inf, fb_info fb_inf)
+{
+    fb_info big_jpeg_inf;
+    fb_info small_jpeg_inf;
+    int xres;
+    int yres;
+    int xloop;
+    int yloop;
+    int x;
+    int y;
+
+    u8_t *buf24_big = decode_jpeg(jpegs[JPEG_X_NUM * JPEG_Y_NUM], &big_jpeg_inf);
+    u8_t *scale_buf_big = scale24(buf24_big, fb_inf, big_jpeg_inf);
+    u32_t *buf32_big = rgb24to32(scale_buf_big, fb_inf);
+    
+    u8_t *buf24_small = decode_jpeg(jpegname, &small_jpeg_inf);
+    u8_t *scale_buf_small = scale24(buf24_small, size_inf, small_jpeg_inf);
+    u32_t *buf32_small = rgb24to32(scale_buf_small, size_inf);
+    
+    for (yloop = 0; yloop < size_inf.h; yloop++)
+    {
+        for (xloop = 0; xloop < size_inf.w; xloop++)
+        {
+            x = x_center - size_inf.w / 2; 
+            y = y_center - size_inf.h / 2;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2)) * 0.3 
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * size_inf.w)] + 2)) * 0.7;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1)) * 0.3
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * size_inf.w)] + 1)) * 0.7;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0)) * 0.3 
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * size_inf.w)] + 0)) * 0.7;
+
+        }
+    }
+    
+    for (yloop = 0; yloop < size_inf.h; yloop++)
+    {
+        for (xloop = 0; xloop < size_inf.w; xloop++)
+        {
+            xres = x_center - size_inf.w / 2 + xloop;
+            yres = y_center - size_inf.h / 2 + yloop;
+
+            if ((xres >= 0) && (xres < fb_inf.w) && (yres >= 0) && (yres < fb_inf.h))
+             {
+                fb_pixel(fb_inf, xres, yres, buf32_big[xres + yres * fb_inf.w]);
+             }
+        }
+    }
+        
+    free(buf24_small);
+    free(scale_buf_small);
+    free(buf32_small);
+
+    free(buf24_big);
+    free(scale_buf_big);
+    free(buf32_big);
+    
+    return 0;
+}
+#endif
+
+#if 0
+/* display jpeg inset */
+int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, float value, fb_info small_inf, fb_info fb_inf)
+{
+    fb_info jpeg_inf1;
+    fb_info jpeg_inf2;
+    int xres;
+    int yres;
+    int xloop;
+    int yloop;
+
+    u8_t *buf24_big = decode_jpeg(jpeg_big, &jpeg_inf1);
+    u8_t *scale_buf_big = scale24(buf24_big, fb_inf, jpeg_inf1);
+    u32_t *buf32_big = rgb24to32(scale_buf_big, fb_inf);
+    
+    u8_t *buf24_small = decode_jpeg(jpeg_small, &jpeg_inf2);
+    u8_t *scale_buf_small = scale24(buf24_small, small_inf, jpeg_inf2);
+    u32_t *buf32_small = rgb24to32(scale_buf_small, small_inf);
+    
+    for (yloop = 0; yloop < small_inf.h; yloop++)
+    {
+        for (xloop = 0; xloop < small_inf.w; xloop++)
+        {
+
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 2)) * (1 - value) 
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 2)) * value;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 1)) * (1 - value)
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 1)) * value;
+            *((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0) = (float)(*((u8_t *)&buf32_big[x + xloop + ((y + yloop) * fb_inf.w)] + 0)) * (1 - value) 
+                                                              + (float)(*((u8_t *)&buf32_small[xloop + (yloop * small_inf.w)] + 0)) * value;
+
+        }
+    }
+
+    for (yres = 0; yres < fb_inf.h; yres++)
+    {
+        for (xres = 0; xres < fb_inf.w; xres++)
+        {
+            fb_pixel(fb_inf, xres, yres, buf32_big[xres + (yres * fb_inf.w)]);
+        }
+    }
+    
+    free(buf24_small);
+    free(scale_buf_small);
+    free(buf32_small);
+
+    free(buf24_big);
+    free(scale_buf_big);
+    free(buf32_big);
     
     return 0;
 }

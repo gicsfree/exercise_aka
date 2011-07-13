@@ -136,8 +136,21 @@ extern int display_jpeg_down(const char *jpegname, fb_info fb_inf);
 /* display jpeg mosaic*/
 extern int display_jpeg_mosaic(const const char *jpegname, fb_info fb_inf, int size);
 
+/* display jpegs when mouse work */
+extern int display_jpeg_mouse(fb_info fb_inf);
+/* jpeg bigger */
+extern int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf);
+/* display jpeg in local */
+extern int display_jpeg_local(int p_iloop, int p_jloop, fb_info bigger_size_inf, fb_info fb_inf);
+/* response of left button work */
+extern int mevent_button_left(fb_info size_inf, fb_info small_size_inf, fb_info fb_inf);
+/* display jpegs */
+extern int display_jpegs(fb_info fb_inf, fb_info size_inf);
 /* display jpeg inner */
-extern int display_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf);
+//extern int display_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf);
+extern int display_jpeg_inner(const char *jpegname, int x_center, int y_center, fb_info size_inf, fb_info fb_inf);
+/* display bigger jpeg inner */
+extern int display_bigger_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf);
 
 #if 0
 /* display jpeg */
