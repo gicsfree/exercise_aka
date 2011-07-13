@@ -85,7 +85,7 @@ int mouse_open(char *device_name, int *fd)
 */
 int mouse_parse(const u8_t *buf, mouse_event_t* mevent)
 {
-    switch(buf[0] & 0x7)
+    switch(buf[0] & 0x07)
     {
         case 1:						      /* left */
             mevent->button = 1;
@@ -100,6 +100,7 @@ int mouse_parse(const u8_t *buf, mouse_event_t* mevent)
             break;
 	        	
         default:
+            mevent->button = 0;         
             break;
     }
     mevent->x =  buf[1] - ((buf[0] & 0x10) ? 256 : 0);

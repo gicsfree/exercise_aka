@@ -11,7 +11,7 @@
 
 static int flag = 0;
 // static int flag_mouse = 1;
-int flag_mouse = 1;
+// int flag_mouse = 1;
 
 /* the thread display clock */
 void *pro_thread_clock(void *fb_inf)
@@ -25,7 +25,7 @@ void *pro_thread_clock(void *fb_inf)
     return NULL;
 }
 
-#if 1
+#if 0
 /* the thread display jpeg when mouse work */
 void *pro_thread_mouse(void *fb0_inf)
 {
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
     }
     
     pthread_create(&p_mon, NULL, pro_thread_clock, &fb_inf);
-    pthread_create(&p_m, NULL, pro_thread_mouse, &fb_inf);
+//    pthread_create(&p_m, NULL, pro_thread_mouse, &fb_inf);
 
     small_inf.w = fb_inf.w / 2;
     small_inf.h = fb_inf.h / 2;
@@ -125,7 +125,11 @@ int main(int argc, char *argv[])
 //    display_jpeg("1.jpg", fb_inf);
 //    sleep(1);
 
-    while (1)
+
+    display_jpeg_mouse(fb_inf);
+
+#if 0
+    while (0)
     {
         if (flag_mouse == 1)
         {
@@ -134,6 +138,7 @@ int main(int argc, char *argv[])
         }
         usleep(50);
     }
+#endif
 
 #if 0
     display_jpeg_blind_y("3.jpg", fb_inf);
