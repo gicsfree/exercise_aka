@@ -33,8 +33,7 @@ PATH: /usr/sbin
 PATH: /usr/bin
 PATH: /sbin
 PATH: /bin
-PATH: /usr/games
-PATH: /home/akaedu/linux-cross-tool/4.3.2/bin
+PATH: /usr/X11R6/bin
 
 
 ## ----------- ##
@@ -906,19 +905,19 @@ lt_cv_to_tool_file_cmd=func_convert_file_noop
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL='${SHELL} /home/akaedu/test/frameshow_src-v1.00/jpeg-8c/missing --run aclocal-1.11'
+ACLOCAL='${SHELL} /home/akaedu/test/frameshow_src-v1.01/jpeg-8c/missing --run aclocal-1.11'
 AMDEPBACKSLASH='\'
 AMDEP_FALSE='#'
 AMDEP_TRUE=''
-AMTAR='${SHELL} /home/akaedu/test/frameshow_src-v1.00/jpeg-8c/missing --run tar'
+AMTAR='${SHELL} /home/akaedu/test/frameshow_src-v1.01/jpeg-8c/missing --run tar'
 AM_BACKSLASH='\'
 AM_DEFAULT_VERBOSITY='0'
 ANSI2KNR=''
 AR='ar'
 AS='as'
-AUTOCONF='${SHELL} /home/akaedu/test/frameshow_src-v1.00/jpeg-8c/missing --run autoconf'
+AUTOCONF='${SHELL} /home/akaedu/test/frameshow_src-v1.01/jpeg-8c/missing --run autoconf'
 AUTOHEADER='echo autoheader ignored'
-AUTOMAKE='${SHELL} /home/akaedu/test/frameshow_src-v1.00/jpeg-8c/missing --run automake-1.11'
+AUTOMAKE='${SHELL} /home/akaedu/test/frameshow_src-v1.01/jpeg-8c/missing --run automake-1.11'
 AWK='gawk'
 CC='gcc -std=gnu99'
 CCDEPMODE='depmode=gcc3'
@@ -956,7 +955,7 @@ LTLIBOBJS=''
 MAINT='#'
 MAINTAINER_MODE_FALSE=''
 MAINTAINER_MODE_TRUE='#'
-MAKEINFO='${SHELL} /home/akaedu/test/frameshow_src-v1.00/jpeg-8c/missing --run makeinfo'
+MAKEINFO='${SHELL} /home/akaedu/test/frameshow_src-v1.01/jpeg-8c/missing --run makeinfo'
 MANIFEST_TOOL=':'
 MEMORYMGR='jmemnobs'
 MKDIR_P='/bin/mkdir -p'
@@ -1013,7 +1012,7 @@ host_vendor='pc'
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} /home/akaedu/test/frameshow_src-v1.00/jpeg-8c/install-sh'
+install_sh='${SHELL} /home/akaedu/test/frameshow_src-v1.01/jpeg-8c/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'

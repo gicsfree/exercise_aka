@@ -182,4 +182,13 @@ extern int display_bmp_diagonal(const char *bmpname, fb_info fb_inf);
 /* display clock */
 extern void display_clock(fb_info fb_inf);
 
+/* response when keyboard work */ 
+extern int keyboard_response(void);
+
+/* display picture */
+extern int display_pic(fb_info fb_inf); 
+
+/* display pictures in directory */
+extern int dispaly_pic_in_dir(const char *directory, fb_info fb_inf);
+
 #endif /* _FRAME_H_ */
