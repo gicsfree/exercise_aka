@@ -191,4 +191,7 @@ extern int display_pic(fb_info fb_inf);
 /* display pictures in directory */
 extern int dispaly_pic_in_dir(const char *directory, fb_info fb_inf);
 
+/* download the frame */
+extern int tcp_receive_frame(void);
+
 #endif /* _FRAME_H_ */

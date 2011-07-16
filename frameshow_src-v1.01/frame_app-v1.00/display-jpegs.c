@@ -12,14 +12,14 @@
 
 #include "frame.h"
 
-#if 0
+#if 1
 #define JPEG_X_NUM 3
 #define JPEG_Y_NUM 2
 
-char jpegs[JPEG_X_NUM * JPEG_Y_NUM + 1][8] = {"2.jpg", "3.jpg", "4.jpg","5.jpg", "6.jpg", "7.jpg", "8.jpg"};
+char jpegs[JPEG_X_NUM * JPEG_Y_NUM + 1][8] = {"1.jpg", "2.jpg", "3.jpg","4.jpg", "5.jpg", "6.jpg", "7.jpg"};
 #endif
 
-#if 1
+#if 0
 #define JPEG_X_NUM 4
 #define JPEG_Y_NUM 3
 

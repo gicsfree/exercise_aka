@@ -7,10 +7,7 @@
 #include <time.h>
 #include <pthread.h>
 
-//#include <stdio.h>
-//#include <stdlib.h>
 #include <string.h>
-//#include <unistd.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <dirent.h>
@@ -26,6 +23,23 @@
 
 int clock_flag = 0;
 int keyboard_display_pic_flag = 0;
+pthread_t p_display_jpegs;
+
+/* the thread display severial pictures at the same moment */
+void *pro_thread_display_jpegs(void *fb_inf)
+{
+    display_jpeg_mouse(*(fb_info *)fb_inf);
+
+    return NULL;
+}
+
+/* the thread receive frame by tcp */
+void *pro_thread_tcp(void *para)
+{
+    tcp_receive_frame();
+
+    return NULL;
+}
 
 /* the thread response keyboard */
 void *pro_thread_keyboard(void *para)
@@ -42,6 +56,7 @@ void *pro_thread_display_pic(void *fb_inf)
     {
         usleep(1);
     }
+    pthread_cancel(p_display_jpegs);
     display_pic(*(fb_info *)fb_inf);
 
     return NULL;
@@ -65,6 +80,8 @@ int main(int argc, char *argv[])
     pthread_t p_clock; 
     pthread_t p_keyboard;
     pthread_t p_display_pic;
+    pthread_t p_tcp_recv_frame;
+//    pthread_t p_display_jpegs;
 
     fb_info fb_inf;
 
@@ -73,9 +90,11 @@ int main(int argc, char *argv[])
         fprintf(stderr, "Error initial framebuffer\b")	;
         return -1;
     }
-    
+ 
+    pthread_create(&p_display_jpegs, NULL, pro_thread_display_jpegs, &fb_inf);   
     pthread_create(&p_clock, NULL, pro_thread_clock, &fb_inf);
     pthread_create(&p_keyboard, NULL, pro_thread_keyboard, NULL);
+    pthread_create(&p_tcp_recv_frame, NULL, pro_thread_tcp, NULL);
 again:
     pthread_create(&p_display_pic, NULL, pro_thread_display_pic, &fb_inf);
 

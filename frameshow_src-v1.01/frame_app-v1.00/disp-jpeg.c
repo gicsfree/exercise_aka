@@ -16,7 +16,7 @@
 ////////////////////////////////////////////////////////////////
 #if 1
 /* display jpeg */
-int display_jpeg(const const char *jpegname, fb_info fb_inf)
+int display_jpeg(const char *jpegname, fb_info fb_inf)
 {
     fb_info jpeg_inf;
     int xres;

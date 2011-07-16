@@ -55,15 +55,15 @@ int test_mouse(fb_info fb_inf)
 	     switch (mevent.button)
               {
 	         case 1:
-		      printf("left\n");
+//		      printf("left\n");
 		      break;
 
 		  case 2:
-		      printf("right\n");
+//		      printf("right\n");
 		      break;
                      
 		  case 3:
-		      printf("middle\n");
+//		      printf("middle\n");
 		      break;
 
 		  default:

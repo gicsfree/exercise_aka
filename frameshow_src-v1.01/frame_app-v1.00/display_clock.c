@@ -10,7 +10,7 @@
 
 #include "frame.h"
 
-#define COLURE 0x00FF0000
+#define COLURE 0x00FFFF00
 #define X 700
 #define Y 0 
 #define BMP_WIDTH  320
