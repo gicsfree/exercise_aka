@@ -1,0 +1,290 @@
+/* frame.h */
+#ifndef _FRAME_H_
+#define _FRAME_H_
+
+#define FRAME_SUPPORT_JPEG
+#define FRAME_SUPPORT_FONT
+#define FRAME_SUPPORT_MOUSE
+#define FRAME_SUPPORT_BMP
+
+////////////////////////////////////////////////////////////////////////////
+typedef unsigned char  u8_t;
+typedef unsigned short u16_t;
+typedef unsigned int   u32_t;
+
+typedef struct 
+{
+	int w;				     /* width */
+	int h;				     /* high */
+	int bpp;				   /* bits per pixel */
+	u8_t *fbmem;
+}fb_info;
+
+////////////////////////////////////////////////////////////////////////////
+/* initial framebuffer */
+extern int init_fb(fb_info *fb_inf);
+
+/* drawing pixel */
+extern int fb_pixel(fb_info fb_inf, int x, int y, u32_t color);
+
+/* draw a color line, the slope is single */
+extern int fb_draw_row(const fb_info fb_inf, int x, int y, int len, u32_t color);
+
+/* draw a color slash line, the slope is change */
+extern int fb_draw_slash_row(const fb_info fb_inf, int x, int y, int len, int slope, u32_t color);
+
+/* draw a color circle */
+extern int fb_draw_circle(const fb_info fb_inf, int x, int y, int len, u32_t color);
+
+/* draw a color empty circle */
+extern int fb_draw_empty_circle(const fb_info fb_inf, int x, int y, int len, int c_width, u32_t color);
+
+/* draw a color oval circle */
+extern int fb_draw_oval_circle(const fb_info fb_inf, int x, int y, int a_len, int b_len, u32_t color);
+
+/* draw a color empty oval circle */
+extern int fb_draw_empty_oval_circle(const fb_info fb_inf, int x, int y, int a_len, int b_len, int c_width, u32_t color);
+
+/* draw a color squarearea */
+extern int fb_draw_squarearea(const fb_info fb_inf, int x, int y, int x_len, int y_len, u32_t color);
+
+/* draw a empty square */
+extern int fb_draw_empty_square(const fb_info fb_inf, int x, int y, int x_len, int y_len, int s_width, u32_t color);
+
+/* draw a star */
+extern int fb_draw_star(const fb_info fb_inf, int x, int y, int len, u32_t color);
+
+#ifdef FRAME_SUPPORT_FONT
+////////////////////////////////////////////////////////////////////////////
+/* init font library */
+extern int init_ft (const char *file, int size);
+
+/* display string */
+extern int display_string (const char * buf, int x, int y, fb_info fb_inf, u32_t color);
+/* display string chinese */
+extern int display_string_ch (const char * buf, int x, int y, fb_info fb_inf, u32_t color);
+
+#endif    /* FRAME_SUPPORT_FONT */
+
+#ifdef FRAME_SUPPORT_MOUSE
+////////////////////////////////////////////////////////////////////////////
+typedef struct 
+{
+	int x;
+	int y;
+	int button;
+}mouse_event_t;
+
+#define C_WIDTH  10
+#define C_HEIGHT 17
+
+////////////////////////////////////////////////////////////////////////////
+/* open mouse */
+extern int mouse_open(char *device_name, int *fd);
+/* parse mouse */
+extern int mouse_parse(const u8_t *buf, mouse_event_t* mevent);
+
+/* restore cursor */
+extern int fb_restore_cursor(fb_info fb_inf, int x, int y);
+/* save cursor */
+extern int fb_save_cursor (fb_info fb_inf,int x,int y);
+/* draw cursor */
+extern int fb_draw_cursor(fb_info fb_inf, int x, int y);
+/* test mouse */
+extern int test_mouse(fb_info fb_inf);
+
+#endif  /* FRAME_SUPPORT_MOUSE */
+
+
+#ifdef FRAME_SUPPORT_JPEG
+////////////////////////////////////////////////////////////////////////////
+/* decode jpeg */
+extern unsigned char *decode_jpeg (const char *jpegname, fb_info *jpeg_inf);
+/* rgb888 to argb8888 */
+extern u32_t * rgb24to32(u8_t *buf24, fb_info picture_inf);
+/* scale24 */
+u8_t * scale24(u8_t *buf24, fb_info new_inf, fb_info picture_inf);
+
+/* display jpeg */
+extern int display_jpeg(const char *jpegname, fb_info fb_inf);
+/* display jpeg blind y */
+extern int display_jpeg_blind_y(const char *jpegname, fb_info fb_inf);
+/* display jpeg blind x */
+extern int display_jpeg_blind_x(const char *jpegname, fb_info fb_inf);
+/* display jpeg door */
+extern int display_jpeg_door(const char *jpegname, fb_info fb_inf);
+/* display jpeg cross */
+extern int display_jpeg_cross(const char *jpegname, fb_info fb_inf);
+/* display jpeg circle */
+extern int display_jpeg_circle(const char *jpegname, fb_info fb_inf);
+/* display jpeg some circle */
+extern int display_jpeg_circle_num(const char *jpegname, fb_info fb_inf, int x_num, int y_num);
+/* display jpeg diagonal close */
+extern int display_jpeg_diagonal_c(const char *jpegname, fb_info fb_inf);
+/* display jpeg diagonal open */
+extern int display_jpeg_diagonal_o(const char *jpegname, fb_info fb_inf);
+/* display jpeg circle area */
+extern int display_jpeg_circle_area(const char *jpegname, fb_info fb_inf);
+/* display jpeg point */
+extern int display_jpeg_point(const char *jpegname, fb_info fb_inf);
+/* display jpeg square */
+extern int display_jpeg_square(const char *jpegname, fb_info fb_inf);
+/* display jpeg inset */
+extern int display_jpeg_inset(const char *jpeg_big, const char *jpeg_small, int x, int y, float vlaue, fb_info small_inf, fb_info fb_inf);
+/* display jpeg down */
+extern int display_jpeg_down(const char *jpegname, fb_info fb_inf);
+/* display jpeg mosaic*/
+extern int display_jpeg_mosaic(const const char *jpegname, fb_info fb_inf, int size);
+
+/* display jpegs when mouse work */
+extern int display_jpeg_mouse(fb_info fb_inf);
+/* jpeg bigger */
+//extern int jpeg_bigger(fb_info bigger_size_inf, fb_info size_inf, fb_info fb_inf);
+extern int jpeg_bigger(fb_info small_pic_inf, fb_info bigger_pic_inf, fb_info big_pic_inf, fb_info fb_inf);
+/* display jpeg in local */
+//extern int display_jpeg_local(int p_iloop, int p_jloop, fb_info bigger_size_inf, fb_info fb_inf);
+extern int display_jpeg_local(int p_iloop, int p_jloop, fb_info bigger_pic_inf, fb_info big_pic_inf, fb_info fb_inf);
+/* response of left button work */
+//extern int mevent_button_left(fb_info size_inf, fb_info small_size_inf, fb_info fb_inf);
+extern int mevent_button_left(fb_info mouse_area_inf, fb_info small_pic_inf, fb_info big_pic_inf, fb_info fb_inf);
+/* display jpegs */
+extern int display_jpegs(fb_info fb_inf, fb_info size_inf);
+/* display jpeg inner */
+//extern int display_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf);
+extern int display_jpeg_inner(const char *jpegname, int x_center, int y_center, fb_info size_inf, fb_info fb_inf);
+/* display bigger jpeg inner */
+extern int display_bigger_jpeg_inner(const char *jpegname, int x, int y, fb_info size_inf, fb_info fb_inf);
+
+#if 0
+/* display jpeg */
+extern int display_jpeg_shutter(char *filename, fb_info fb_inf);
+
+extern int disp(char *filename, fb_info fb_inf);
+#endif
+
+#endif  /* FRAME_SUPPORT_JPEG */
+
+#ifdef FRAME_SUPPORT_BMP
+////////////////////////////////////////////////////////////////////////////
+/* bmp decode */
+extern u8_t *decode_24bmp (const char *bmpname, fb_info *bmp_inf);
+
+/* display bmp */
+extern int display_bmp(const char *bmpname, fb_info fb_inf);
+/* display bmp blind */
+extern int display_bmp_blind(const char *bmpname, fb_info fb_inf);
+/* display bmp some circle */
+extern int display_bmp_circle_num(const char *bmpname, fb_info fb_inf, int x_num, int y_num);
+/* display bmp square */
+extern int display_bmp_square(const char *bmpname, fb_info fb_inf);
+/* display bmp diagonal open */
+extern int display_bmp_diagonal(const char *bmpname, fb_info fb_inf);
+
+#endif  /* FRAME_SUPPORT_BMP */
+
+/* display clock */
+extern void display_clock(fb_info fb_inf);
+
+/* response when keyboard work */ 
+extern int keyboard_response(void);
+
+/* display picture */
+extern int display_pic(fb_info fb_inf); 
+
+/* display pictures in directory */
+extern int dispaly_pic_in_dir(const char *directory, fb_info fb_inf);
+
+/* download the frame */
+extern int tcp_receive_frame(void);
+
+typedef struct picture
+{
+    char name[100];
+    int type;
+    struct picture *next;  
+}picture_t;
+
+/* ************************************wavplay.h ***************** */
+//#ifndef _FMTHEADERS_H
+//#define _FMTHEADERS_H	1
+
+#include <sys/types.h>
+
+/* Definitions for .VOC files */
+
+#define VOC_MAGIC	"Creative Voice File\032"
+
+#define DATALEN(bp)	((u_long)(bp.BlockLen[0]) | \
+                         ((u_long)(bp.BlockLen[1]) << 8) | \
+                         ((u_long)(bp.BlockLen[2]) << 16) )
+
+typedef struct vochead {
+  u_char  Magic[20];	/* must be VOC_MAGIC */
+  u_short BlockOffset;	/* Offset to first block from top of file */
+  u_short Version;	/* VOC-file version */
+  u_short IDCode;	/* complement of version + 0x1234 */
+} vochead;
+
+typedef struct blockTC {
+  u_char  BlockID;
+  u_char  BlockLen[3];	/* low, mid, high byte of length of rest of block */
+} blockTC;
+
+typedef struct blockT1 {
+  u_char  TimeConstant;
+  u_char  PackMethod;
+} blockT1;
+
+typedef struct blockT8 {
+  u_short TimeConstant;
+  u_char  PackMethod;
+  u_char  VoiceMode;
+} blockT8;
+
+typedef struct blockT9 {
+  u_int   SamplesPerSec;
+  u_char  BitsPerSample;
+  u_char  Channels;
+  u_short Format;
+  u_char   reserved[4];
+} blockT9;
+  
+
+
+/* Definitions for Microsoft WAVE format */
+
+/* it's in chunks like .voc and AMIGA iff, but my source say there
+   are in only in this combination, so I combined them in one header;
+   it works on all WAVE-file I have
+*/
+typedef struct wavhead {
+  u_long	main_chunk;	/* 'RIFF' */
+  u_long	length;		/* Length of rest of file */
+  u_long	chunk_type;	/* 'WAVE' */
+
+  u_long	sub_chunk;	/* 'fmt ' */
+  u_long	sc_len;		/* length of sub_chunk, =16 (rest of chunk) */
+  u_short	format;		/* should be 1 for PCM-code */
+  u_short	modus;		/* 1 Mono, 2 Stereo */
+  u_long	sample_fq;	/* frequence of sample */
+  u_long	byte_p_sec;
+  u_short	byte_p_spl;	/* samplesize; 1 or 2 bytes */
+  u_short	bit_p_spl;	/* 8, 12 or 16 bit */ 
+
+  u_long	data_chunk;	/* 'data' */
+  u_long	data_length;	/* samplecount (lenth of rest of block?)*/
+} wavhead;
+
+//#endif
+////////////////////////////////////////////////////////////////////////////////
+/* **********************************************wavplay.c ********************* */
+
+extern int wav_music_play();
+extern void init_shm(void);
+extern void diskread(int outfd, int bcount, char hd_buf[20], int terminate,int speed, int bits, int stereo);
+extern volatile void audiowrite(void);
+extern void initsems(int disks, int snds);
+extern void cleanupsems(void);
+
+
+#endif /* _FRAME_H_ */
