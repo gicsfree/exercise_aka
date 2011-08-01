@@ -1,0 +1,6 @@
+#haha
+Trans:vt. 大笑
+#nihao
+Trans:n. 你好
+#你好
+Trans:n. nihao
