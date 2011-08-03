@@ -9,60 +9,48 @@
 /* merge dictionary */
 static void merge_dict(dict_t *dict, int start, int mid, int end)
 {
-    int i;
-    int j;
-    int k;
+    int iloop;
+    int jloop;
+    int kloop;
     int n1 = mid - start + 1;
     int n2 = end - mid;
     dict_t left[n1];
     dict_t right[n2];
 
-    for (i = 0; i< n1; i++)
+    for (iloop = 0; iloop< n1; iloop++)
     {
-        left[i].key_word = dict[start + i].key_word;
-        left[i].trans = dict[start + i].trans;
-        left[i].trans_num = dict[start + i].trans_num;
+        left[iloop] = dict[start + iloop];
     }
 
-    for (j = 0; j< n2; j++)
+    for (jloop = 0; jloop< n2; jloop++)
     {
-        right[j].key_word = dict[mid + 1 + j].key_word;
-        right[j].trans = dict[mid + 1 + j].trans;
-        right[j].trans_num = dict[mid + 1 + j].trans_num;
+        right[jloop] = dict[mid + 1 + jloop];
     }
 
-    i = 0;
-    j = 0;
-    k = start;
+    iloop = 0;
+    jloop = 0;
+    kloop = start;
  
-    while ((i < n1) && (j < n2))
+    while ((iloop < n1) && (jloop < n2))
     {
-        if (strcmp(left[i].key_word, right[j].key_word) <= 0)
+        if (strcmp(left[iloop].key_word, right[jloop].key_word) <= 0)
         {
-            dict[k].key_word = left[i].key_word;
-            dict[k].trans = left[i].trans;
-            dict[k++].trans_num = left[i++].trans_num;
+            dict[kloop++] = left[iloop++];
         }
         else
         {
-            dict[k].key_word = right[j].key_word;
-            dict[k].trans = right[j].trans;
-            dict[k++].trans_num = right[j++].trans_num;
+            dict[kloop++] = right[jloop++];
         }
     } 
 
-    while (i < n1)
+    while (iloop < n1)
     {
-        dict[k].key_word = left[i].key_word;
-        dict[k].trans = left[i].trans;
-        dict[k++].trans_num = left[i++].trans_num;
+        dict[kloop++] = left[iloop++];
     }
 
-    while (j < n2)
+    while (jloop < n2)
     {
-        dict[k].key_word = right[j].key_word;
-        dict[k].trans = right[j].trans;
-        dict[k++].trans_num = right[j++].trans_num;
+        dict[kloop++] = right[jloop++];
     }
 }
 
@@ -78,7 +66,6 @@ void merge_sort_dict(dict_t *dict, int start, int end)
         merge_sort_dict(dict, mid + 1, end);
         merge_dict(dict, start, mid, end);
     }
-
 }
 
 /* binary search the word in the dictionary */
