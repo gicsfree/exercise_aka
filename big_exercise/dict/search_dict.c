@@ -6,47 +6,79 @@
 
 #include "dict.h"
 
-/* bubble the dictionary */
-int bubble_dict(dict_t *dict, int n)
+/* merge dictionary */
+static void merge_dict(dict_t *dict, int start, int mid, int end)
 {
-    int iloop;
-    int jloop;
-    char *tmp_key_word;
-    char **tmp_trans;
-    int tmp_trans_num;
-    int exchange_flag = 0;
+    int i;
+    int j;
+    int k;
+    int n1 = mid - start + 1;
+    int n2 = end - mid;
+    dict_t left[n1];
+    dict_t right[n2];
 
-    for (iloop = 1; iloop < n; iloop++)
+    for (i = 0; i< n1; i++)
     {
-        exchange_flag = 0;
-
-        for (jloop = n - 1; jloop >= iloop; jloop--)
-        {
-            if (strcmp(dict[jloop].key_word, dict[jloop - 1].key_word) < 0)
-            {
-                tmp_key_word = dict[jloop].key_word;
-                dict[jloop].key_word = dict[jloop - 1].key_word;
-                dict[jloop - 1].key_word = tmp_key_word;
-
-                tmp_trans = dict[jloop].trans;
-                dict[jloop].trans = dict[jloop - 1].trans;
-                dict[jloop - 1].trans = tmp_trans;
-
-                tmp_trans_num = dict[jloop].trans_num;
-                dict[jloop].trans_num = dict[jloop - 1].trans_num;
-                dict[jloop - 1].trans_num = tmp_trans_num;
-         
-                exchange_flag = 1;
-            }
-        }
-
-        if (exchange_flag == 0)
-        {
-            break;
-        }
+        left[i].key_word = dict[start + i].key_word;
+        left[i].trans = dict[start + i].trans;
+        left[i].trans_num = dict[start + i].trans_num;
     }
 
-    return 0;
+    for (j = 0; j< n2; j++)
+    {
+        right[j].key_word = dict[mid + 1 + j].key_word;
+        right[j].trans = dict[mid + 1 + j].trans;
+        right[j].trans_num = dict[mid + 1 + j].trans_num;
+    }
+
+    i = 0;
+    j = 0;
+    k = start;
+ 
+    while ((i < n1) && (j < n2))
+    {
+        if (strcmp(left[i].key_word, right[j].key_word) <= 0)
+        {
+            dict[k].key_word = left[i].key_word;
+            dict[k].trans = left[i].trans;
+            dict[k++].trans_num = left[i++].trans_num;
+        }
+        else
+        {
+            dict[k].key_word = right[j].key_word;
+            dict[k].trans = right[j].trans;
+            dict[k++].trans_num = right[j++].trans_num;
+        }
+    } 
+
+    while (i < n1)
+    {
+        dict[k].key_word = left[i].key_word;
+        dict[k].trans = left[i].trans;
+        dict[k++].trans_num = left[i++].trans_num;
+    }
+
+    while (j < n2)
+    {
+        dict[k].key_word = right[j].key_word;
+        dict[k].trans = right[j].trans;
+        dict[k++].trans_num = right[j++].trans_num;
+    }
+}
+
+/* merge sort dictionary */
+void merge_sort_dict(dict_t *dict, int start, int end)
+{
+    int mid;
+
+    if (start < end)
+    {
+        mid = (start + end) / 2;
+        merge_sort_dict(dict, start, mid);
+        merge_sort_dict(dict, mid + 1, end);
+        merge_dict(dict, start, mid, end);
+    }
+
 }
 
 /* binary search the word in the dictionary */
@@ -76,22 +108,6 @@ int binary_search_word(dict_t *dict, int n, const char *key_word)
         }
     }    
     
-    return -1;
-}
-
-/* search word in the dictionary */
-int search_word(dict_t *dict, int n, const char *key_word)
-{
-    int iloop;
-
-    for (iloop = 0; iloop < n; iloop++)
-    {
-        if (strcmp(dict[iloop].key_word, key_word) == 0)
-        {
-            return iloop;
-        }
-    }
-
     return -1;
 }
 

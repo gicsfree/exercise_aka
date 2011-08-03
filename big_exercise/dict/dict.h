@@ -18,9 +18,8 @@ extern dict_t *init_dict_dat(const char *dict_dat, int *n);
 
 extern int create_index(const char *dict_dat, const char *dict_txt);
 
-extern int bubble_dict(dict_t *dict, int n);
+extern void merge_sort_dict(dict_t *dict, int start, int end);
 extern int binary_search_word(dict_t *dict, int n, const char *key_word);
-extern int search_word(dict_t *dict, int n, const char *key_word);
 extern int printf_trans(dict_t *dict, int word_num);
 extern int free_dict(dict_t *dict, int n);
 

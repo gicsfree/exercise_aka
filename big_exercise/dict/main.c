@@ -71,7 +71,7 @@ static char *Gets(char str[], int n)
     return str;
 }
 
-/* main.c */
+/* main */
 int main(void)
 {
     int n;
@@ -83,17 +83,14 @@ int main(void)
     {
         case 1:
             dict = init_dict_txt(DICT_TXT, &n);
-            printf("init dictionary from %s successfully !\n", DICT_TXT);
             break;
 
         case 2:
             dict = init_dict_dat(DICT_DAT, &n);
-            printf("init dictionary from %s successfully !\n", DICT_DAT);
             break;
 
         case 3:
             dict = init_dict_txt(USR_DICT, &n);
-            printf("init dictionary from %s successfully !\n", USR_DICT);
             break;
 
         case 4:
@@ -106,21 +103,16 @@ int main(void)
 
     }
 
-//    create_index(DICT_DAT, DICT_TXT);
-//    dict = init_dict_txt(DICT_TXT, &n);
-//    dict = init_dict_dat(DICT_DAT, &n);
-
-//    n = 10;
-//    bubble_dict(dict, n);
+    merge_sort_dict(dict, 0, n - 1);
+    printf("init dictionary successfully !\n");
 
 #if 1
     empty_cache();
     printf("exit with enter\n");
-    printf("input your keyword:");
+    printf("\ninput your keyword:");
     while (strlen(Gets(key_word, sizeof(key_word))) != 0)
     {
-//        word_num = binary_search_word(dict, n, key_word);
-        word_num = search_word(dict, n, key_word);
+        word_num = binary_search_word(dict, n, key_word);
         if (word_num != -1)
         {
             printf_trans(dict, word_num);
@@ -129,13 +121,12 @@ int main(void)
         {
             printf("No such word in the dictionary!\n");
         }
-       printf("input your keyword:");
+       printf("\ninput your keyword:");
     }
 
     free_dict(dict, n);
-#endif
 
-#if 0
+#else
     int iloop;
     int jloop;
     
