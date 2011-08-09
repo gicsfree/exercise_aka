@@ -6,6 +6,39 @@
 
 #include "dict.h"
 
+/* quick sort dictionary */
+void quick_sort_dict(dict_t *dict, int first, int end)
+{
+    int iloop = first;
+    int jloop = end;
+    dict_t temp = dict[first];
+
+    while (iloop < jloop)
+    {
+        while((iloop < jloop) && (strcmp(dict[jloop].key_word, temp.key_word) >= 0))
+        {
+            jloop--;
+        }
+        dict[iloop] = dict[jloop];
+
+        while((iloop < jloop) && (strcmp(dict[iloop].key_word, temp.key_word) <= 0))
+        {
+            iloop++;	
+        }	
+        dict[jloop] = dict[iloop];
+    }
+    dict[iloop] = temp;
+
+    if (first < iloop - 1) 
+    {
+        quick_sort_dict(dict, first, iloop - 1);
+    }
+    if (end > iloop + 1) 
+    {		
+        quick_sort_dict(dict, iloop + 1, end);
+    }
+}
+
 /* merge dictionary */
 static void merge_dict(dict_t *dict, int start, int mid, int end)
 {

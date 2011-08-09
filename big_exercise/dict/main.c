@@ -103,10 +103,11 @@ int main(void)
 
     }
 
+//    quick_sort_dict(dict, 0, n - 1);
     merge_sort_dict(dict, 0, n - 1);
     printf("init dictionary successfully !\n");
 
-#if 0
+#if 1
     empty_cache();
     printf("exit with enter\n");
     printf("\ninput your keyword:");
