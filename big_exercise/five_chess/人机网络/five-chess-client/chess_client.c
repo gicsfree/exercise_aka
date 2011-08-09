@@ -34,7 +34,6 @@ int tcp_send_chessitem(const char *addr)
 {   
     int cPort = DEFAULT_PORT_TCP;
     int cClient;
-    int cSend;
     struct sockaddr_in cli;
    
     cli.sin_family = AF_INET;

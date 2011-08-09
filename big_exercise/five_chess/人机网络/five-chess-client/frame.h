@@ -35,6 +35,9 @@ extern int init_ft(const char *file, int size);
 /* display string */
 extern int display_string(const char * buf, int x, int y, fb_info fb_inf, u32_t color);
 
+/* display chinese string */
+extern int display_string_ch(const char * buf, int x, int y, fb_info fb_inf, u32_t color);
+
 #endif    /* FRAME_SUPPORT_FONT */
 
 #ifdef FRAME_SUPPORT_MOUSE
@@ -83,6 +86,15 @@ u8_t *decode_24bmp (const char *bmpname, fb_info *bmp_inf);
 #endif  /* FRAME_SUPPORT_BMP */
 
 //////////////////////////////////////////////////////////////////////////
+/* mouse_work */
+extern int mouse_work(fb_info fb_inf, int x_start, int y_start);
+/* the client send and receive chessitem */
+extern int tcp_send_chessitem(const char *addr);
+/* draw a board */
+extern int fb_draw_board(fb_info fb_inf, int x_start, int y_start);
+/* draw a circle chess */
+extern int fb_draw_chess(fb_info fb_inf, int x_center, int y_center, int r_len, u32_t color);
+
 typedef struct chess 
 {
     int x;

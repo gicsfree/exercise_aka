@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <time.h>
+#include <pthread.h>
 
 #include "frame.h"
 
@@ -20,6 +21,12 @@ int main(int argc, char *argv[])
 {
     fb_info fb_inf;
     pthread_t p_tcp;
+
+    if (argc != 2)
+    {
+        printf("Usage: ./appname 192.168.1.***\n");
+        exit(1);
+    }
     
     if (init_fb(&fb_inf) < 0)
     {

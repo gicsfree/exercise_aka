@@ -122,7 +122,7 @@ chess_t c_get_chess_item(void)
     int cy_max = -1;
     int px_max = -1;
     int py_max = -1;
-    chess_t chess_item;
+    chess_t chessitem;
 
     cgrade = 0;		
     pgrade = 0;
@@ -209,16 +209,16 @@ chess_t c_get_chess_item(void)
 
     if (cgrade >= pgrade)
     {   
-        chess_item.x = cx_max;
-        chess_item.y = cy_max;
+        chessitem.x = cx_max;
+        chessitem.y = cy_max;
     }
     else
     {
-        chess_item.x = px_max;
-        chess_item.y = py_max;
+        chessitem.x = px_max;
+        chessitem.y = py_max;
     }
 
-    return chess_item;
+    return chessitem;
 } 
 
 #if 0
@@ -255,38 +255,38 @@ void change_chess(chess_t chess_item, int chess_value)
 }
 
 #else
-void change_chess(chess_t chess_item, int chess_value)
+void change_chess(chess_t chessitem, int chess_value)
 {
     int kloop;
     
     if (chess_value == 1)
     {
-        chess[chess_item.x][chess_item.y] = 1;
+        chess[chessitem.x][chessitem.y] = 1;
         for (kloop = 0; kloop < WIN_SUM; kloop++)
         {
-            if ((ptable[chess_item.x][chess_item.y][kloop] == 1) && win[0][kloop] != 7)
+            if ((ptable[chessitem.x][chessitem.y][kloop] == 1) && win[0][kloop] != 7)
             {
                 win[0][kloop]++;     
             }
-            if (ctable[chess_item.x][chess_item.y][kloop] == 1)
+            if (ctable[chessitem.x][chessitem.y][kloop] == 1)
             {
-                ctable[chess_item.x][chess_item.y][kloop] = 0;
+                ctable[chessitem.x][chessitem.y][kloop] = 0;
                 win[1][kloop] = 7;
             }
         }
     }
     else
     {
-        chess[chess_item.x][chess_item.y] = 2;
+        chess[chessitem.x][chessitem.y] = 2;
         for (kloop = 0; kloop < WIN_SUM; kloop++)
         {
-            if ((ctable[chess_item.x][chess_item.y][kloop] == 1) && win[1][kloop] != 7)
+            if ((ctable[chessitem.x][chessitem.y][kloop] == 1) && win[1][kloop] != 7)
             {
                 win[1][kloop]++;     
             }
-            if (ptable[chess_item.x][chess_item.y][kloop] == 1)
+            if (ptable[chessitem.x][chessitem.y][kloop] == 1)
             {
-                ptable[chess_item.x][chess_item.y][kloop] = 0;
+                ptable[chessitem.x][chessitem.y][kloop] = 0;
                 win[0][kloop] = 7;
             }
         }
@@ -316,10 +316,10 @@ int tcp_recv_chessitem(void)
     int sPort = DEFAULT_PORT_TCP;
     int sListen = 0;
     int sAccept = 0;
-    int sRecv = 0;
     unsigned int sLen = 0;
     struct sockaddr_in ser;
     struct sockaddr_in cli;
+    pid_t pid;
 
     printf("Server waiting...\n");
    
@@ -345,29 +345,42 @@ int tcp_recv_chessitem(void)
 //        printf("accept() client IP: [%s]\n", (char*)inet_ntoa(cli.sin_addr));
 //        printf("accept() client PORT: [%d]\n", ntohs(cli.sin_port)); 
 
-again:
-        init_game();
-
-        while (1)
-        {   
-            Recv(sAccept, &chess_item, sizeof(chess_item), 0);
-            printf("recv: %d %d\n", chess_item.x, chess_item.y);
-            change_chess(chess_item, 1);
-            if (is_win(0) == 1)
-             {
-                goto again;
-             }
-            chess_item = c_get_chess_item();
-            change_chess(chess_item, 2);
-            Send(sAccept, &chess_item, sizeof(chess_t), 0);
-            printf("send: %d %d\n", chess_item.x, chess_item.y);
-            if (is_win(1) == 1)
-            {
-                goto again;
-            }
+        if ((pid = fork()) > 0)
+        {
+            Close(sAccept);
+            continue;
         }
+        else if(pid == 0)
+        {
+            Close(sListen);
+again:
+            init_game();
 
-        Close(sAccept);
+            while (1)
+            {   
+                Recv(sAccept, &chess_item, sizeof(chess_item), 0);
+                printf("recv: %d %d\n", chess_item.x, chess_item.y);
+                change_chess(chess_item, 1);
+                if (is_win(0) == 1)
+                 {
+                    goto again;
+                 }
+                chess_item = c_get_chess_item();
+                change_chess(chess_item, 2);
+                Send(sAccept, &chess_item, sizeof(chess_t), 0);
+                printf("send: %d %d\n", chess_item.x, chess_item.y);
+                if (is_win(1) == 1)
+                {
+                    goto again;
+                }
+            }
+            exit(0);
+        }
+        else 
+        {
+            perror("fork error\n");
+            exit(0);
+        }
     }
 
     Close(sListen);

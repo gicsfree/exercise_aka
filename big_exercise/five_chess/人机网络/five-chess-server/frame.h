@@ -83,6 +83,8 @@ u8_t *decode_24bmp (const char *bmpname, fb_info *bmp_inf);
 #endif  /* FRAME_SUPPORT_BMP */
 
 //////////////////////////////////////////////////////////////////////////
+extern int tcp_recv_chessitem(void);
+
 typedef struct chess 
 {
     int x;
