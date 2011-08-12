@@ -9,6 +9,7 @@
 
 #include "frame.h"
 
+/* the thread send oand receive chessitem */ 
 void *pro_thread_tcp(void *addr)
 {
     tcp_send_chessitem((const char *)addr);

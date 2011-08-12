@@ -14,6 +14,7 @@
 
 extern chess_t recv_chessitem;
 extern int recv_flag;
+extern int mouse_work_falg;
 extern int draw_chess_flag;
 extern int is_p_win;
 extern int is_c_win;
@@ -55,7 +56,7 @@ chess_t p_get_chess_item(fb_info fb_inf, int x_start, int y_start)
     return chess_item;
 }
 
-#if 1
+/* judge who win */
 int is_win(int who)  
 {  
     int iloop, jloop, kloop;  
@@ -112,8 +113,8 @@ int is_win(int who)
  
     return 0;  
 }
-#endif
 
+/* init the chess array */
 void init_chess(void)
 {
     int iloop;
@@ -175,7 +176,7 @@ again:
             switch (mevent.button)
             {
                 case 1:
-                    if (win_flag == 0)
+                    if ((win_flag == 0) && (mouse_work_falg == 1))
                     {
                         chess_item = p_get_chess_item(fb_inf, x_start, y_start);
                         if ((chess_item.x != -1) && (chess_item.y != -1) && (chess[chess_item.x][chess_item.y] == 0))
@@ -221,12 +222,17 @@ again:
             fb_save_cursor(fb_inf, m_x, m_y); 
             p_x = m_x;   
             p_y = m_y;
+            fb_draw_cursor(fb_inf, m_x, m_y);
         }
 
         if (is_p_win == 1)
         {
             is_p_win = 0;
             display_string_ch("你赢了！", fb_inf.w / 3, fb_inf.h / 2, fb_inf, 0x0000FF00);
+            fb_save_cursor(fb_inf, m_x, m_y); 
+            p_x = m_x;   
+            p_y = m_y;
+            fb_draw_cursor(fb_inf, m_x, m_y);
             win_flag = 1;
         }
         usleep(30000);	

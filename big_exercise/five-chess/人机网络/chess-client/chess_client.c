@@ -23,6 +23,7 @@ extern int send_flag;
 
 extern int is_win(int who);
 
+int mouse_work_flag = 1;
 int draw_chess_flag = 0;
 chess_t recv_chessitem;
 int recv_flag = 0;
@@ -55,25 +56,28 @@ again:
         if (send_flag == 1)
         {
             Send(cClient, &chess_item, sizeof(chess_t), 0);
-//            printf("send: %d %d\n", chess_item.x, chess_item.y);
+            mouse_work_flag = 0;
+            send_flag = 0;
             chess[chess_item.x][chess_item.y] = 1;
             if (is_win(1) == 1)
             {
                 is_p_win = 1;
                 send_flag = 0;
+                mouse_work_flag = 1;
                 goto again;
             }
+
             Recv(cClient, &recv_chessitem, sizeof(recv_chessitem), 0);
-//            printf("recv: %d %d\n", recv_chessitem.x, recv_chessitem.y);
             chess[recv_chessitem.x][recv_chessitem.y] = 2;
             draw_chess_flag = 1;
             if (is_win(2) == 1)
             {
                 is_c_win = 1;
                 send_flag = 0;
+                mouse_work_flag = 1;
                 goto again;
             }
-            send_flag = 0;
+            mouse_work_flag = 1;
         }
     }
     

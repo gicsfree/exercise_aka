@@ -1,29 +1,28 @@
-/* chess_server.c */
+/* mouse_work.c */
 
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <pthread.h>
+#include <stdio.h>
 #include <math.h>
+#include <unistd.h>
+#include <string.h>
 
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <sys/stat.h>
 
 #include "frame.h"
-#include "wrap.h"
 
-#define DEFAULT_PORT_TCP 5050
-
+int m_x = 0;
+int m_y = 0;
+int p_x = 0;
+int p_y = 0;
 int win_flag = 0;
-chess_t chess_item;
+
+typedef struct chess 
+{
+    int x;
+    int y;
+} chess_t;
 
 int ptable[CHESS_X_NUM][CHESS_Y_NUM][WIN_SUM];
 int ctable[CHESS_X_NUM][CHESS_Y_NUM][WIN_SUM];
@@ -34,6 +33,7 @@ int pgrade;
 int win[2][WIN_SUM];
 int chess[CHESS_X_NUM][CHESS_Y_NUM];
 
+/* init the game */
 void init_game(void)
 {
     int iloop; 
@@ -112,7 +112,7 @@ void init_game(void)
     }
 }
 
-
+/* computer get chessitem */
 chess_t c_get_chess_item(void)
 {
     int iloop;
@@ -122,7 +122,7 @@ chess_t c_get_chess_item(void)
     int cy_max = -1;
     int px_max = -1;
     int py_max = -1;
-    chess_t chessitem;
+    chess_t chess_item;
 
     cgrade = 0;		
     pgrade = 0;
@@ -209,19 +209,19 @@ chess_t c_get_chess_item(void)
 
     if (cgrade >= pgrade)
     {   
-        chessitem.x = cx_max;
-        chessitem.y = cy_max;
+        chess_item.x = cx_max;
+        chess_item.y = cy_max;
     }
     else
     {
-        chessitem.x = px_max;
-        chessitem.y = py_max;
+        chess_item.x = px_max;
+        chess_item.y = py_max;
     }
 
-    return chessitem;
+    return chess_item;
 } 
 
-#if 0
+/* change chess array */
 void change_chess(chess_t chess_item, int chess_value)
 {
     int kloop;
@@ -231,11 +231,14 @@ void change_chess(chess_t chess_item, int chess_value)
         chess[chess_item.x][chess_item.y] = 1;
         for (kloop = 0; kloop < WIN_SUM; kloop++)
         {
-            if (ptable[chess_item.x][chess_item.y][kloop] == 1)
+            if ((ptable[chess_item.x][chess_item.y][kloop] == 1) && win[0][kloop] != 7)
             {
                 win[0][kloop]++;     
+            }
+            if (ctable[chess_item.x][chess_item.y][kloop] == 1)
+            {
                 ctable[chess_item.x][chess_item.y][kloop] = 0;
-                win[1][kloop] = 0;
+                win[1][kloop] = 7;
             }
         }
     }
@@ -244,56 +247,47 @@ void change_chess(chess_t chess_item, int chess_value)
         chess[chess_item.x][chess_item.y] = 2;
         for (kloop = 0; kloop < WIN_SUM; kloop++)
         {
-            if ((ctable[chess_item.x][chess_item.y][kloop] == 1))
+            if ((ctable[chess_item.x][chess_item.y][kloop] == 1) && win[1][kloop] != 7)
             {
                 win[1][kloop]++;     
+            }
+            if (ptable[chess_item.x][chess_item.y][kloop] == 1)
+            {
                 ptable[chess_item.x][chess_item.y][kloop] = 0;
-                win[0][kloop] = 0;
-            }
-        }
-    }
-}
-
-#else
-void change_chess(chess_t chessitem, int chess_value)
-{
-    int kloop;
-    
-    if (chess_value == 1)
-    {
-        chess[chessitem.x][chessitem.y] = 1;
-        for (kloop = 0; kloop < WIN_SUM; kloop++)
-        {
-            if ((ptable[chessitem.x][chessitem.y][kloop] == 1) && win[0][kloop] != 7)
-            {
-                win[0][kloop]++;     
-            }
-            if (ctable[chessitem.x][chessitem.y][kloop] == 1)
-            {
-                ctable[chessitem.x][chessitem.y][kloop] = 0;
-                win[1][kloop] = 7;
-            }
-        }
-    }
-    else
-    {
-        chess[chessitem.x][chessitem.y] = 2;
-        for (kloop = 0; kloop < WIN_SUM; kloop++)
-        {
-            if ((ctable[chessitem.x][chessitem.y][kloop] == 1) && win[1][kloop] != 7)
-            {
-                win[1][kloop]++;     
-            }
-            if (ptable[chessitem.x][chessitem.y][kloop] == 1)
-            {
-                ptable[chessitem.x][chessitem.y][kloop] = 0;
                 win[0][kloop] = 7;
             }
         }
     }
 }
-#endif
 
+/* response of left button's work, get the mouse position */
+chess_t p_get_chess_item(fb_info fb_inf, int x_start, int y_start)
+{
+    int iloop;
+    int jloop;
+    chess_t chess_item;
+
+    chess_item.x = -1;
+    chess_item.y = -1;
+
+    for (iloop = 0; iloop < CHESS_Y_NUM; iloop++)
+    {
+        for (jloop = 0; jloop < CHESS_X_NUM; jloop++)
+        {
+            if ((m_x >= x_start + iloop * GRID_SIZE - CHESS_SIZE) && (m_x < x_start + iloop * GRID_SIZE + CHESS_SIZE)
+               && (m_y >= y_start + jloop * GRID_SIZE - CHESS_SIZE) && (m_y < y_start + jloop * GRID_SIZE + CHESS_SIZE))
+            {
+                chess_item.x = jloop;
+                chess_item.y = iloop;
+                return chess_item; 
+            }
+        }
+    }
+
+    return chess_item;
+}
+
+/* judge who win */
 int is_win(int who)
 {
     int iloop;
@@ -310,83 +304,114 @@ int is_win(int who)
     return 0;
 }
 
-/* tcp receive the chessitem */
-int tcp_recv_chessitem(void)
+/* mouse_work */
+int mouse_work(fb_info fb_inf, int x_start, int y_start)
 {
-    int sPort = DEFAULT_PORT_TCP;
-    int sListen = 0;
-    int sAccept = 0;
-    unsigned int sLen = 0;
-    struct sockaddr_in ser;
-    struct sockaddr_in cli;
-    pid_t pid;
+    int mfd = -1;
+    u8_t buf[8];
+    mouse_event_t mevent;
 
-    printf("Server waiting...\n");
-   
-    sListen = Socket(AF_INET, SOCK_STREAM, 0);
-    if (sListen < 0)
-    {
-        printf("socket() failure!\n");
-        return -1;
-    }
-   
-    ser.sin_family = AF_INET;
-    ser.sin_port = htons(sPort);
-    ser.sin_addr.s_addr = htonl(INADDR_ANY);
-   
-    Bind(sListen, (struct sockaddr*)&ser, sizeof(ser));
-    Listen(sListen, 5); 
+    int play_flag = 0;
+    chess_t chess_item;
 
-    while(1)
-    {
-        sLen = sizeof(cli);
-        sAccept = Accept(sListen, (struct sockaddr*)&cli, (unsigned int*)&sLen);
-   
-//        printf("accept() client IP: [%s]\n", (char*)inet_ntoa(cli.sin_addr));
-//        printf("accept() client PORT: [%d]\n", ntohs(cli.sin_port)); 
-
-        if ((pid = fork()) > 0)
-        {
-            Close(sAccept);
-            continue;
-        }
-        else if(pid == 0)
-        {
-            Close(sListen);
 again:
-            init_game();
+    fb_draw_board(fb_inf, x_start, y_start);
+    m_x = fb_inf.w / 2;
+    m_y = fb_inf.h / 2;
+        
+    mouse_open(NULL, &mfd);
 
-            while (1)
-            {   
-                Recv(sAccept, &chess_item, sizeof(chess_item), 0);
-                printf("recv: %d %d\n", chess_item.x, chess_item.y);
-                change_chess(chess_item, 1);
-                if (is_win(0) == 1)
-                 {
-                    goto again;
-                 }
+    fb_save_cursor(fb_inf, m_x, m_y);
+    p_x = m_x;   
+    p_y = m_y;  
+    fb_draw_cursor(fb_inf, m_x, m_y);
+
+    init_game();
+        
+    for(;;)
+     {
+        if (read(mfd, buf, sizeof(buf)) != -1)
+         {
+            mouse_parse(buf, &mevent);
+
+            m_x += mevent.x;
+            m_y += mevent.y;
+                           
+            if((m_x >= 0) && (m_x < fb_inf.w - C_WIDTH) && (m_y >= 0) && (m_y < fb_inf.h - C_HEIGHT))
+              {
+                fb_restore_cursor(fb_inf, p_x, p_y);
+                fb_save_cursor(fb_inf, m_x, m_y); 
+                p_x = m_x;   
+                p_y = m_y;
+//                fb_draw_cursor(fb_inf, m_x, m_y);
+              }
+            else
+             {
+                m_x -= mevent.x;
+                m_y -= mevent.y;
+             }
+
+            if (play_flag == 1)
+            {
                 chess_item = c_get_chess_item();
                 change_chess(chess_item, 2);
-                Send(sAccept, &chess_item, sizeof(chess_t), 0);
-                printf("send: %d %d\n", chess_item.x, chess_item.y);
+                play_flag = 0;
+                fb_draw_chess(fb_inf, x_start + chess_item.y * GRID_SIZE, y_start + chess_item.x * GRID_SIZE, CHESS_SIZE, WHITE_CHESS_COLOR);
+                fb_save_cursor(fb_inf, m_x, m_y); 
+                p_x = m_x;   
+                p_y = m_y;	
                 if (is_win(1) == 1)
                 {
-                    goto again;
-                }
+                    display_string_ch("你输了！", fb_inf.w / 3, fb_inf.h / 2, fb_inf, 0x0000FF00);
+                    fb_save_cursor(fb_inf, m_x, m_y); 
+                    p_x = m_x;   
+                    p_y = m_y;
+                    play_flag = -1;
+                }							
             }
-            exit(0);
-        }
-        else 
-        {
-            perror("fork error\n");
-            exit(0);
-        }
+
+            switch (mevent.button)
+            {
+                case 1:
+                    if (play_flag == 0)
+                     {
+                        chess_item = p_get_chess_item(fb_inf, x_start, y_start);
+                        if ((chess_item.x != -1) && (chess_item.y != -1) && (chess[chess_item.x][chess_item.y] == 0))
+                          {
+                            change_chess(chess_item, 1);
+                            play_flag = 1;
+                            fb_draw_chess(fb_inf, x_start + chess_item.y * GRID_SIZE, y_start + chess_item.x * GRID_SIZE, CHESS_SIZE, BLACK_CHESS_COLOR);
+                            if (is_win(0) == 1)
+                              {
+                                display_string_ch("你赢了！", fb_inf.w / 3, fb_inf.h / 2, fb_inf, 0x0000FF00);
+                                play_flag = -1;
+                              }
+                            fb_save_cursor(fb_inf, m_x, m_y); 
+                            p_x = m_x;   
+                            p_y = m_y;
+                          }
+                      }
+                    break;
+
+                case 2:
+                    if (win_flag == 1)
+                    {
+                        win_flag = 0;
+                        play_flag = 0;
+                        goto again;
+                    }
+                    break;
+                     
+                case 3:
+                    break;
+
+                default:
+                    break;
+            }
+        fb_draw_cursor(fb_inf, m_x, m_y);
+        }	
+    usleep(30000);
     }
 
-    Close(sListen);
-   
     return 0;
 }
-
-
-
