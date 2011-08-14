@@ -9,16 +9,9 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#define SONG_DIRECTORY "/home/akaedu/sdcard"
-#define NAME_LEN 1024
+#include "mp3player.h"
 
-struct song 
-{
-    char *songname;
-    struct song *prev;
-    struct song *next;
-};
-typedef struct song * link_t;
+#define NAME_LEN 1024
 
 /* make node */
 link_t make_node(const char *songname)
@@ -53,7 +46,7 @@ void free_node(link_t p)
     if (p->songname != NULL)
     {
         free(p->songname);
-        p->songname == NULL;
+        p->songname = NULL;
     }
     if (p != NULL)
     {
@@ -69,6 +62,17 @@ void insert_node(link_t p, link_t head)
     head->next->prev = p;
     head->next = p;
     p->prev = head;
+}
+
+/* is empty list */
+int is_empty_list(link_t head)
+{
+    if (head->next == head)
+    {
+        return 1; 
+    }
+ 
+    return 0;
 }
 
 /* traverse list */
@@ -97,6 +101,8 @@ void destroy_list(link_t head)
         p = p->next;
         free_node(q);
     }
+
+    free(head);
 }
 
 /* save song name */
@@ -194,6 +200,7 @@ void print_songname(link_t p)
     printf("%s\n", p->songname); 
 }
 
+#if 0
 /* main */
 int main(void)
 {
@@ -205,3 +212,4 @@ int main(void)
 
     return 0;
 }
+#endif
