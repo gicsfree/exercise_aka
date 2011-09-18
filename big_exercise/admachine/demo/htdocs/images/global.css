@@ -1,0 +1,147 @@
+A:link {
+	COLOR: #000066; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #ff0000; TEXT-DECORATION: underline
+}
+A:visited {
+	COLOR: #000066; TEXT-DECORATION: none
+}
+IMG {
+	BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.border_top_left {
+	BACKGROUND-IMAGE: url(JiSu_Admin_22.gif); WIDTH: 8px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 7px
+}
+.border_top_center {
+	BACKGROUND: url(JiSu_Admin_23.gif) repeat-x 50% top; HEIGHT: 7px
+}
+.border_top_right {
+	BACKGROUND-IMAGE: url(JiSu_Admin_25.gif); WIDTH: 8px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 7px
+}
+.border_left_line {
+	BACKGROUND-POSITION: 50% top; BACKGROUND-IMAGE: url(JiSu_Admin_30.gif); WIDTH: 8px; BACKGROUND-REPEAT: repeat-y
+}
+.border_right_line {
+	BACKGROUND-POSITION: 50% top; BACKGROUND-IMAGE: url(JiSu_Admin_32.gif); WIDTH: 8px; BACKGROUND-REPEAT: repeat-y
+}
+.border_bottom_left {
+	BACKGROUND-IMAGE: url(JiSu_Admin_48.gif); WIDTH: 8px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 8px
+}
+.border_bottom_center {
+	BACKGROUND: url(JiSu_Admin_49.gif) repeat-x 50% top; HEIGHT: 8px
+}
+.border_bottom_right {
+	BACKGROUND-IMAGE: url(JiSu_Admin_51.gif); WIDTH: 8px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 8px
+}
+.warp {
+	WIDTH: 98%; BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: none
+}
+.menu {
+	FLOAT: none; WIDTH: 100%
+}
+.menu UL {
+	MARGIN: 0px; LIST-STYLE-TYPE: none
+}
+.menu LI {
+	FLOAT: left; TEXT-ALIGN: center
+}
+.current_item {
+	PADDING-RIGHT: 0px; BACKGROUND-POSITION: 50% bottom; PADDING-LEFT: 0px; FONT-WEIGHT: 900; FONT-SIZE: 13px; FLOAT: left; BACKGROUND-IMAGE: url(JiSu_Admin_28.gif); PADDING-BOTTOM: 0px; MARGIN: 0px 3px 0px 0px; WIDTH: 120px; COLOR: white; PADDING-TOP: 12px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 20px
+}
+.default_item A:link {
+	COLOR: #545249; TEXT-DECORATION: none
+}
+.default_item A:visited {
+	COLOR: #545249; TEXT-DECORATION: none
+}
+.default_item {
+	PADDING-RIGHT: 0px; BACKGROUND-POSITION: 50% bottom; PADDING-LEFT: 0px; FONT-WEIGHT: 900; FONT-SIZE: 13px; FLOAT: left; BACKGROUND-IMAGE: url(JiSu_Admin_34.gif); PADDING-BOTTOM: 0px; MARGIN: 0px 3px; WIDTH: 120px; COLOR: #000033; PADDING-TOP: 12px; BACKGROUND-REPEAT: no-repeat; HEIGHT: 20px
+}
+.textbox {
+	PADDING-RIGHT: 0px; BORDER-TOP: #e3e3e3 1px solid; PADDING-LEFT: 0px; FLOAT: none; PADDING-BOTTOM: 5px; WIDTH: 100%; PADDING-TOP: 5px
+}
+.searchbox {
+	BORDER-RIGHT: #e3e3e3 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #e3e3e3 1px solid; PADDING-LEFT: 20px; PADDING-BOTTOM: 5px; BORDER-LEFT: #e3e3e3 1px solid; WIDTH: 98%; PADDING-TOP: 5px; BORDER-BOTTOM: #e3e3e3 1px solid; HEIGHT: 20px; BACKGROUND-COLOR: #eceee0; TEXT-ALIGN: left
+}
+.ddlCss {
+	FONT-SIZE: 12px; MARGIN-LEFT: 10px; WIDTH: 100px; MARGIN-RIGHT: 10px
+}
+.btnCss {
+	BACKGROUND-POSITION: 50% bottom; BACKGROUND-IMAGE: url(button.gif); MARGIN-LEFT: 10px; WIDTH: 71px; BORDER-TOP-STYLE: none; MARGIN-RIGHT: 10px; BACKGROUND-REPEAT: no-repeat; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 21px; BORDER-BOTTOM-STYLE: none
+}
+.txtCss {
+	FONT-SIZE: 12px; MARGIN-LEFT: 10px; WIDTH: 200px; MARGIN-RIGHT: 10px
+}
+.topbar {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; WIDTH: 90%; PADDING-TOP: 5px; TEXT-ALIGN: right
+}
+.tooltipbox {
+	BORDER-RIGHT: #e3e3e3 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #e3e3e3 1px solid; PADDING-LEFT: 20px; PADDING-BOTTOM: 5px; BORDER-LEFT: #e3e3e3 1px solid; WIDTH: 98%; PADDING-TOP: 5px; BORDER-BOTTOM: #e3e3e3 1px solid; HEIGHT: 20px; BACKGROUND-COLOR: #eceee0; TEXT-ALIGN: left
+}
+.tooltip {
+	WIDTH: 100%; COLOR: red; TEXT-ALIGN: right
+}
+.hidden {
+	DISPLAY: none
+}
+.show {
+	DISPLAY: block
+}
+.gvCss {
+	MARGIN-TOP: 10px; MARGIN-BOTTOM: 10px; WIDTH: 100%
+}
+.gvCss TR {
+	HEIGHT: 30px
+}
+.gvCss TD {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; LINE-HEIGHT: 20px; PADDING-TOP: 0px; TEXT-ALIGN: left
+}
+.gvheader {
+	PADDING-RIGHT: 5px; BORDER-TOP: #666 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; BACKGROUND: #e6e4e4; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: left
+}
+.gvheader TD {
+	PADDING-RIGHT: 5px; BORDER-TOP: #666 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; BACKGROUND: #e6e4e4; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 28px; TEXT-ALIGN: left
+}
+.gvItem01 {
+	PADDING-RIGHT: 5px; PADDING-LEFT: 5px; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 30px; BACKGROUND-COLOR: #ffffff
+}
+.gvItem02 {
+	PADDING-RIGHT: 5px; BORDER-TOP: #ccc 1px solid; PADDING-LEFT: 5px; BACKGROUND: #f4f4f4; PADDING-BOTTOM: 0px; PADDING-TOP: 0px; HEIGHT: 30px
+}
+.gvpager {
+	WIDTH: 98%; HEIGHT: 20px; TEXT-ALIGN: center
+}
+.btnpager {
+	BORDER-RIGHT: #cccc99 1px solid; BORDER-TOP: #cccc99 1px solid; BORDER-LEFT: #cccc99 1px solid; WIDTH: 30px; BORDER-BOTTOM: #cccc99 1px solid; HEIGHT: 20px
+}
+.first {
+	BORDER-RIGHT: #cccc99 1px solid; BORDER-TOP: #cccc99 1px solid; BORDER-LEFT: #cccc99 1px solid; WIDTH: 30px; BORDER-BOTTOM: #cccc99 1px solid; HEIGHT: 20px
+}
+.last {
+	
+}
+.prev {
+	
+}
+.next {
+	
+}
+.box {
+	BORDER-RIGHT: #e3e3e3 1px solid; PADDING-RIGHT: 0px; BORDER-TOP: #e3e3e3 1px solid; PADDING-LEFT: 20px; PADDING-BOTTOM: 5px; BORDER-LEFT: #e3e3e3 1px solid; WIDTH: 98%; PADDING-TOP: 5px; BORDER-BOTTOM: #e3e3e3 1px solid; BACKGROUND-COLOR: #eceee0; TEXT-ALIGN: left
+}
+.left_title {
+	PADDING-RIGHT: 10px; FONT-SIZE: 13px; WIDTH: 150px; COLOR: #6666cc; HEIGHT: 30px; TEXT-ALIGN: right
+}
+.center_text {
+	
+}
+.right_text {
+	PADDING-LEFT: 10px; FONT-SIZE: 12px; COLOR: #ff0000; TEXT-ALIGN: left
+}
+.rowbg01 {
+	HEIGHT: 40px; BACKGROUND-COLOR: #ffffff
+}
+.rowbg02 {
+	HEIGHT: 40px; BACKGROUND-COLOR: #f4f4f4
+}

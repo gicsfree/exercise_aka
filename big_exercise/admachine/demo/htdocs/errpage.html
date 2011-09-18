@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0183)http://cp.babyschool.com.cn/showerror.aspx?error=0&msg=%e6%82%a8%e5%b0%9a%e6%9c%aa%e7%99%bb%e5%bd%95%e6%88%96%e8%bf%9e%e6%8e%a5%e6%97%b6%e9%97%b4%e8%b6%85%e6%97%b6&tourl=syslogin.aspx -->
+<HTML xmlns="http://www.w3.org/1999/xhtml"><HEAD id=Head1><TITLE>信息提示</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"><LINK 
+href="images/global.css" type=text/css rel=stylesheet>
+<SCRIPT src="images/jquery-1.2.6.pack.js" type=text/javascript></SCRIPT>
+
+<META http-equiv=refresh content="5; url=login.html">
+<STYLE type=text/css>
+#error {
+	MARGIN: 0px auto;
+	WIDTH: 580px;
+	HEIGHT: 224px;
+	background-image: url(images/err.png);
+	background-repeat: no-repeat;
+}
+#error .error_layout {
+	PADDING-RIGHT: 0px; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 40px auto; WIDTH: 450px; PADDING-TOP: 30px; HEIGHT: 100px
+}
+
+#error .error_content {
+	PADDING-RIGHT: 40px; PADDING-LEFT: 20px; FLOAT: left; PADDING-BOTTOM: 20px; PADDING-TOP: 10px
+}
+#error .error_text {
+	VERTICAL-ALIGN: middle;
+	LINE-HEIGHT: 25px;
+        padding-top: 10%;
+	padding-left: 35%;
+}
+#error .error_text STRONG {
+	FONT-SIZE: 15px; COLOR: #cc0000
+}
+#error .error_text A.autourl {
+	FONT-SIZE: 12px; COLOR: #ff66cc
+}
+
+#error .error_button A {
+	FONT-SIZE: 12px; TEXT-DECORATION: none
+}
+</STYLE>
+
+<META content="MSHTML 6.00.6000.17092" name=GENERATOR></HEAD>
+<BODY>
+<SCRIPT 
+type=text/javascript>var second=0;var total=5;var url="login.html";</SCRIPT>
+
+<SCRIPT type=text/javascript>    
+    function showtime()
+    {
+       second++;
+       var tips=document.getElementById("tips");
+       tips.innerHTML=total-second;
+       setTimeout("showtime()",1000);
+       if(second>4)
+       {
+          window.location.replace(url);
+       }
+    }    
+    </SCRIPT>
+<!--doc start-->
+<DIV id=doc>
+<DIV>
+<DIV 
+style="PADDING-RIGHT: 20px; PADDING-LEFT: 20px; PADDING-BOTTOM: 20px; MARGIN: 150px 0px 0px; PADDING-TOP: 20px">
+<DIV class="" id=error>
+<DIV class=error_layout>
+
+<DIV class=error_content>
+<DIV class=error_text><STRONG>&nbsp;&nbsp;&nbsp;&nbsp;密码错误或用户不存在</STRONG><BR><A class=autourl 
+href="login.html"><STRONG 
+id=tips></STRONG>秒后将返回登录，如未自动跳转请点击这里</A> </DIV>
+
+</DIV></DIV></DIV></DIV></DIV></DIV></DIV>
+<SCRIPT type=text/javascript>$(document).ready(showtime);</SCRIPT>
+</BODY></HTML>

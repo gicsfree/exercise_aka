@@ -1,0 +1,88 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0090)http://www.czldbz.gov.cn/login.do;jsessionid=0E79820D278C291FB88E56AD580F7A18?method=begin -->
+<HTML><HEAD><TITLE>系统登陆</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"><LINK 
+href="images/style.css" rel=stylesheet>
+<SCRIPT language=JavaScript src="images/Globals.js"></SCRIPT>
+
+<SCRIPT language=JavaScript src="images/common.js"></SCRIPT>
+
+<SCRIPT language=javascript>
+
+if (top.location != self.location)
+   top.location=self.location;
+
+//设置页面元素的CSS
+//eleName 页面元素名称
+//className 要切换的CSS名称
+function setClass(eleName,clsName) {
+	document.all(eleName).className = clsName;
+}
+
+function onsubmit(){
+  document.all("logonform").submit();
+}
+function cancel(){
+  document.all("logonform").j_username.value="";
+  document.all("logonform").j_password.value="";
+}
+
+
+function enterToTab1(){
+  if( event.keyCode == 13){
+    onsubmit();
+  }
+}
+
+function enterToSubmit(){
+  if (event.keyCode == 13){
+    onsubmit();
+  }
+}
+
+function initFocus(){
+  document.all("logonform").j_username.focus();
+   
+}
+</SCRIPT>
+
+<META content="MSHTML 6.00.6000.17092" name=GENERATOR></HEAD>
+<BODY leftMargin=0 background=images/login_bk.gif topMargin=0 
+onload=initFocus() styleclass="BodyBgColor"><BR><BR><BR><BR><BR><BR><BR>
+<FORM name=logonform action=cgi-bin/login.cgi method=post>
+<TABLE cellSpacing=0 cellPadding=0 width=682 align=center border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=top background=images/login.gif height=364>　　<BR><BR>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD width="60%" height=130>&nbsp;</TD>
+          <TD width="40%">&nbsp;</TD></TR>
+        <TR>
+          <TD>&nbsp;</TD>
+          <TD vAlign=top height=35><INPUT class=login_input id=username 
+            onkeydown=enterToTab1() tabIndex=1 size=18 name=UserName></TD></TR>
+        <TR>
+          <TD width="60%" height=4>&nbsp;</TD>
+          <TD width="40%">&nbsp;</TD></TR>
+        <TR>
+          <TD>&nbsp;</TD>
+          <TD vAlign=top height=35><INPUT class=login_input id=password 
+            onkeydown=enterToTab1() tabIndex=2 type=password size=18 
+            name=PassWord></TD></TR>
+        <TR>
+          <TD>&nbsp;</TD>
+          <TD vAlign=bottom height=28></TD></TR>
+        <TR>
+          <TD>&nbsp;</TD>
+          <TD height=30>
+            <TABLE height=30 cellSpacing=0 cellPadding=0 width="100%" 
+              border=0><TBODY>
+              <TR>
+                <TD vAlign=bottom width="50%" height=26><A 
+                  href="javascript:onsubmit()"><IMG tabIndex=3 height=20 
+                  src="images/qd_but.gif" width=47 border=0></A> &nbsp; <A 
+                  href="javascript:cancel()"><IMG tabIndex=4 height=20 
+                  src="images/qx_but.gif" width=47 border=0></A> 
+              </TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></FORM></BODY></HTML>

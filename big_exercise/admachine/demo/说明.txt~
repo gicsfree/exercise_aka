@@ -1,0 +1,10 @@
+1、把cgi-bin目录下的两个cgi程序及user.db文件拷贝到web服务器cgi-bin目录中，把htdocs目录下的文件都拷贝到web服务器htdocs目录下。
+
+2、执行c_ser目录下的server
+
+3、执行ad_machine目录下的qt程序ad_machine
+
+4、打开浏览器，输入http://127.0.0.1/login.html
+用户名、密码都是akaedu
+
+5、本demo仅仅演示了传送滚动字幕文本的例子。

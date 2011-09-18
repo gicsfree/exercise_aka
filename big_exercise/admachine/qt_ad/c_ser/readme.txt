@@ -1,0 +1,4 @@
+每一个文件夹存放一个服务器
+command_server:存放控制mplayer播放的服务器
+file_server:存放传输视频、图片的服务器
+msg_server: 存放传输文本信息的服务器

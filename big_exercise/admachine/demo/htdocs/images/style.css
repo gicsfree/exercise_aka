@@ -1,0 +1,360 @@
+BODY {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+INPUT {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+SELECT {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+TD {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+TEXTAREA {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+TH {
+	FONT-SIZE: 11px; FONT-FAMILY: Verdana, Geneva, Arial, Helvetica, sans-serif
+}
+.login_input {
+	BORDER-RIGHT: #d0deec 1px solid; BORDER-TOP: #d0deec 1px solid; FONT-SIZE: 9pt; BORDER-LEFT: #d0deec 1px solid; COLOR: #ffffff; BORDER-BOTTOM: #d0deec 1px solid; HEIGHT: 18px; BACKGROUND-COLOR: #256fb2; TEXT-DECORATION: none
+}
+.FontSize_9 {
+	FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: "????"
+}
+.FontSize_10 {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: "????"
+}
+.FontSize_12 {
+	
+}
+.FontSize_14 {
+	
+}
+.FontSizeTitle {
+	
+}
+.InputReadOnlyFont {
+	inputReadOnlyFont: 
+}
+.InputWriteFont {
+	inputWriteFont: 
+}
+.BodyBgColor {
+	BACKGROUND-COLOR: #f0f0f0
+}
+.OuterBorderLine {
+	BACKGROUND-COLOR: #ffffff
+}
+.OutBorderBgColor {
+	BACKGROUND-COLOR: #ffffff
+}
+.TableLineBgColor {
+	WIDTH: 100%; BACKGROUND-COLOR: #c0c0c0
+}
+.TableTopInfoBgColor {
+	BACKGROUND-IMAGE: url(../images/sitemanager/navigation/top_info_bk.gif)
+}
+.TableTitleImgA {
+	BACKGROUND-IMAGE: url(../images/tab/tabA1.gif)
+}
+.TableTitleImgB {
+	BACKGROUND-IMAGE: url(../images/tab/tabA2.gif)
+}
+.TableTitleImgC {
+	BACKGROUND-IMAGE: url(../images/tab/tabA3.gif)
+}
+.TableTitleFont {
+	FONT-WEIGHT: bold; FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}
+.TrBgColor1 {
+	BACKGROUND-COLOR: #ffffff
+}
+.TrBgColor2 {
+	
+}
+.TrTopBackGround {
+	BACKGROUND-IMAGE: url(../images/table_topbk.gif)
+}
+.TrBackGround1 {
+	
+}
+.TdDataNameBgColor {
+	BACKGROUND-COLOR: #ffffff
+}
+.TdDataInputBgColor {
+	BACKGROUND-COLOR: #ffffff
+}
+.TdBottomBackGround {
+	BACKGROUND-IMAGE: url(../images/table_bottombk.gif)
+}
+.TabLeftTabBgSlant {
+	BACKGROUND: url(../images/tab/tabB1.gif) no-repeat left top
+}
+.TabLeftTabForeSlant {
+	BACKGROUND: url(../images/tab/tabA1.gif) no-repeat left top
+}
+.TabRightTabBgCurve {
+	BACKGROUND: url(../images/tab/tabB3.gif) no-repeat right top
+}
+.TabRightTabForeCurve {
+	BACKGROUND: url(../images/tab/tabA3.gif) no-repeat right top
+}
+.TabForePropertyTab {
+	BORDER-RIGHT: #336699 0px solid; BORDER-TOP: #336699 0px solid; FONT-WEIGHT: normal; FONT-SIZE: 9pt; BACKGROUND: url(../images/tab/tabA2.gif); BORDER-LEFT: #336699 0px solid; COLOR: #000000; BORDER-BOTTOM: #336699 0px solid; FONT-FAMILY: "????"; HEIGHT: 20px
+}
+.TabBackPropertyTab {
+	BORDER-RIGHT: #336699 0px solid; BORDER-TOP: #336699 0px solid; FONT-WEIGHT: normal; FONT-SIZE: 9pt; BACKGROUND: url(../images/tab/tabB2.gif); BORDER-LEFT: #336699 0px solid; COLOR: #000000; BORDER-BOTTOM: #336699 0px solid; FONT-FAMILY: "????"; HEIGHT: 20px
+}
+.TabTableTitleFontA {
+	FONT-SIZE: 9pt; COLOR: #ffffff; FONT-FAMILY: "????"
+}
+.TabTableTitleFontB {
+	FONT-SIZE: 9pt; COLOR: #000000; FONT-FAMILY: "????"
+}
+.Button_2A {
+	FONT-SIZE: 12px; BACKGROUND-IMAGE: url(../images/button/2but.gif); WIDTH: 52px; COLOR: #000000; BORDER-TOP-STYLE: none; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: "????"; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 19px; BACKGROUND-COLOR: #f3f8ff; BORDER-BOTTOM-STYLE: none
+}
+.Button_2B {
+	
+}
+.Button_3A {
+	FONT-SIZE: 12px; BACKGROUND-IMAGE: url(../images/button/3but.gif); WIDTH: 81px; COLOR: #000000; BORDER-TOP-STYLE: none; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: "????"; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 19px; BACKGROUND-COLOR: #f3f8ff; BORDER-BOTTOM-STYLE: none
+}
+.Button_3B {
+	
+}
+.Button_4A {
+	
+}
+.Button_4B {
+	
+}
+.Button_5A {
+	FONT-SIZE: 12px; BACKGROUND-IMAGE: url(../images/button/5but.gif); WIDTH: 81px; COLOR: #000000; BORDER-TOP-STYLE: none; BACKGROUND-REPEAT: no-repeat; FONT-FAMILY: "????"; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; HEIGHT: 19px; BACKGROUND-COLOR: #f3f8ff; BORDER-BOTTOM-STYLE: none
+}
+.Button_5B {
+	
+}
+.Button_6A {
+	
+}
+.Button_6B {
+	
+}
+.ALink {
+	
+}
+.BLink {
+	
+}
+.CLink {
+	
+}
+.TreeLink {
+	
+}
+.ButtonLink {
+	FONT-SIZE: 9pt; FONT-FAMILY: "????", "Arial Narrow", "Times New Roman"
+}
+.ButtonLink:link {
+	FONT-SIZE: 9pt; COLOR: #255595; TEXT-DECORATION: none
+}
+.ButtonLink:unknown {
+	FONT-SIZE: 9pt; COLOR: #255595; TEXT-DECORATION: none
+}
+.ButtonLink:visited {
+	FONT-SIZE: 9pt; COLOR: #255595; TEXT-DECORATION: none
+}
+.ButtonLink:active {
+	FONT-SIZE: 9pt; COLOR: #255595; TEXT-DECORATION: none
+}
+.ButtonLink:hover {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.MenuLink {
+	
+}
+.ContentLink {
+	
+}
+.FirstLink {
+	
+}
+.PreviousLink {
+	
+}
+.NextLink {
+	
+}
+.LastLink {
+	
+}
+.PerRecordNo {
+	
+}
+.TotalRecord {
+	
+}
+.CurrentPageNo {
+	
+}
+THEAD TR {
+	BACKGROUND-IMAGE: url(../images/table_topbk.gif); MARGIN: 0px; VERTICAL-ALIGN: middle; WIDTH: 100%; PADDING-TOP: 2px; HEIGHT: 22px; TEXT-ALIGN: center
+}
+TH.HeaderSortable {
+	COLOR: #000000
+}
+TH.HeaderSorted {
+	COLOR: #000000
+}
+TH.HeaderSorted A {
+	COLOR: #000000
+}
+TH A {
+	COLOR: black
+}
+TH A:hover {
+	COLOR: black; TEXT-DECORATION: underline
+}
+TH.HeaderSorted A {
+	BACKGROUND-POSITION: right 50%; DISPLAY: block; WIDTH: 100%
+}
+TH.HeaderSortable A {
+	BACKGROUND-POSITION: right 50%; DISPLAY: block; WIDTH: 100%
+}
+TH.HeaderSortable A {
+	BACKGROUND-IMAGE: url(../images/arrow_off.png); BACKGROUND-REPEAT: no-repeat
+}
+TH.HeaderOrderASC A {
+	BACKGROUND-IMAGE: url(../images/arrow_down.png); BACKGROUND-REPEAT: no-repeat
+}
+TH.HeaderOrderDEC A {
+	BACKGROUND-IMAGE: url(../images/arrow_up.png); BACKGROUND-REPEAT: no-repeat
+}
+TR.RowEven {
+	BACKGROUND-COLOR: #f5f5f5
+}
+TR.empty {
+	BACKGROUND-COLOR: #ffffff
+}
+TR.RowOdd {
+	BACKGROUND-COLOR: #ffffff
+}
+DIV.exportlinks {
+	BORDER-RIGHT: #5d82b4 0px solid; BORDER-TOP: #5d82b4 0px solid; BACKGROUND-IMAGE: url(../images/table_bottombk.gif); MARGIN: 0px; BORDER-LEFT: #5d82b4 0px solid; WIDTH: 100%; PADDING-TOP: 4px; BORDER-BOTTOM: #5d82b4 0px solid; HEIGHT: 25px; TEXT-ALIGN: center
+}
+SPAN.export {
+	PADDING-RIGHT: 4px; DISPLAY: inline-block; PADDING-LEFT: 20px; PADDING-BOTTOM: 1px; CURSOR: pointer; PADDING-TOP: 0px
+}
+SPAN.excel {
+	BACKGROUND-IMAGE: url(../images/ico_file_excel.gif)
+}
+SPAN.csv {
+	BACKGROUND-IMAGE: url(../images/ico_file_csv.gif)
+}
+SPAN.xml {
+	BACKGROUND-IMAGE: url(../images/ico_file_xml.gif)
+}
+SPAN.pdf {
+	BACKGROUND-IMAGE: url(../images/ico_file_pdf.gif)
+}
+SPAN.rtf {
+	BACKGROUND-IMAGE: url(../images/ico_file_rtf.png)
+}
+SPAN.pagebanner {
+	BORDER-RIGHT: #999 1px dotted; PADDING-RIGHT: 4px; BORDER-TOP: #999 1px dotted; MARGIN-TOP: 10px; DISPLAY: block; PADDING-LEFT: 4px; PADDING-BOTTOM: 2px; BORDER-LEFT: #999 1px dotted; WIDTH: 79%; PADDING-TOP: 2px; BORDER-BOTTOM: medium none; BACKGROUND-COLOR: #eee; align: left
+}
+SPAN.pagelinks {
+	BORDER-RIGHT: #999 1px dotted; PADDING-RIGHT: 4px; BORDER-TOP: medium none; DISPLAY: block; PADDING-LEFT: 4px; MARGIN-BOTTOM: -5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #999 1px dotted; WIDTH: 79%; PADDING-TOP: 2px; BORDER-BOTTOM: #999 1px dotted; BACKGROUND-COLOR: #eee
+}
+.TreeButtonBgDown {
+	BACKGROUND-IMAGE: url(../images/onelevelBg.gif)
+}
+.TableLeftBackground {
+	BACKGROUND-IMAGE: url(../../images/left_bk2.gif)
+}
+.FontSize_9LeftMenu {
+	FONT-SIZE: 9pt; COLOR: #ffeae6; FONT-FAMILY: "????"
+}
+.ALink {
+	FONT-SIZE: 9pt; FONT-FAMILY: "????", "Arial Narrow", "Times New Roman"
+}
+.ALink:link {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.ALink:unknown {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.ALink:visited {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.ALink:active {
+	FONT-SIZE: 9pt; COLOR: #000000; TEXT-DECORATION: none
+}
+.ALink:hover {
+	FONT-SIZE: 9pt; COLOR: #ff0000; TEXT-DECORATION: none
+}
+.MenuLink {
+	FONT-SIZE: 9pt; FONT-FAMILY: "????", "Arial Narrow", "Times New Roman"
+}
+.MenuLink:link {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.MenuLink:unknown {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.MenuLink:visited {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.MenuLink:active {
+	FONT-SIZE: 9pt; COLOR: #ffffff; TEXT-DECORATION: none
+}
+.MenuLink:hover {
+	FONT-SIZE: 9pt; COLOR: #ffe400; TEXT-DECORATION: none
+}
+.TableTopInfoBgColor {
+	BACKGROUND-IMAGE: url(../images/top_info_bk.gif)
+}
+.TableTitleBackGround {
+	BACKGROUND-IMAGE: url(../images/tableTitleBackGround.gif)
+}
+.ButtonStyle {
+	BORDER-RIGHT: 0px; BORDER-TOP: 0px; FONT-SIZE: 12px; BACKGROUND-IMAGE: url(../../images/but_bkB.gif); BORDER-LEFT: 0px; CURSOR: hand; COLOR: #000000; BORDER-BOTTOM: 0px; FONT-FAMILY: "????"; HEIGHT: 20px
+}
+.CLink {
+	FONT-SIZE: 10pt; COLOR: #0099ee; FONT-FAMILY: ????
+}
+.CLink:link {
+	FONT-SIZE: 10pt; COLOR: #0099ee; FONT-FAMILY: ????
+}
+.CLink:unknown {
+	FONT-SIZE: 10pt; COLOR: #0099ee; FONT-FAMILY: ????
+}
+.CLink:visited {
+	FONT-SIZE: 10pt; COLOR: #0099ee; FONT-FAMILY: ????
+}
+.CLink:active {
+	FONT-SIZE: 10pt; COLOR: #0099ee; FONT-FAMILY: ????
+}
+.CLink:hover {
+	FONT-SIZE: 10pt; COLOR: #0099ee; FONT-FAMILY: ????
+}
+.DLink {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}
+.DLink:link {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}
+.DLink:unknown {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}
+.DLink:visited {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}
+.DLink:active {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}
+.DLink:hover {
+	FONT-SIZE: 10pt; COLOR: #000000; FONT-FAMILY: ????
+}

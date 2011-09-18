@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf8">
+    <title><font color="#ffffff">用户登录</font></title>
+</head>
+<body bgcolor="black">
+    <div id=layer1 style="Z-INDEX:1; position:absolute; left:0; top:0; width:100%; height:100%">
+    <img src="/httpd_ad/images/back.jpg" width=100% height=100%> 
+    </div> 
+
+    <div id=layer2 style="Z-INDEX:2; position:absolute; left:0; top:0; width:100%; height:100%"> 	
+    <form action='/cgi-bin/cgi_ad/login_cgi/login.cgi' method=POST>
+    <br><br><br>
+    <font size=6><center><font color="#ffffff">系统管理员登录</font></font><br><br><br>
+    <font size=4><font color="#ffffff">用户名:</font><input type="text" name="UserName" maxlength="16"><br><br>
+    <font color="#ffffff">密　码:</font><input type="password" name="Password"  maxlength="16"><br><br>
+    <input type="submit" value="登录">
+    <input type="reset" name="Cancle" value="取消">
+    </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>WiseInfo</title>
+
+<style type="text/css">
+<!--
+* { 
+	margin:0px; 
+	padding:0px;
+}
+html, body{	
+	height:100%;
+	overflow: hidden;
+
+}
+html>body{		/*-- for !IE6.0 --*/
+	width: auto;
+	height: auto;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
+	
+}
+body {
+	border:8px solid #ffffff;
+	background-color: #ffffff;min-width:230px;
+}
+
+#form{
+width:80%;
+height:99%;
+margin:0 auto;
+_margin-left:20%;
+
+}
+fieldset{
+width:100%;
+margin:20 auto;
+line-height:35px;
+padding-left:20PX;
+}
+-->
+</style>
+</head>
+<body>
+
+<form action="cgi-bin/c_cli.cgi" method="post">
+
+	<fieldset>
+		<legend>请选择要上传的视频:</legend>
+		<label for="WebDesign">选择一个视频</label>
+		<select id="WebDesign" name="video">
+			<optgroup label="VIDEO">
+				<option value="CAT&M1.mp4">CAT&M1.mp4</option>
+				<option value="CAT&M2.mp4">CAT&M2.mp4</option>
+				<option value="CAT&M3.mp4">CAT&M3.mp4</option>
+				<option value="CAT&M4.mp4">CAT&M4.mp4</option>
+			</optgroup>
+			<optgroup label="PICTURE">
+				<option value="INUYASHA1.jpg">INUYASHA1.jpg</option>
+				<option value="INUYASHA2.jpg">INUYASHA2.jpg</option>
+				<option value="INUYASHA3.jpg">INUYASHA3.jpg</option>
+				<option value="INUYASHA4.jpg">INUYASHA4.jpg</option>
+				<option value="INUYASHA5.jpg">INUYASHA5.jpg</option>
+				<option value="INUYASHA6.jpg">INUYASHA6.jpg</option>
+				<option value="INUYASHA7.jpg">INUYASHA7.jpg</option>
+				<option value="INUYASHA8.jpg">INUYASHA8.jpg</option>
+				<option value="INUYASHA9.jpg">INUYASHA9.jpg</option>
+				<option value="INUYASHA10.jpg">INUYASHA10.jpg</option>
+				<option value="INUYASHA11.jpg">INUYASHA11.jpg</option>
+			</optgroup>
+		</select>
+	</fieldset>
+
+	
+		<input type="submit" value="上传" id="submit" name="submit" />
+		<input type="reset" value="重置" id="reset" name="reset" />
+	
+
+
+</form>
+
+</body>
+</html>
