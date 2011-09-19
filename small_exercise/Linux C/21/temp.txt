@@ -1,0 +1,10 @@
+app
+buf.c
+convert.c
+copy.c
+mul_sum.c
+my_copy.c
+sum.c
+temp.txt
+test.c
+test.txt
